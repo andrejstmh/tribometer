@@ -1,0 +1,100 @@
+<h1>Settings</h1>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <label>
+    User name:
+    <input type="text" formControlName="user" required>
+  </label>
+
+  <label>
+    Bearing:
+    <input type="text" formControlName="bearing" required>
+  </label>
+
+  <div formGroupName="address">
+    <h3>Files</h3>
+    <label>
+      Output file name:
+      <input type="text" formControlName="outputFileName" required>
+    </label>
+
+    <label>
+      Log file name:
+      <input type="text" formControlName="logFileName" required>
+    </label>
+    <label>
+      Working directory:
+      <input type="text" formControlName="workingDirectory">
+    </label>
+  </div>
+  <label>
+    Experiment total duration:
+    <input type="text" formControlName="totalDuration">
+  </label>
+
+  <div formArrayName="programme">
+    <h3>Programme</h3> <button (click)="addAlias()">Add point</button>
+
+    <div *ngFor="let prog of programme.controls; let i=index">
+      <!-- The repeated alias template -->
+      <label>
+        Alias:
+        <input type="text" [formControlName]="i">
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+</form>
+
+<hr>
+
+
+<p>
+  Form Value: {{ profileForm.value | json }}
+</p>
+
+<!--<form [formGroup]="myForm" (ngSubmit)="register(myForm)" novalidate>
+  <p> Is "myForm" valid? {{myForm.valid}} </p>
+
+  <div>
+    <label>Name</label>
+    <input type="text" name="name" formControlName="name">
+    <show-errors [control]="myForm.controls.name"></show-errors>
+  </div>
+
+  <div>
+    <label>Birth Year</label>
+    <input type="text" name="birthYear" formControlName="birthYear">
+    <show-errors [control]="myForm.controls.birthYear"></show-errors>
+  </div>
+
+  <div formGroupName="location">
+    <h3>Location</h3>
+    <div>
+      <label>Country</label>
+      <input type="text" name="country" formControlName="country">
+      <show-errors [control]="myForm.controls.location.controls.country"></show-errors>
+    </div>
+    <div>
+      <label>City</label>
+      <input type="text" name="city" formControlName="city">
+    </div>
+  </div>
+
+  <div formArrayName="phoneNumbers">
+    <h3>Phone numbers</h3>
+    <div *ngFor="let phoneNumberControl of myForm.controls.phoneNumbers.controls; let i=index;">
+      <label>Phone number {{i + 1}}</label>
+      <input type="text" name="phoneNumber[{{phoneId}}]" [formControlName]="i">
+      <button type="button" (click)="remove(i); myForm.markAsTouched()">remove</button>
+      <show-errors [control]="phoneNumberControl"></show-errors>
+    </div>
+    <button type="button" (click)="add(); myForm.markAsTouched()">Add phone number</button>
+  </div>
+
+  <show-errors [control]="myForm"></show-errors>
+
+  <pre>{{myForm.value | json}}</pre>
+  <button type="submit" [disabled]="myForm.invalid || myForm.pending">Register</button>
+  <button type="button" (click)="printMyForm()">Print to console</button>
+</form>-->

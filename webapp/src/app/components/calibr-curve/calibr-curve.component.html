@@ -1,0 +1,55 @@
+<!--<span class="badge">Curve</span>
+    [tableClass]="'table table-sm border rounded table-striped'"
+    [rowFormatter]="SaistibasTable.rowFormatter"
+                     [responsiveLayout]="SaistibasTable.responsiveLayout"
+                     [responsiveLayoutCollapseStartOpen]="SaistibasTable.responsiveLayoutCollapseStartOpen"
+                     [rowClick]="SaistibasTable.rowClick"
+    *ngIf="status$|async as stts"
+    [disabled]="!stts.state.writing"
+    -->
+
+<div class="container-fluid">
+  <div class="row"> <h3>Calibration curves</h3> </div>
+  <div class="row">
+    <div class="col">
+      <div class="row"><h5>Select curve</h5></div>
+      <div class="row">
+        <ul class="ccurves">
+          <li *ngFor="let curve of CCurves"
+              [class.selected]="curve === selectedCurve"
+              (click)="onSelect(curve)">
+            {{curve.name}}
+          </li>
+        </ul>
+      </div>
+      <div class="row"><h5>Edit curve</h5></div>
+      <div class="row">
+        <button type="button" class="btn btn-light" (click)="onAppendRow()">Append</button>
+        <button type="button" class="btn btn-light" (click)="onDeleteRow()">Delete</button>
+        <button type="button" class="btn btn-light" (click)="onRestore()">Restore</button>
+        <button type="button" class="btn btn-danger" (click)="onSave()">Save</button>
+      </div>
+      <div class="row">
+        <app-tabulator-table *ngIf="CurveTable"
+                             [tableData]="CurveTable"
+                             [tableColumns]="tableSettings.columns"
+                             [layout]="tableSettings.layout"
+                             [selectable]="true">
+        </app-tabulator-table>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <!--<div class="row">
+    <div class="col">
+      <app-tabulator-table *ngIf="CurveTable"
+                            [tableData]="CurveTable"
+                            [tableColumns]="tableSettings.columns"
+                            [layout]="tableSettings.layout">
+      </app-tabulator-table>
+
+    </div>
+    <div class="col"></div>
+  </div>-->
+</div>

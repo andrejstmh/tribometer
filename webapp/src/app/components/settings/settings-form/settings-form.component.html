@@ -1,0 +1,105 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Settings</h1>
+
+    <!--public user: string="",
+    public bearing: string="",
+    public outputFileName: string="results.h5",
+    public workingDirectory: string="",
+    public logFileName: string="log.txt",
+    public totalDuration: number = 72,
+    public program: ProgramPoint[]=[]-->
+
+    <form (ngSubmit)="onSubmit()" #settingsForm="ngForm">
+      <div class="form-group">
+        <label for="name">*Name</label>
+        <input type="text" class="form-control" id="user" placeholder="Example: John Anyone"
+               required
+               [(ngModel)]="model.user" name="user" #user="ngModel" />
+        <div [hidden]="user.valid || user.pristine"
+             class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">*Bearing description</label>
+        <textarea type="text" class="form-control" id="bearing" placeholder="Example: Thrust ball bearing 65 (2011) 245-248"
+                  required
+                  [(ngModel)]="model.bearing" name="bearing" #bearing="ngModel"></textarea>
+        <div [hidden]="bearing.valid || bearing.pristine"
+             class="alert alert-danger">
+          Bering description is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">*Output file name</label>
+        <input type="text" class="form-control" id="bearing" placeholder="Example: result.h5"
+                  required
+                  [(ngModel)]="model.outputFileName" name="outputFileName" #outputFileName="ngModel"/>
+        <div [hidden]="outputFileName.valid || outputFileName.pristine"
+             class="alert alert-danger">
+          Output file name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">*Log file name</label>
+        <input type="text" class="form-control" id="logFileName" placeholder="Example: log.txt"
+                  required
+                  [(ngModel)]="model.logFileName" name="logFileName" #logFileName="ngModel"/>
+        <div [hidden]="logFileName.valid || logFileName.pristine"
+             class="alert alert-danger">
+          Log file name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Working directory</label>
+        <input type="text" class="form-control" id="workingDirectory" value="home" placeholder="Example: /home/pi/tribometer/"
+                  [(ngModel)]="model.workingDirectory" name="workingDirectory" #workingDirectory="ngModel"/>
+      </div>
+
+      <!--<div class="form-group">
+    <label for="alterEgo">Alter Ego</label>
+    <input type="text" class="form-control" id="alterEgo"
+           [(ngModel)]="model.alterEgo" name="alterEgo">
+  </div>
+
+  <div class="form-group">
+    <label for="power">Hero Power</label>
+    <select class="form-control" id="power"
+            required
+            [(ngModel)]="model.power" name="power"
+            #power="ngModel">
+      <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+    </select>
+    <div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+      Power is required
+    </div>
+  </div>-->
+
+      <button type="submit" class="btn btn-success" [disabled]="!settingsForm.form.valid">Start</button>
+      <!--<button type="button" class="btn btn-default" (click)="newHero(); settingsForm.reset()">New Hero</button>-->
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9">{{ model.user }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Alter Ego</div>
+      <div class="col-xs-9">{{ model.bearing }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Power</div>
+      <div class="col-xs-9">{{ model.outputFileName }}</div>
+    </div>-->
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>
+</div>
