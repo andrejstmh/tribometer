@@ -9,6 +9,8 @@ sudo apt-get update
 sudo apt-get install libhdf5-serial-dev
 
 ### python libraries
+sudo pip3 install ???gipio
+sudo pip3 install sensor 
 sudo pip3 install --upgrade pyserial
 sudo pip3 install numpy --upgrade
 sudo pip3 install pandas
