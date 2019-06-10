@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tribometrs", "Tribometrs.pyproj", "{5037B8A2-7CAF-4BC3-862C-33E947927357}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "webapp", "webapp\webapp.njsproj", "{BDCA467E-FE52-41E4-8A00-E51C0049E839}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5037B8A2-7CAF-4BC3-862C-33E947927357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5037B8A2-7CAF-4BC3-862C-33E947927357}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCA467E-FE52-41E4-8A00-E51C0049E839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCA467E-FE52-41E4-8A00-E51C0049E839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCA467E-FE52-41E4-8A00-E51C0049E839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCA467E-FE52-41E4-8A00-E51C0049E839}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEDD19C1-0B80-4AD8-945D-DD4634DA2D96}
+	EndGlobalSection
+EndGlobal

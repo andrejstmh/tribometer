@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5037b8a2-7caf-4bc3-862c-33e947927357}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>http_server.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="calibration.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="default_settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="draw_res.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="experiment.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="exp_settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="exp_datafile.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="motor3.py" />
+    <Compile Include="program.py" />
+    <Compile Include="read_RPM.py" />
+    <Compile Include="SDL_Pi_HDC1000.py" />
+    <Compile Include="sensor_data.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="http_server.py" />
+    <Compile Include="sensor_data_pi.py" />
+    <Compile Include="sockettest.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tribometer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VFD.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
