@@ -2,23 +2,29 @@
 
 ## Software
 rasberian 2018-11-26-rpd-x86-stretch
+### Editors and repositories
+1. wget https://packagecloud.io/headmelted/codebuilds/gpgkey -O - | sudo apt-key add -
+1. git clone https://github.com/schacon/
+1. curl -L https://code.headmelted.com/installers/apt.sh | sudo bash
+	1. git config --global user.name "andrejstmh"
+	1. git config --global user.email "andrejstmh@gmail.com"
+
 ### HDF5
-sudo apt-get update
-sudo apt-get install libhdf5-dev
-sudo apt-get update
-sudo apt-get install libhdf5-serial-dev
+1. sudo apt-get update
+1. sudo apt-get install libhdf5-dev
+1. sudo apt-get update
+1. sudo apt-get install libhdf5-serial-dev
 
 ### python libraries
-sudo pip3 install ???gipio
-sudo pip3 install sensor 
-sudo pip3 install --upgrade pyserial
-sudo pip3 install numpy --upgrade
-sudo pip3 install pandas
-sudo pip3 install h5py
-sudo pip3 install matplotlib
-sudo pip3 install rx
+1. sudo pip3 install tornado
+1. sudo pip3 install --upgrade pyserial
+1. sudo pip3 install numpy --upgrade
+1. sudo pip3 install pandas
+1. sudo pip3 install h5py
+1. sudo pip3 install matplotlib
+1. sudo pip3 install rx
 
-
+## Other
 Sensors/get
 Time
 Temperature
@@ -38,5 +44,5 @@ Project file name
 Writing frequency
 
 Virtualbox config
-mount -t vboxsf [-o OPTIONS] rspbr /mnt/rspbr
-mount -t vboxsf rspbr /mnt/rspbr
+1. mount -t vboxsf [-o OPTIONS] rspbr /mnt/rspbr
+1. mount -t vboxsf rspbr /mnt/rspbr

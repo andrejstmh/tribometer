@@ -147,11 +147,11 @@ class SettingsHandler(tornado.web.RequestHandler):
 				controls.P_motor(5/1.8,1)
 			self.write("{0}".format(load))
 		elif st_case=="resultfile":
-			hdf = Tibometer.Experiment.DataFile.OpenRead();
+			hdf = Tibometer.Experiment.DataFile.OpenRead()
 			dt = hdf["data"]
 			rc = sh = dt.shape[0]
 			if (Tibometer.Experiment.DataFile.CurrentRecord>0)and(rc>Tibometer.Experiment.DataFile.CurrentRecord):
-				rc = Tibometer.Experiment.DataFile.CurrentRecord;
+				rc = Tibometer.Experiment.DataFile.CurrentRecord
 			step = 1
 			maxCount=1000
 			if rc>maxCount:
@@ -165,7 +165,7 @@ class SettingsHandler(tornado.web.RequestHandler):
 						"temperature": list(dt[:,4].tolist()), "friction":list(dt[:,2].tolist())}
 					)
 				)
-			Tibometer.Experiment.DataFile.CloseReader(hdf);
+			Tibometer.Experiment.DataFile.CloseReader(hdf)
 		elif st_case=="clbr_fr":
 			self.write(Tibometer.Experiment.Settings.calibrationData.friction.get_json_string())
 		elif st_case=="clbr_load":
@@ -194,10 +194,10 @@ class SettingsHandler(tornado.web.RequestHandler):
 		elif st_case=="clbr_fr":
 			#xy = json.loads(self.get_body_argument("message"))
 			Tibometer.Experiment.Settings.calibrationData.friction.initJSON(self.request.body)
-			self.write(Tibometer.Experiment.Settings.calibrationData.friction.get_json_string());
+			self.write(Tibometer.Experiment.Settings.calibrationData.friction.get_json_string())
 		elif st_case=="clbr_load":
 			Tibometer.Experiment.Settings.calibrationData.load.initJSON(self.request.body)
-			self.write(Tibometer.Experiment.Settings.calibrationData.load.get_json_string());
+			self.write(Tibometer.Experiment.Settings.calibrationData.load.get_json_string())
 		#elif st_case=="clbr_rpm":
 		#	Tibometer.Experiment.Settings.calibrationData.RPM.initJSON(self.request.body)
 		#	self.write(Tibometer.Experiment.Settings.calibrationData.RPM.get_json_string());
@@ -283,9 +283,8 @@ def make_app():
 		(r"/(.*)", tornado.web.StaticFileHandler, 
 			{'default_filename': 'index.html',"path": pagePath}),
 		])
-	return res;
-
-
+	return res
+	
 def openInBrowser():
 	print("start client")
 	url = "http://localhost:8787"
