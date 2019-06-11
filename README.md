@@ -6,6 +6,9 @@ rasberian 2018-11-26-rpd-x86-stretch
 1. wget https://packagecloud.io/headmelted/codebuilds/gpgkey -O - | sudo apt-key add -
 1. git clone https://github.com/schacon/
 1. curl -L https://code.headmelted.com/installers/apt.sh | sudo bash
+	1. git config --global user.name "andrejstmh"
+	1. git config --global user.email "andrejstmh@gmail.com"
+
 ### HDF5
 1. sudo apt-get update
 1. sudo apt-get install libhdf5-dev

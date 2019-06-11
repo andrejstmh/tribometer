@@ -1,6 +1,6 @@
 import numpy as np
 
-
+import platform
 if platform.system()!='Windows':
 	import pigpio
 
