@@ -49,6 +49,9 @@
     </Compile>
     <Compile Include="http_server.py" />
     <Compile Include="sensor_data_pi.py" />
+    <Compile Include="server4spa.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="sockettest.py">
       <SubType>Code</SubType>
     </Compile>
