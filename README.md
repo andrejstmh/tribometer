@@ -29,6 +29,10 @@ rasberian 2018-11-26-rpd-x86-stretch
 1. sudo pip3 install rx
 
 ## Other
+### VFD
+1. PD002 2 (modbus)
+2. PD041 1 (carier frequency 1kHz)
+### ??
 Sensors/get
 Time
 Temperature
