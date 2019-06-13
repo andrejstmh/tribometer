@@ -9,6 +9,20 @@ li.selected {
   left: .1em;
 }
 
+.card-header {
+	background-color: transparent;
+}
+
+.cenutabula .table td {
+	padding: 0.05rem;
+}
+
+.cenutabula .table th {
+	padding: 0.2rem;
+	background-color: khaki;
+	border: none;
+}
+
 /*
 
 .ccurves {

@@ -506,7 +506,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "li.selected {\r\n  background-color: #CFD8DC !important;\r\n  color: white;\r\n}\r\n\r\n.ccurves li:hover {\r\n  color: #607D8B;\r\n  background-color: #DDD;\r\n  left: .1em;\r\n}\r\n\r\n/*\r\n\r\n.ccurves {\r\n  margin: 0 0 2em 0;\r\n  list-style-type: none;\r\n  padding: 0;\r\n  width: 15em;\r\n}\r\n\r\n.ccurves li {\r\n  cursor: pointer;\r\n  position: relative;\r\n  left: 0;\r\n  background-color: #EEE;\r\n  margin: .5em;\r\n  padding: .3em 0;\r\n  height: 1.6em;\r\n  border-radius: 4px;\r\n}\r\n\r\n.ccurves li.selected:hover {\r\n  background-color: #BBD8DC !important;\r\n  color: white;\r\n}\r\n\r\n.ccurves li:hover {\r\n  color: #607D8B;\r\n  background-color: #DDD;\r\n  left: .1em;\r\n}\r\n\r\n.ccurves .text {\r\n  position: relative;\r\n  top: -3px;\r\n}\r\n\r\n.ccurves .badge {\r\n  display: inline-block;\r\n  font-size: small;\r\n  color: white;\r\n  padding: 0.8em 0.7em 0 0.7em;\r\n  background-color: #607D8B;\r\n  line-height: 1em;\r\n  position: relative;\r\n  left: -1px;\r\n  top: -4px;\r\n  height: 1.8em;\r\n  margin-right: .8em;\r\n  border-radius: 4px 0 0 4px;\r\n}*/\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9jYWxpYnItY3VydmUvY2FsaWJyLWN1cnZlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxvQ0FBb0M7RUFDcEMsWUFBWTtBQUNkOztBQUVBO0VBQ0UsY0FBYztFQUNkLHNCQUFzQjtFQUN0QixVQUFVO0FBQ1o7O0FBRUE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7RUFpREUiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL2NhbGlici1jdXJ2ZS9jYWxpYnItY3VydmUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbImxpLnNlbGVjdGVkIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjQ0ZEOERDICFpbXBvcnRhbnQ7XHJcbiAgY29sb3I6IHdoaXRlO1xyXG59XHJcblxyXG4uY2N1cnZlcyBsaTpob3ZlciB7XHJcbiAgY29sb3I6ICM2MDdEOEI7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI0RERDtcclxuICBsZWZ0OiAuMWVtO1xyXG59XHJcblxyXG4vKlxyXG5cclxuLmNjdXJ2ZXMge1xyXG4gIG1hcmdpbjogMCAwIDJlbSAwO1xyXG4gIGxpc3Qtc3R5bGUtdHlwZTogbm9uZTtcclxuICBwYWRkaW5nOiAwO1xyXG4gIHdpZHRoOiAxNWVtO1xyXG59XHJcblxyXG4uY2N1cnZlcyBsaSB7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICBsZWZ0OiAwO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNFRUU7XHJcbiAgbWFyZ2luOiAuNWVtO1xyXG4gIHBhZGRpbmc6IC4zZW0gMDtcclxuICBoZWlnaHQ6IDEuNmVtO1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxufVxyXG5cclxuLmNjdXJ2ZXMgbGkuc2VsZWN0ZWQ6aG92ZXIge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNCQkQ4REMgIWltcG9ydGFudDtcclxuICBjb2xvcjogd2hpdGU7XHJcbn1cclxuXHJcbi5jY3VydmVzIGxpOmhvdmVyIHtcclxuICBjb2xvcjogIzYwN0Q4QjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjREREO1xyXG4gIGxlZnQ6IC4xZW07XHJcbn1cclxuXHJcbi5jY3VydmVzIC50ZXh0IHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgdG9wOiAtM3B4O1xyXG59XHJcblxyXG4uY2N1cnZlcyAuYmFkZ2Uge1xyXG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICBmb250LXNpemU6IHNtYWxsO1xyXG4gIGNvbG9yOiB3aGl0ZTtcclxuICBwYWRkaW5nOiAwLjhlbSAwLjdlbSAwIDAuN2VtO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICM2MDdEOEI7XHJcbiAgbGluZS1oZWlnaHQ6IDFlbTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgbGVmdDogLTFweDtcclxuICB0b3A6IC00cHg7XHJcbiAgaGVpZ2h0OiAxLjhlbTtcclxuICBtYXJnaW4tcmlnaHQ6IC44ZW07XHJcbiAgYm9yZGVyLXJhZGl1czogNHB4IDAgMCA0cHg7XHJcbn0qL1xyXG4iXX0= */"
+module.exports = "li.selected {\r\n  background-color: #CFD8DC !important;\r\n  color: white;\r\n}\r\n\r\n.ccurves li:hover {\r\n  color: #607D8B;\r\n  background-color: #DDD;\r\n  left: .1em;\r\n}\r\n\r\n.card-header {\r\n\tbackground-color: transparent;\r\n}\r\n\r\n.cenutabula .table td {\r\n\tpadding: 0.05rem;\r\n}\r\n\r\n.cenutabula .table th {\r\n\tpadding: 0.2rem;\r\n\tbackground-color: khaki;\r\n\tborder: none;\r\n}\r\n\r\n/*\r\n\r\n.ccurves {\r\n  margin: 0 0 2em 0;\r\n  list-style-type: none;\r\n  padding: 0;\r\n  width: 15em;\r\n}\r\n\r\n.ccurves li {\r\n  cursor: pointer;\r\n  position: relative;\r\n  left: 0;\r\n  background-color: #EEE;\r\n  margin: .5em;\r\n  padding: .3em 0;\r\n  height: 1.6em;\r\n  border-radius: 4px;\r\n}\r\n\r\n.ccurves li.selected:hover {\r\n  background-color: #BBD8DC !important;\r\n  color: white;\r\n}\r\n\r\n.ccurves li:hover {\r\n  color: #607D8B;\r\n  background-color: #DDD;\r\n  left: .1em;\r\n}\r\n\r\n.ccurves .text {\r\n  position: relative;\r\n  top: -3px;\r\n}\r\n\r\n.ccurves .badge {\r\n  display: inline-block;\r\n  font-size: small;\r\n  color: white;\r\n  padding: 0.8em 0.7em 0 0.7em;\r\n  background-color: #607D8B;\r\n  line-height: 1em;\r\n  position: relative;\r\n  left: -1px;\r\n  top: -4px;\r\n  height: 1.8em;\r\n  margin-right: .8em;\r\n  border-radius: 4px 0 0 4px;\r\n}*/\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9jYWxpYnItY3VydmUvY2FsaWJyLWN1cnZlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxvQ0FBb0M7RUFDcEMsWUFBWTtBQUNkOztBQUVBO0VBQ0UsY0FBYztFQUNkLHNCQUFzQjtFQUN0QixVQUFVO0FBQ1o7O0FBRUE7Q0FDQyw2QkFBNkI7QUFDOUI7O0FBRUE7Q0FDQyxnQkFBZ0I7QUFDakI7O0FBRUE7Q0FDQyxlQUFlO0NBQ2YsdUJBQXVCO0NBQ3ZCLFlBQVk7QUFDYjs7QUFFQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztFQWlERSIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvY2FsaWJyLWN1cnZlL2NhbGlici1jdXJ2ZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibGkuc2VsZWN0ZWQge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNDRkQ4REMgIWltcG9ydGFudDtcclxuICBjb2xvcjogd2hpdGU7XHJcbn1cclxuXHJcbi5jY3VydmVzIGxpOmhvdmVyIHtcclxuICBjb2xvcjogIzYwN0Q4QjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjREREO1xyXG4gIGxlZnQ6IC4xZW07XHJcbn1cclxuXHJcbi5jYXJkLWhlYWRlciB7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbn1cclxuXHJcbi5jZW51dGFidWxhIC50YWJsZSB0ZCB7XHJcblx0cGFkZGluZzogMC4wNXJlbTtcclxufVxyXG5cclxuLmNlbnV0YWJ1bGEgLnRhYmxlIHRoIHtcclxuXHRwYWRkaW5nOiAwLjJyZW07XHJcblx0YmFja2dyb3VuZC1jb2xvcjoga2hha2k7XHJcblx0Ym9yZGVyOiBub25lO1xyXG59XHJcblxyXG4vKlxyXG5cclxuLmNjdXJ2ZXMge1xyXG4gIG1hcmdpbjogMCAwIDJlbSAwO1xyXG4gIGxpc3Qtc3R5bGUtdHlwZTogbm9uZTtcclxuICBwYWRkaW5nOiAwO1xyXG4gIHdpZHRoOiAxNWVtO1xyXG59XHJcblxyXG4uY2N1cnZlcyBsaSB7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICBsZWZ0OiAwO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNFRUU7XHJcbiAgbWFyZ2luOiAuNWVtO1xyXG4gIHBhZGRpbmc6IC4zZW0gMDtcclxuICBoZWlnaHQ6IDEuNmVtO1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxufVxyXG5cclxuLmNjdXJ2ZXMgbGkuc2VsZWN0ZWQ6aG92ZXIge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNCQkQ4REMgIWltcG9ydGFudDtcclxuICBjb2xvcjogd2hpdGU7XHJcbn1cclxuXHJcbi5jY3VydmVzIGxpOmhvdmVyIHtcclxuICBjb2xvcjogIzYwN0Q4QjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjREREO1xyXG4gIGxlZnQ6IC4xZW07XHJcbn1cclxuXHJcbi5jY3VydmVzIC50ZXh0IHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgdG9wOiAtM3B4O1xyXG59XHJcblxyXG4uY2N1cnZlcyAuYmFkZ2Uge1xyXG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICBmb250LXNpemU6IHNtYWxsO1xyXG4gIGNvbG9yOiB3aGl0ZTtcclxuICBwYWRkaW5nOiAwLjhlbSAwLjdlbSAwIDAuN2VtO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICM2MDdEOEI7XHJcbiAgbGluZS1oZWlnaHQ6IDFlbTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgbGVmdDogLTFweDtcclxuICB0b3A6IC00cHg7XHJcbiAgaGVpZ2h0OiAxLjhlbTtcclxuICBtYXJnaW4tcmlnaHQ6IC44ZW07XHJcbiAgYm9yZGVyLXJhZGl1czogNHB4IDAgMCA0cHg7XHJcbn0qL1xyXG4iXX0= */"
 
 /***/ }),
 
@@ -517,7 +517,7 @@ module.exports = "li.selected {\r\n  background-color: #CFD8DC !important;\r\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<span class=\"badge\">Curve</span>\r\n    [tableClass]=\"'table table-sm border rounded table-striped'\"\r\n    [rowFormatter]=\"SaistibasTable.rowFormatter\"\r\n                     [responsiveLayout]=\"SaistibasTable.responsiveLayout\"\r\n                     [responsiveLayoutCollapseStartOpen]=\"SaistibasTable.responsiveLayoutCollapseStartOpen\"\r\n                     [rowClick]=\"SaistibasTable.rowClick\"\r\n    *ngIf=\"status$|async as stts\"\r\n    [disabled]=\"!stts.state.writing\"\r\n    -->\r\n\r\n<div class=\"container-fluid\">\r\n  <div class=\"row\"> <h3>Calibration curves</h3> </div>\r\n  <div class=\"row\">\r\n    <div class=\"col\">\r\n      <div class=\"row\"><h5>Select curve</h5></div>\r\n      <div class=\"row\">\r\n        <ul class=\"ccurves\">\r\n          <li *ngFor=\"let curve of CCurves\"\r\n              [class.selected]=\"curve === selectedCurve\"\r\n              (click)=\"onSelect(curve)\">\r\n            {{curve.name}}\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"row\"><h5>Edit curve</h5></div>\r\n      <div class=\"row\">\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"onAppendRow()\">Append</button>\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"onDeleteRow()\">Delete</button>\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"onRestore()\">Restore</button>\r\n        <button type=\"button\" class=\"btn btn-danger\" (click)=\"onSave()\">Save</button>\r\n      </div>\r\n      <div class=\"row\">\r\n        <app-tabulator-table *ngIf=\"CurveTable\"\r\n                             [tableData]=\"CurveTable\"\r\n                             [tableColumns]=\"tableSettings.columns\"\r\n                             [layout]=\"tableSettings.layout\"\r\n                             [selectable]=\"true\">\r\n        </app-tabulator-table>\r\n      </div>\r\n    </div>\r\n    <div class=\"col\"></div>\r\n  </div>\r\n\r\n  <!--<div class=\"row\">\r\n    <div class=\"col\">\r\n      <app-tabulator-table *ngIf=\"CurveTable\"\r\n                            [tableData]=\"CurveTable\"\r\n                            [tableColumns]=\"tableSettings.columns\"\r\n                            [layout]=\"tableSettings.layout\">\r\n      </app-tabulator-table>\r\n\r\n    </div>\r\n    <div class=\"col\"></div>\r\n  </div>-->\r\n</div>\r\n"
+module.exports = "<!--<span class=\"badge\">Curve</span>\r\n    [tableClass]=\"'table table-sm border rounded table-striped'\"\r\n    [rowFormatter]=\"SaistibasTable.rowFormatter\"\r\n                     [responsiveLayout]=\"SaistibasTable.responsiveLayout\"\r\n                     [responsiveLayoutCollapseStartOpen]=\"SaistibasTable.responsiveLayoutCollapseStartOpen\"\r\n                     [rowClick]=\"SaistibasTable.rowClick\"\r\n    *ngIf=\"status$|async as stts\"\r\n    [disabled]=\"!stts.state.writing\"\r\n    -->\r\n\r\n<div class=\"container-fluid\">\r\n  <div class=\"row\"> <h3>Calibration curves</h3> </div>\r\n  <div class=\"row\">\r\n    <div class=\"col\">\r\n      <div class=\"row\"><h5>Select curve</h5></div>\r\n      <div class=\"row\">\r\n        <ul class=\"ccurves\">\r\n          <li *ngFor=\"let curve of CCurves\"\r\n              [class.selected]=\"curve === selectedCurve\"\r\n              (click)=\"onSelect(curve)\">\r\n            {{curve.name}}\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"row\"><h5>Edit curve</h5></div>\r\n\r\n\r\n\t  <div class=\"row\">\r\n\t  \t<div *ngIf=\"data$|async as data\" class=\"card-body bg-light border-top\">\r\n\t  \t\t<h6 class=\"h6 card-subtitle text-muted pb-2\"> {{sezonaTagad}}. gada sezona</h6>\r\n\r\n\t  \t\t<button class=\"btn btn-yellow1 dark-border\" type=\"button\" (click)=\"EditClic()\" [hidden]=\"editCurve\">\r\n\t  \t\t\tLabot\r\n\t  \t\t</button>\r\n\r\n\t  \t\t<div *ngIf=\"editCurve\" class=\"row\">\r\n\t  \t\t\t<!--*ngIf=\"edit\"-->\r\n\t  \t\t\t<div class=\"col-12 col-sm-6 pr-sm-0 col-md-12 pr-md-3 col-xl-6 pr-xl-0\">\r\n\t  \t\t\t\t<div class=\"btn-group btn-block\">\r\n\t  \t\t\t\t\t<button class=\"btn btn-yellow1 dark-border\" type=\"button\"\r\n\t\t\t\t\t\t\t\t(click)=\"InserRowBefore()\" title=\"Insert row before\">\r\n\t  \t\t\t\t\t\t<i class=\"fa fa-plus-circle\"></i><i class=\"fa fa-arrow-up\"></i>\r\n\t  \t\t\t\t\t</button>\r\n\t  \t\t\t\t\t<button class=\"btn btn-yellow1 dark-border\" type=\"button\"\r\n\t\t\t\t\t\t\t\t(click)=\"InserRowAfter()\" title=\"Insert row after\">\r\n\t  \t\t\t\t\t\t<i class=\"fa fa-plus-circle\"></i><i class=\"fa fa-arrow-down\"></i>\r\n\t  \t\t\t\t\t</button>\r\n\t  \t\t\t\t\t<button class=\"btn btn-yellow1 dark-border\" type=\"button\" [disabled]=\"selectedRow.Nr==null\"\r\n\t\t\t\t\t\t\t\t(click)=\"MoveUp()\" title=\"Move up\">\r\n\t  \t\t\t\t\t\t<i class=\"fa fa-long-arrow-up\"></i>\r\n\t  \t\t\t\t\t</button>\r\n\t  \t\t\t\t\t<button class=\"btn btn-yellow1 dark-border\" type=\"button\" [disabled]=\"selectedRow.Nr==null\"\r\n\t\t\t\t\t\t\t\t(click)=\"MoveDown()\" title=\"Move down\">\r\n\t  \t\t\t\t\t\t<i class=\"fa fa-long-arrow-down\"></i>\r\n\t  \t\t\t\t\t</button>\r\n\t  \t\t\t\t</div>\r\n\r\n\t  \t\t\t</div>\r\n\t  \t\t\t<div class=\"col-12 col-sm-6 pl-sm-0 col-md-12 pl-md-3 col-xl-6 pl-xl-0\">\r\n\r\n\t  \t\t\t\t<div class=\"btn-group btn-block\">\r\n\t  \t\t\t\t\t<button class=\"btn btn-lightred dark-border\" type=\"button\" [disabled]=\"selectedRow.Nr==null\"\r\n\t\t\t\t\t\t\t\t(click)=\"DeleteRow()\" title=\"Dete row\">\r\n\t  \t\t\t\t\t\tDelete\r\n\t  \t\t\t\t\t</button>\r\n\t  \t\t\t\t\t<button class=\"btn btn-lightgreen dark-border\" type=\"button\"\r\n\t\t\t\t\t\t\t\t(click)=\"SaveData()\" title=\"Save\">\r\n\t  \t\t\t\t\t\tSave\r\n\t  \t\t\t\t\t</button>\r\n\t  \t\t\t\t\t<button class=\"btn btn-yellow1 dark-border\" type=\"button\"\r\n\t\t\t\t\t\t\t\t(click)=\"CancelEdit()\" title=\"Cancel\">\r\n\t  \t\t\t\t\t\tAtcelt\r\n\t  \t\t\t\t\t</button>\r\n\t  \t\t\t\t</div>\r\n\r\n\t  \t\t\t</div>\r\n\t  \t\t</div>\r\n\r\n\t  \t\t<table *ngIf=\"data$|async as data\" class=\"table mt-2\">\r\n\t  \t\t\t<thead>\r\n\t  \t\t\t\t<tr>\r\n\t  \t\t\t\t\t<th scope=\"col\">X</th>\r\n\t  \t\t\t\t\t<th scope=\"col\">Y</th>\r\n\t  \t\t\t\t\t<th *ngIf=\"editCurve\" scope=\"col\"></th>\r\n\t  \t\t\t\t</tr>\r\n\t  \t\t\t</thead>\r\n\t  \t\t\t<tbody>\r\n\t  \t\t\t\t<tr *ngFor=\"let r of data\" (click)=\"onSelectRow(r)\">\r\n\t  \t\t\t\t\t<td *ngIf=\"r.Nr !== selectedRow.Nr\">{{r.x}}</td>\r\n\t  \t\t\t\t\t<td *ngIf=\"r.Nr === selectedRow.Nr\"><input type=\"text\" [(ngModel)]=\"selectedRow.x\" class=\"form-control\" /></td>\r\n\t  \t\t\t\t\t<td *ngIf=\"r.Nr !== selectedRow.Nr\">{{r.y}}</td>\r\n\t  \t\t\t\t\t<td *ngIf=\"r.Nr === selectedRow.Nr\"><input type=\"text\" [(ngModel)]=\"selectedRow.y\" class=\"form-control\" /></td>\r\n\t  \t\t\t\t\t<td *ngIf=\"r.Nr !== selectedRow.Nr && editCurve\"><i class=\"fa fa-pencil-square fa-lg pointer\"></i></td>\r\n\t  \t\t\t\t</tr>\r\n\t  \t\t\t</tbody>\r\n\t  \t\t</table>\r\n\r\n\t  \t</div>\r\n\t  </div>\r\n\r\n\r\n\r\n      <div class=\"row\">\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"onAppendRow()\">Append</button>\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"onDeleteRow()\">Delete</button>\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"onRestore()\">Restore</button>\r\n        <button type=\"button\" class=\"btn btn-danger\" (click)=\"onSave()\">Save</button>\r\n      </div>\r\n      <div class=\"row\">\r\n        <app-tabulator-table *ngIf=\"CurveTable\"\r\n                             [tableData]=\"CurveTable\"\r\n                             [tableColumns]=\"tableSettings.columns\"\r\n                             [layout]=\"tableSettings.layout\"\r\n                             [selectable]=\"true\">\r\n        </app-tabulator-table>\r\n      </div>\r\n    </div>\r\n    <div class=\"col\"></div>\r\n  </div>\r\n\r\n  <!--<div class=\"row\">\r\n    <div class=\"col\">\r\n      <app-tabulator-table *ngIf=\"CurveTable\"\r\n                            [tableData]=\"CurveTable\"\r\n                            [tableColumns]=\"tableSettings.columns\"\r\n                            [layout]=\"tableSettings.layout\">\r\n      </app-tabulator-table>\r\n\r\n    </div>\r\n    <div class=\"col\"></div>\r\n  </div>-->\r\n</div>\r\n"
 
 /***/ }),
 
@@ -534,9 +534,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_sygnals_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../services/sygnals.service */ "./src/app/services/sygnals.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 
 
 
+
+var CurveRow = /** @class */ (function () {
+    function CurveRow(x, y, Nr) {
+        if (x === void 0) { x = 0; }
+        if (y === void 0) { y = 0; }
+        if (Nr === void 0) { Nr = null; }
+        this.x = x;
+        this.y = y;
+        this.Nr = Nr;
+    }
+    return CurveRow;
+}());
 var CalibrCurveComponent = /** @class */ (function () {
     function CalibrCurveComponent(sygnalServ) {
         this.sygnalServ = sygnalServ;
@@ -546,6 +559,10 @@ var CalibrCurveComponent = /** @class */ (function () {
             { name: "Load calibration curve", path: "clbr_load", title: ["Voltage, V", "Force, N"] }
             //{ name: "RPM calibration curve", path: "clbr_rpm", title: ["Voltage, V", "RPM"] }
         ];
+        this.data$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
+        this.editCurve = false;
+        this.selectedRow = new CurveRow();
+        this.prevData = [];
         this.CcurvData = null;
         this.status$ = null;
         this.CurveTable = [{ x: 1, y: 2, select: false }, { x: 2, y: 5, select: false }, { x: 3, y: 10 }, { x: 4, y: 20, select: false }];
@@ -616,9 +633,12 @@ var CalibrCurveComponent = /** @class */ (function () {
                 console.log("GetCalibrationCurve");
                 _this.CcurvData = cc;
                 _this.CurveTable = [];
+                var res = [];
                 for (var i = 0; i < cc.x.length; i++) {
+                    res.push(new CurveRow(cc.x[i], cc.y[i], i));
                     _this.CurveTable.push({ x: cc.x[i], y: cc.y[i], select: true });
                 }
+                _this.data$.next(res);
                 _this.drawChart(cc);
             });
         }
@@ -634,6 +654,137 @@ var CalibrCurveComponent = /** @class */ (function () {
     };
     CalibrCurveComponent.prototype.onRestore = function () {
         //this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path,)
+    };
+    CalibrCurveComponent.prototype.CreateNewItem = function (Nr) {
+        if (Nr === undefined) {
+            return new CurveRow(0, 0, null);
+        }
+        else {
+            return new CurveRow(0, 0, Nr);
+        }
+    };
+    CalibrCurveComponent.prototype.EditClic = function () {
+        var _this = this;
+        this.editCurve = !this.editCurve;
+        if (this.editCurve) {
+            var res = this.data$.value;
+            res.forEach(function (r, i) { r.Nr = i; });
+            this.prevData = [];
+            res.forEach(function (r) { _this.prevData.push(new CurveRow(r.x, r.y, r.Nr)); });
+            this.selectedRow = res[0];
+        }
+        else {
+            this.CancelEdit();
+        }
+    };
+    CalibrCurveComponent.prototype.onSelectRow = function (r) {
+        if (this.editCurve) {
+            this.selectedRow = r;
+        }
+    };
+    CalibrCurveComponent.prototype.DeleteRow = function () {
+        if (this.selectedRow.Nr != null) {
+            var res = this.data$.value;
+            if (res.length > 1) {
+                //res.bazesCena.content = res.bazesCena.content.filter(it => it["Nr"] !== this.selectedRow.Nr)
+                res.splice(this.selectedRow.Nr, 1);
+                res.forEach(function (r, i) { r.Nr = i; });
+                this.selectedRow = this.CreateNewItem(null); //{ name: null, val: null, Nr: null };
+                this.data$.next(res);
+            }
+        }
+    };
+    CalibrCurveComponent.prototype.InsertItem = function (before) {
+        var nr = this.selectedRow.Nr;
+        var res = this.data$.value;
+        var newItem = this.CreateNewItem();
+        if (nr != null) {
+            if (before) {
+                res.splice(nr, 0, newItem);
+            }
+            else {
+                res.splice(nr + 1, 0, newItem);
+                nr = nr + 1;
+            }
+        }
+        else {
+            if (before) {
+                res.unshift(newItem);
+                nr = 0;
+            }
+            else {
+                res.push(newItem);
+                nr = res.length - 1;
+            }
+        }
+        res.forEach(function (r, i) { r.Nr = i; });
+        this.selectedRow = res[nr];
+        this.data$.next(res);
+    };
+    CalibrCurveComponent.prototype.InserRowBefore = function () {
+        this.InsertItem(true);
+    };
+    CalibrCurveComponent.prototype.InserRowAfter = function () {
+        this.InsertItem(false);
+    };
+    CalibrCurveComponent.prototype.MoveItem = function (up) {
+        var nr = this.selectedRow.Nr;
+        var res = this.data$.value;
+        var moved = false;
+        if (nr != null) {
+            if (up) {
+                if (nr > 0) {
+                    var it = res[nr];
+                    res[nr] = res[nr - 1];
+                    nr = nr - 1;
+                    res[nr] = it;
+                    moved = true;
+                }
+            }
+            else {
+                if (nr < res.length - 1) {
+                    var it = res[nr];
+                    res[nr] = res[nr + 1];
+                    nr = nr + 1;
+                    res[nr] = it;
+                    moved = true;
+                }
+            }
+            if (moved) {
+                res.forEach(function (r, i) { r.Nr = i; });
+                this.selectedRow = res[nr];
+                this.data$.next(res);
+            }
+        }
+    };
+    CalibrCurveComponent.prototype.MoveUp = function () {
+        this.MoveItem(true);
+    };
+    CalibrCurveComponent.prototype.MoveDown = function () {
+        this.MoveItem(false);
+    };
+    CalibrCurveComponent.prototype.SaveData = function () {
+        var res = this.data$.value;
+        //let s = res.CMS.ToString();
+        //this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path).subscribe();
+        //this.cmsService.AizpilditCMS(res.CMS.id, s).subscribe(
+        //	x => {
+        //		//console.log(x);
+        //		this.selectedRow = this.CreateNewItem(null);
+        //		this.prevData = s;
+        //	},
+        //	err => {
+        //		this.dataState$.next(DataState.Error);
+        //		this.CancelEdit();
+        //	}
+        //);
+    };
+    CalibrCurveComponent.prototype.CancelEdit = function () {
+        this.editCurve = false;
+        this.selectedRow = this.CreateNewItem(null);
+        var res = [];
+        this.prevData.forEach(function (r) { res.push(new CurveRow(r.x, r.y, r.Nr)); });
+        this.data$.next(res);
     };
     CalibrCurveComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -668,7 +819,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n"
+module.exports = "\r\n"
 
 /***/ }),
 
@@ -1882,7 +2033,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\Calculations\Tribometrs\webapp\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! c:\Calculations\Tribometer_SVN\tribometr\webapp\src\main.ts */"./src/main.ts");
 
 
 /***/ })

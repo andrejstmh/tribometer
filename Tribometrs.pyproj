@@ -49,6 +49,9 @@
     </Compile>
     <Compile Include="http_server.py" />
     <Compile Include="sensor_data_pi.py" />
+    <Compile Include="server4spa.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="sockettest.py">
       <SubType>Code</SubType>
     </Compile>
@@ -56,6 +59,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VFD.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

@@ -266,7 +266,10 @@ class BeginProgramHandler(tornado.web.RequestHandler):
 
 
 def make_app():
-	pagePath = "c:/Calculations/Tribometrs/webapp/dist/"
+	#pagePath = "c:/Calculations/Tribometer_SVN/Tribometrs/webapp/dist/"
+	#import inspect
+	#pagePath = os.path.join( os.path.dirname(inspect.getfile(http_server)), "/webapp/dist/")
+	pagePath = "c:/Calculations/Tribometer_SVN/tribometr/webapp/dist/"
 	if not os.path.exists(pagePath):
 		pagePath = "/home/pi/tribometer/webapp/dist/"
 	res=tornado.web.Application([
