@@ -7,45 +7,49 @@ class CurveRow {
 	constructor(public x: number = 0, public y: number = 0, public Nr: number = null) { }
 }
 
+
+class CurveInfo {
+    constructor(public name?: string, public path?: string, public title: string[]) { }
+}
+
 @Component({
   selector: 'app-calibr-curve',
   templateUrl: './calibr-curve.component.html',
   styleUrls: ['./calibr-curve.component.css']
 })
 export class CalibrCurveComponent implements OnInit {
-  selectedCurve = null;
-  CCurves = [
-    { name: "Friction force calibration curve", path: "clbr_fr", title: ["Voltage, V", "Force, N"] },
-    { name: "Load calibration curve", path: "clbr_load", title: ["Voltage, V", "Force, N"] }
-    //{ name: "RPM calibration curve", path: "clbr_rpm", title: ["Voltage, V", "RPM"] }
+    selectedCurve: CurveInfo = null;
+    CCurves = [
+        new CurveInfo("Friction force calibration curve", "clbr_fr", ["Voltage, V", "Force, N"]),
+        new CurveInfo("Load calibration curve", "clbr_load", ["Voltage, V", "Force, N"])
   ]
-	data$: BehaviorSubject<CurveRow[]> = new BehaviorSubject<CurveRow[]>([]);
-	editCurve: boolean = false;
-	selectedRow: CurveRow = new CurveRow();
-	prevData: CurveRow[] = [];
+    data$: BehaviorSubject<CurveRow[]> = new BehaviorSubject<CurveRow[]>([]);
+    editCurve: boolean = false;
+    selectedRow: CurveRow = new CurveRow();
+    prevData: CurveRow[] = [];
 
-	CcurvData: CalibrationCurve = null;
-  status$: BehaviorSubject<trTotalState> = null;
-  constructor(private sygnalServ: SygnalsService) {
-    this.status$ = this.sygnalServ.totalstate$;
-    this.selectedCurve = this.CCurves[0];
-  }
-  CurveTable = [{ x: 1, y: 2, select: false }, { x: 2, y: 5, select: false }, { x: 3, y: 10 }, { x: 4, y: 20, select: false }]
-  tableSettings: any = {
-    layout: "fitColumns",
-    columns: [
-      { title: "x", field: "x", headerSort: false, width:100, editor: "input", validator: ["min:-1E5", "max:1E5", "numeric"] },
-      { title: "y", field: "y", headerSort: false, width:100,editor: "input", validator: ["min:-1E5", "max:1E5", "numeric"] },
-      { select: "select", field: "select", headerSort: false, width: 50,align: "center", editor: true, formatter: "tickCross"}
-      ],
-    validationFailed: function (cell, value, validators) {
-      //cell - cell component for the edited cell
-      //value - the value that failed validation
-      //validatiors - an array of validator objects that failed
+    CcurvData: CalibrationCurve = null;
+    status$: BehaviorSubject<trTotalState> = null;
+    constructor(private sygnalServ: SygnalsService) {
+        this.status$ = this.sygnalServ.totalstate$;
+        this.selectedCurve = this.CCurves[0];
+    }
+  //CurveTable = [{ x: 1, y: 2, select: false }, { x: 2, y: 5, select: false }, { x: 3, y: 10 }, { x: 4, y: 20, select: false }]
+  //tableSettings: any = {
+  //  layout: "fitColumns",
+  //  columns: [
+  //    { title: "x", field: "x", headerSort: false, width:100, editor: "input", validator: ["min:-1E5", "max:1E5", "numeric"] },
+  //    { title: "y", field: "y", headerSort: false, width:100,editor: "input", validator: ["min:-1E5", "max:1E5", "numeric"] },
+  //    { select: "select", field: "select", headerSort: false, width: 50,align: "center", editor: true, formatter: "tickCross"}
+  //    ],
+  //  validationFailed: function (cell, value, validators) {
+  //    //cell - cell component for the edited cell
+  //    //value - the value that failed validation
+  //    //validatiors - an array of validator objects that failed
 
-      //take action on validation fail
-      },
-  }
+  //    //take action on validation fail
+  //    },
+  //}
   ngOnInit() {
     this.onSelect(this.CCurves[0]);
   }
@@ -94,174 +98,155 @@ export class CalibrCurveComponent implements OnInit {
     if (curve) {
       console.log("onSelect");
       this.selectedCurve = curve;
-      this.CurveTable = null;
-      this.CcurvData = null;
-      this.tableSettings.columns[0].title = curve.title[0];
-      this.tableSettings.columns[1].title = curve.title[1];
+      //this.CurveTable = null;
+      //this.CcurvData = null;
+      //this.tableSettings.columns[0].title = curve.title[0];
+      //this.tableSettings.columns[1].title = curve.title[1];
       this.sygnalServ.GetCalibrationCurve(curve.path).subscribe(cc => {
         console.log("GetCalibrationCurve");
-        this.CcurvData = cc;
-		this.CurveTable = [];
-		let res: CurveRow[] = [];
-		for (var i = 0; i < cc.x.length; i++) {
-			res.push(new CurveRow(cc.x[i], cc.y[i],i));
-			this.CurveTable.push({ x: cc.x[i], y: cc.y[i], select: true });
-		}
-		this.data$.next(res);
+        //this.CcurvData = cc;
+        //this.CurveTable = [];
+        let res: CurveRow[] = [];
+        for (var i = 0; i < cc.x.length; i++) {
+            res.push(new CurveRow(cc.x[i], cc.y[i],i));
+            //this.CurveTable.push({ x: cc.x[i], y: cc.y[i], select: true });
+        }
+        this.data$.next(res);
         this.drawChart(cc);
       });
     }
   }
-  onSave() {
-    //this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path,)
-  }
-  onAppendRow() {
-    //this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path,)
-  }
-  onDeleteRow() {
-    //this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path,)
-  }
-  onRestore() {
-    //this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path,)
-	}
-
 
 	
-	CreateNewItem(Nr?: number) {
-		if (Nr === undefined) {
-			return new CurveRow(0, 0, null);
-		} else {
-			return new CurveRow(0, 0, Nr);
-		}
-	}
+    CreateNewItem(Nr?: number) {
+        if (Nr === undefined) {
+            return new CurveRow(0, 0, null);
+        } else {
+            return new CurveRow(0, 0, Nr);
+        }
+    }
 
-	EditClic() {
-		this.editCurve = !this.editCurve;
-		if (this.editCurve) {
-			let res = this.data$.value;
-			res.forEach((r, i) => { r.Nr = i; });
-			this.prevData = []
-			res.forEach(r => { this.prevData.push(new CurveRow(r.x, r.y, r.Nr));})
-			this.selectedRow = res[0];
-		} else {
-			this.CancelEdit();
-		}
-	}
+    EditClic() {
+        this.editCurve = !this.editCurve;
+        if (this.editCurve) {
+            let res = this.data$.value;
+            res.forEach((r, i) => { r.Nr = i; });
+            this.prevData = []
+            res.forEach(r => { this.prevData.push(new CurveRow(r.x, r.y, r.Nr));})
+            this.selectedRow = res[0];
+        } else {
+            this.CancelEdit();
+        }
+    }
 
-	onSelectRow(r: any) {
-		if (this.editCurve) {
-			this.selectedRow = r;
-		}
-	}
-	DeleteRow() {
-		if (this.selectedRow.Nr != null) {
-			let res = this.data$.value;
-			if (res.length > 1) {
-				//res.bazesCena.content = res.bazesCena.content.filter(it => it["Nr"] !== this.selectedRow.Nr)
-				res.splice(this.selectedRow.Nr, 1);
-				res.forEach((r, i) => { r.Nr = i; });
-				this.selectedRow = this.CreateNewItem(null);//{ name: null, val: null, Nr: null };
-				this.data$.next(res);
-			}
-		}
-	}
+    onSelectRow(r: any) {
+        if (this.editCurve) {
+            this.selectedRow = r;
+        }
+    }
+
+    DeleteRow() {
+        if (this.selectedRow.Nr != null) {
+            let res = this.data$.value;
+            if (res.length > 1) {
+                //res.bazesCena.content = res.bazesCena.content.filter(it => it["Nr"] !== this.selectedRow.Nr)
+                res.splice(this.selectedRow.Nr, 1);
+                res.forEach((r, i) => { r.Nr = i; });
+                this.selectedRow = this.CreateNewItem(null);//{ name: null, val: null, Nr: null };
+                this.data$.next(res);
+            }
+        }
+    }
+
 	InsertItem(before: boolean) {
-		let nr: number = this.selectedRow.Nr;
-		let res = this.data$.value;
-		let newItem = this.CreateNewItem();
-		if (nr != null) {
-			if (before) {
-				res.splice(nr, 0, newItem);
-			} else {
-				res.splice(nr + 1, 0, newItem);
-				nr = nr + 1;
-			}
-		} else {
-			if (before) {
-				res.unshift(newItem);
-				nr = 0;
-			} else {
-				res.push(newItem);
-				nr = res.length - 1;
-			}
+        let nr: number = this.selectedRow.Nr;
+        let res = this.data$.value;
+        let newItem = this.CreateNewItem();
+        if (nr != null) {
+            if (before) {
+                res.splice(nr, 0, newItem);
+            } else {
+                res.splice(nr + 1, 0, newItem);
+                nr = nr + 1;
+            }
+        } else {
+            if (before) {
+                res.unshift(newItem);
+            nr = 0;
+            } else {
+                res.push(newItem);
+                nr = res.length - 1;
+            }
 
-		}
-		res.forEach((r, i) => { r.Nr = i; });
-		this.selectedRow = res[nr];
-		this.data$.next(res);
+        }
+        res.forEach((r, i) => { r.Nr = i; });
+        this.selectedRow = res[nr];
+        this.data$.next(res);
 
-	}
+    }
 
-	InserRowBefore() {
-		this.InsertItem(true);
-	}
+    InserRowBefore() {
+        this.InsertItem(true);
+    }
 
 	InserRowAfter() {
 		this.InsertItem(false);
 	}
 
-	MoveItem(up: boolean) {
-		let nr: number = this.selectedRow.Nr;
-		let res = this.data$.value;
-		let moved: boolean = false;
-		if (nr != null) {
-			if (up) {
-				if (nr > 0) {
-					let it = res[nr];
-					res[nr] = res[nr - 1];
-					nr = nr - 1;
-					res[nr] = it;
-					moved = true;
-				}
-			} else {
-				if (nr < res.length - 1) {
-					let it = res[nr];
-					res[nr] = res[nr + 1];
-					nr = nr + 1;
-					res[nr] = it;
-					moved = true;
-				}
-			}
-			if (moved) {
-				res.forEach((r, i) => { r.Nr = i; });
-				this.selectedRow = res[nr];
-				this.data$.next(res);
-			}
-		}
-	}
+    MoveItem(up: boolean) {
+        let nr: number = this.selectedRow.Nr;
+        let res = this.data$.value;
+        let moved: boolean = false;
+        if (nr != null) {
+            if (up) {
+                if (nr > 0) {
+                    let it = res[nr];
+                    res[nr] = res[nr - 1];
+                    nr = nr - 1;
+                    res[nr] = it;
+                    moved = true;
+                }
+            } else {
+                if (nr < res.length - 1) {
+                    let it = res[nr];
+                    res[nr] = res[nr + 1];
+                    nr = nr + 1;
+                    res[nr] = it;
+                    moved = true;
+                }
+            }
+            if (moved) {
+                res.forEach((r, i) => { r.Nr = i; });
+                this.selectedRow = res[nr];
+                this.data$.next(res);
+            }
+        }
+    }
 
-	MoveUp() {
-		this.MoveItem(true);
-	}
+    MoveUp() {
+        this.MoveItem(true);
+    }
 
-	MoveDown() {
-		this.MoveItem(false);
-	}
+    MoveDown() {
+        this.MoveItem(false);
+    }
 
-	SaveData() {
-		let res = this.data$.value;
-		
-		//let s = res.CMS.ToString();
-		//this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path).subscribe();
+    SaveData() {
+        let res = this.data$.value;
+        let cd = new CalibrationCurve();
+        res.forEach(it => { cd.x.push(it.x); cd.y.push(it.y); })
+        this.sygnalServ.EditCalibrationCurve(this.selectedCurve.path, cd).subscribe(
+            resOk => { },
+            resErr => { },
+            () => { }
+        );
+    }
 
-		//this.cmsService.AizpilditCMS(res.CMS.id, s).subscribe(
-		//	x => {
-		//		//console.log(x);
-		//		this.selectedRow = this.CreateNewItem(null);
-		//		this.prevData = s;
-		//	},
-		//	err => {
-		//		this.dataState$.next(DataState.Error);
-		//		this.CancelEdit();
-		//	}
-		//);
-	}
-
-	CancelEdit() {
-		this.editCurve = false;
-		this.selectedRow = this.CreateNewItem(null);
-		let res: CurveRow[] =[];
-		this.prevData.forEach(r => { res.push(new CurveRow(r.x, r.y, r.Nr)); });
-		this.data$.next(res);
-	}
+    CancelEdit() {
+        this.editCurve = false;
+        this.selectedRow = this.CreateNewItem(null);
+        let res: CurveRow[] =[];
+        this.prevData.forEach(r => { res.push(new CurveRow(r.x, r.y, r.Nr)); });
+        this.data$.next(res);
+    }
 }

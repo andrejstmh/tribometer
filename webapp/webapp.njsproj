@@ -32,6 +32,8 @@
     <Content Include="src\app\components\navbar\navbar.component.html" />
     <Content Include="src\app\components\settings\settings.component.css" />
     <Content Include="src\app\components\settings\settings.component.html" />
+    <Content Include="src\app\components\trib-controls\trib-controls.component.css" />
+    <Content Include="src\app\components\trib-controls\trib-controls.component.html" />
     <Content Include="src\app\components\workshop\workshop.component.css" />
     <Content Include="src\app\components\workshop\workshop.component.html" />
     <Content Include="src\assets\forms.css">
@@ -55,8 +57,11 @@
     <TypeScriptCompile Include="src\app\components\navbar\navbar.component.ts" />
     <TypeScriptCompile Include="src\app\components\settings\settings.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\settings\settings.component.ts" />
+    <TypeScriptCompile Include="src\app\components\show-errors.component.ts" />
+    <TypeScriptCompile Include="src\app\components\trib-controls\trib-controls.component.ts" />
     <TypeScriptCompile Include="src\app\components\workshop\workshop.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\workshop\workshop.component.ts" />
+    <TypeScriptCompile Include="src\app\services\chart.service.ts" />
     <TypeScriptCompile Include="src\app\services\socket.service.spec.ts" />
     <TypeScriptCompile Include="src\app\services\socket.service.ts" />
     <TypeScriptCompile Include="src\app\services\sygnals.service.spec.ts" />
@@ -91,6 +96,7 @@
     <Folder Include="src\app\components\controls\tabulator-table\" />
     <Folder Include="src\app\components\navbar\" />
     <Folder Include="src\app\components\settings\" />
+    <Folder Include="src\app\components\trib-controls\" />
     <Folder Include="src\app\components\workshop\" />
     <Folder Include="src\app\services\" />
     <Folder Include="src\assets" />

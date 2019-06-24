@@ -22,13 +22,12 @@
           </li>
         </ul>
       </div>
-      <div class="row"><h5>Edit curve</h5></div>
+      
+		<div class="row"><h5>Edit curve</h5></div>
 
 
 	  <div class="row">
 	  	<div *ngIf="data$|async as data" class="card-body bg-light border-top">
-	  		<h6 class="h6 card-subtitle text-muted pb-2"> {{sezonaTagad}}. gada sezona</h6>
-
 	  		<button class="btn btn-yellow1 dark-border" type="button" (click)="EditClic()" [hidden]="editCurve">
 	  			Labot
 	  		</button>
@@ -57,7 +56,6 @@
 
 	  			</div>
 	  			<div class="col-12 col-sm-6 pl-sm-0 col-md-12 pl-md-3 col-xl-6 pl-xl-0">
-
 	  				<div class="btn-group btn-block">
 	  					<button class="btn btn-lightred dark-border" type="button" [disabled]="selectedRow.Nr==null"
 								(click)="DeleteRow()" title="Dete row">
@@ -72,18 +70,17 @@
 	  						Atcelt
 	  					</button>
 	  				</div>
-
 	  			</div>
 	  		</div>
 
 	  		<table *ngIf="data$|async as data" class="table mt-2">
-	  			<thead>
-	  				<tr>
-	  					<th scope="col">X</th>
-	  					<th scope="col">Y</th>
-	  					<th *ngIf="editCurve" scope="col"></th>
-	  				</tr>
-	  			</thead>
+				<thead>
+					<tr>
+						<th scope="col">Voltage, V</th>
+						<th scope="col">Force, N</th>
+						<th *ngIf="editCurve" scope="col"></th>
+					</tr>
+				</thead>
 	  			<tbody>
 	  				<tr *ngFor="let r of data" (click)="onSelectRow(r)">
 	  					<td *ngIf="r.Nr !== selectedRow.Nr">{{r.x}}</td>
@@ -94,39 +91,9 @@
 	  				</tr>
 	  			</tbody>
 	  		</table>
-
 	  	</div>
 	  </div>
-
-
-
-      <div class="row">
-        <button type="button" class="btn btn-light" (click)="onAppendRow()">Append</button>
-        <button type="button" class="btn btn-light" (click)="onDeleteRow()">Delete</button>
-        <button type="button" class="btn btn-light" (click)="onRestore()">Restore</button>
-        <button type="button" class="btn btn-danger" (click)="onSave()">Save</button>
-      </div>
-      <div class="row">
-        <app-tabulator-table *ngIf="CurveTable"
-                             [tableData]="CurveTable"
-                             [tableColumns]="tableSettings.columns"
-                             [layout]="tableSettings.layout"
-                             [selectable]="true">
-        </app-tabulator-table>
-      </div>
     </div>
     <div class="col"></div>
   </div>
-
-  <!--<div class="row">
-    <div class="col">
-      <app-tabulator-table *ngIf="CurveTable"
-                            [tableData]="CurveTable"
-                            [tableColumns]="tableSettings.columns"
-                            [layout]="tableSettings.layout">
-      </app-tabulator-table>
-
-    </div>
-    <div class="col"></div>
-  </div>-->
 </div>

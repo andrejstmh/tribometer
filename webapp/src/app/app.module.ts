@@ -11,12 +11,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { WorkshopComponent } from './components/workshop/workshop.component';
 import { CalibrCurveComponent } from './components/calibr-curve/calibr-curve.component';
+import { TribControlsComponent } from './components/trib-controls/trib-controls.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ShowErrorsComponent } from './components/show-errors.component';
 import { SettingsFormComponent } from './components/settings/settings-form/settings-form.component';
 
 import { SocketService } from './services/socket.service';
 import { SygnalsService } from './services/sygnals.service';
+import { ChartService } from './services/chart.service';
 import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
 
 @NgModule({
@@ -29,13 +31,14 @@ import { TabulatorTableComponent } from './components/controls/tabulator-table/t
     NotFoundComponent,
     ShowErrorsComponent,
     SettingsFormComponent,
-    TabulatorTableComponent
+    TabulatorTableComponent,
+    TribControlsComponent
   ],
   imports: [
     HttpClientModule, BrowserModule, ReactiveFormsModule, FormsModule, ChartsModule,
     AppRoutingModule
   ],
-  providers: [SocketService, SygnalsService],
+    providers: [SocketService, SygnalsService, ChartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,7 +29,7 @@ export class SocketService {
 
   constructor(private http: HttpClient) { }
   lastData$:BehaviorSubject<SensorsData> = new BehaviorSubject(null);
-  buffer:SensorsData[] = [];
+  //buffer:SensorsData[] = [];
   //private socket;
   socket = webSocket<SensorsData>(SERVER_URL);
   subsctiprion:Subscription = null;
@@ -37,13 +37,13 @@ export class SocketService {
     //this.socket = socketIo(SERVER_URL);
     this.subsctiprion = this.socket.subscribe(
       msg =>{ 
-        console.log('msg: ' + msg); // Called whenever there is a message from the server.
-        console.log('msg time: ' + msg.time);
-        this.buffer.push(msg);
+        //console.log('msg: ' + msg); // Called whenever there is a message from the server.
+        //console.log('msg time: ' + msg.time);
         this.lastData$.next(msg);
-        if(this.buffer.length>100){
-          this.buffer.shift();
-        }
+        //this.buffer.push(msg);
+        //if(this.buffer.length>100){
+        //  this.buffer.shift();
+        //}
       },
       err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
       () => console.log('complete') // Called when connection is closed (for whatever reason).
@@ -80,8 +80,8 @@ export class SocketService {
     if (this.subsctiprion){
       this.subsctiprion.unsubscribe();
     }
-    this.buffer = [];
-    this.lastData$.next(null);
+    //this.buffer = [];
+    //this.lastData$.next(null);
     return this.http.get<any>(url).pipe(
       tap(_ => console.log("stopListen")),
       catchError(this.handleError<any>("stopListen"))
