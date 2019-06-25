@@ -1,66 +1,65 @@
-<h1></h1>
 <div class="container-fluid">
-  <div class="row">
-    <input type="text" [(ngModel)]="rpmVal" name="rpm" #rpm >
-    <button type="button" class="btn btn-light" (click)="rotation()">set RPM {{rpmVal}}/{{rpmVal/60.0}}</button>
-    <button type="button" class="btn btn-danger" (click)="StopRotation()">Stop</button>
-  </div>
-  <div class="row">
-    <button type="button" class="btn btn-light" (click)="loadPlus()">Load +</button>
-    <button type="button" class="btn btn-light" (click)="loadMinus()">Load -</button>
-  </div>
-  <div class="row">
-    <div class="col-4">
-      <div class="row">
-        <button type="button" class="btn btn-light" (click)="startListen()">Start listen</button>
-        <button type="button" class="btn btn-light" (click)="stopListen()">Stop listen</button>
-      </div>
-      <div class="row">
-        <ul *ngIf="OnMessage$|async as data">
-          <li>time:{{data.time}}</li>
-          <li>T:{{data.temperature}}</li>
-          <li>RPM:{{data.rotationrate}}</li>
-          <li>Load:{{data.load}}</li>
-          <li>Friction:{{data.frictionforce}}</li>
-        </ul>
-      </div>
+    <div class="row">
+        <div class="container rounded border bg-light">
+            <h6>Rotation control</h6>
+            <input type="text" [(ngModel)]="rpmVal" name="rpm" #rpm>
+            <button type="button" class="btn btn-light" (click)="rotation()">set RPM {{rpmVal}}/{{rpmVal/60.0}}</button>
+            <button type="button" class="btn btn-danger" (click)="StopRotation()">Stop</button>
+        </div>
     </div>
-    <div class="col-8">
-      <canvas baseChart #listen height="400"
-              [datasets]="ChartListen.lineChartData"
-              [labels]="ChartListen.lineChartLabels"
-              [options]="ChartListen.lineChartOptions"
-              [colors]="ChartListen.lineChartColors"
-              [legend]="ChartListen.lineChartLegend"
-              [chartType]="ChartListen.lineChartType"></canvas>
-      <!--<div style="display: block;">
-
-      </div>-->
+    <div class="row">
+        <div class="container rounded border bg-light">
+            <h6>Load control</h6>
+            <button type="button" class="btn btn-light" (click)="loadPlus()">Increase load+</button>
+            <button type="button" class="btn btn-light" (click)="loadMinus()">Decrease load-</button>
+        </div>
     </div>
-  </div>
-
-  <div class="row">
-    <button type="button" class="btn btn-light" (click)="beginWrite()">Start writing</button>
-    <button type="button" class="btn btn-light" (click)="endWrite()">Stop writing</button>
-  </div>
-  <div class="row">
-    <canvas baseChart #writing height="400"
-            [datasets]="ChartFile.lineChartData"
-            [labels]="ChartFile.lineChartLabels"
-            [options]="ChartFile.lineChartOptions"
-            [colors]="ChartFile.lineChartColors"
-            [legend]="ChartFile.lineChartLegend"
-            [chartType]="ChartFile.lineChartType"></canvas>
-  </div>
-  <!--
-
-
-      height="300"
-  [plugins]="lineChartPlugins"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"
-      -->
-
-
-
+    <div class="row">
+        <div class="container rounded border bg-light">
+            <table *ngIf="currentData" class="table">
+                <thead>
+                    <tr>
+                        <!--<th scope="col">time, V</th>-->
+                        <th scope="col">RPM</th>
+                        <th scope="col">Load, N</th>
+                        <th scope="col">Friction, N</th>
+                        <th scope="col">Temperature, °C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!--<td>{{printNumVal(currentData.time)}}</td>-->
+                        <td>{{printNumVal(currentData.rotationrate)}}</td>
+                        <td>{{printNumVal(currentData.load)}}</td>
+                        <td>{{printNumVal(currentData.frictionforce)}}</td>
+                        <td>{{printNumVal(currentData.temperature)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <!--<div class="col-4">
+          <div class="row">
+            <ul *ngIf="currentData">
+                <li>time:{{printNumVal(currentData.time)}}</li>
+                <li>T:{{printNumVal(currentData.temperature)}}</li>
+                <li>RPM:{{printNumVal(currentData.rotationrate)}}</li>
+                <li>Load:{{printNumVal(currentData.load)}}</li>
+                <li>Friction:{{printNumVal(currentData.frictionforce)}}</li>
+            </ul>
+          </div>
+        </div>-->
+        <div class="col">
+            <div class="container rounded border bg-light">
+                <canvas baseChart #listen height="400"
+                        [datasets]="ChartListen.lineChartData"
+                        [labels]="ChartListen.lineChartLabels"
+                        [options]="ChartListen.lineChartOptions"
+                        [colors]="ChartListen.lineChartColors"
+                        [legend]="ChartListen.lineChartLegend"
+                        [chartType]="ChartListen.lineChartType"></canvas>
+            </div>
+        </div>
+    </div>
 </div>

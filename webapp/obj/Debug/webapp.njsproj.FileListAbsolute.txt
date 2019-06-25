@@ -1,0 +1,3 @@
+C:\Calculations\Tribometer_SVN\tribometr\webapp\obj\Debug\webapp.njsprojAssemblyReference.cache
+C:\Calculations\Tribometer_SVN\tribometr\webapp\obj\Debug\webapp.njsproj.CoreCompileInputs.cache
+C:\Calculations\Tribometer_SVN\tribometr\webapp\bin\Microsoft.NodejsTools.WebRole.dll

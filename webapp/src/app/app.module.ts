@@ -17,7 +17,7 @@ import { ShowErrorsComponent } from './components/show-errors.component';
 import { SettingsFormComponent } from './components/settings/settings-form/settings-form.component';
 
 import { SocketService } from './services/socket.service';
-import { SygnalsService } from './services/sygnals.service';
+import { SignalsService } from './services/signals.service';
 import { ChartService } from './services/chart.service';
 import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
 
@@ -38,7 +38,7 @@ import { TabulatorTableComponent } from './components/controls/tabulator-table/t
     HttpClientModule, BrowserModule, ReactiveFormsModule, FormsModule, ChartsModule,
     AppRoutingModule
   ],
-    providers: [SocketService, SygnalsService, ChartService],
+    providers: [SocketService, SignalsService, ChartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

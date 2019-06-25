@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { Observable, Subscription, interval } from 'rxjs';
+import { Observable, Subscription, interval ,of} from 'rxjs';
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
 import { SocketService, SensorsData } from './../../services/socket.service';
-import { SygnalsService } from './../../services/sygnals.service';
+import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
 
 
@@ -15,11 +15,11 @@ import { ChartService, LineChartSettings } from './../../services/chart.service'
 	styleUrls: ['./trib-controls.component.css']
 })
 export class TribControlsComponent implements OnInit, OnDestroy {
-    OnMessage$: Observable<SensorsData> = null;
+    currentData: SensorsData = null;
     constructor(
         private chartService:ChartService,
         private socketservice: SocketService,
-        private sygnalsService: SygnalsService) {
+        private signalsService: SignalsService) {
         this.ChartListen = this.chartService.ChartListen;
     }
     rpmVal: number = 0;
@@ -34,7 +34,11 @@ export class TribControlsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.OnChDCh = this.chartService.onChartDataChanged.subscribe(
-            reOk => { this.chart.update(); },
+            reOk => {
+                this.currentData = reOk;
+                this.chart.update();
+                console.log("update trib-control");
+            },
             resErr => { },
             () => { }
         )
@@ -43,22 +47,25 @@ export class TribControlsComponent implements OnInit, OnDestroy {
         if (this.OnChDCh) { this.OnChDCh.unsubscribe(); } 
     }
 
-    public updateChartData(x: SensorsData): void {
-        if (x) {
-            let jj = this.ChartListen.lineChartData[0].data.length - 1;
-            for (let j = 0; j < jj; j++) {
-            this.ChartListen.lineChartData[0].data[j] = this.ChartListen.lineChartData[0].data[j + 1];
-            this.ChartListen.lineChartData[1].data[j] = this.ChartListen.lineChartData[1].data[j + 1];
-            this.ChartListen.lineChartData[2].data[j] = this.ChartListen.lineChartData[2].data[j + 1];
-            this.ChartListen.lineChartData[3].data[j] = this.ChartListen.lineChartData[3].data[j + 1];
-            }
-            this.ChartListen.lineChartData[0].data[jj] = x.temperature;
-            this.ChartListen.lineChartData[1].data[jj] = x.rotationrate;
-            this.ChartListen.lineChartData[2].data[jj] = x.load;
-            this.ChartListen.lineChartData[3].data[jj] = x.frictionforce;
-            this.chart.update();
-        }
+    printNumVal(v: number) {
+        return isNaN(v) ? "-" : v.toFixed(2)
     }
+    //public updateChartData(x: SensorsData): void {
+    //    if (x) {
+    //        let jj = this.ChartListen.lineChartData[0].data.length - 1;
+    //        for (let j = 0; j < jj; j++) {
+    //        this.ChartListen.lineChartData[0].data[j] = this.ChartListen.lineChartData[0].data[j + 1];
+    //        this.ChartListen.lineChartData[1].data[j] = this.ChartListen.lineChartData[1].data[j + 1];
+    //        this.ChartListen.lineChartData[2].data[j] = this.ChartListen.lineChartData[2].data[j + 1];
+    //        this.ChartListen.lineChartData[3].data[j] = this.ChartListen.lineChartData[3].data[j + 1];
+    //        }
+    //        this.ChartListen.lineChartData[0].data[jj] = x.temperature;
+    //        this.ChartListen.lineChartData[1].data[jj] = x.rotationrate;
+    //        this.ChartListen.lineChartData[2].data[jj] = x.load;
+    //        this.ChartListen.lineChartData[3].data[jj] = x.frictionforce;
+    //        this.chart.update();
+    //    }
+    //}
 
 
     public secondsToSting(s: number) {
@@ -77,25 +84,25 @@ export class TribControlsComponent implements OnInit, OnDestroy {
 
 
     rotation() {
-        this.sygnalsService.SetRPM(this.rpmVal).subscribe(x => {
+        this.signalsService.SetRPM(this.rpmVal).subscribe(x => {
             console.log("Rotation " +x);
         });
     }
 
     StopRotation() {
-        this.sygnalsService.SetRPM(0).subscribe(x => {
+        this.signalsService.SetRPM(0).subscribe(x => {
             console.log("StopRotation "+x);
         });
     }
 
     loadPlus() {
-        this.sygnalsService.SetLoad(10).subscribe(x => {
+        this.signalsService.SetLoad(10).subscribe(x => {
             console.log("Load " +x);
         });
     }
 
     loadMinus() {
-        this.sygnalsService.SetLoad(-10).subscribe(x => {
+        this.signalsService.SetLoad(-10).subscribe(x => {
             console.log("Load" + x);
         });
     }

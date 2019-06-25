@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SygnalsService, CalibrationCurve, trTotalState } from './../../services/sygnals.service';
+import { SignalsService, CalibrationCurve, trTotalState } from './../../services/signals.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 class CurveRow {
@@ -30,7 +30,7 @@ export class CalibrCurveComponent implements OnInit {
 
     CcurvData: CalibrationCurve = null;
     status$: BehaviorSubject<trTotalState> = null;
-    constructor(private sygnalServ: SygnalsService) {
+    constructor(private sygnalServ: SignalsService) {
         this.status$ = this.sygnalServ.totalstate$;
         this.selectedCurve = this.CCurves[0];
     }
@@ -248,5 +248,8 @@ export class CalibrCurveComponent implements OnInit {
         let res: CurveRow[] =[];
         this.prevData.forEach(r => { res.push(new CurveRow(r.x, r.y, r.Nr)); });
         this.data$.next(res);
+    }
+    printNumVal(v: number) {
+        return isNaN(v) ? "-" : v.toFixed(3)
     }
 }

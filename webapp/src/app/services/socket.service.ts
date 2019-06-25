@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators'
 
 //import * as socketIo from 'socket.io-client';
 import { webSocket } from "rxjs/webSocket";
+import { forEach } from '@angular/router/src/utils/collection';
 //import { Message } from '../model/message';
 //import { Event } from '../model/event';
 
@@ -30,25 +31,25 @@ export class SocketService {
 
   constructor(private http: HttpClient) { }
   lastData$:BehaviorSubject<SensorsData> = new BehaviorSubject(null);
-  //buffer:SensorsData[] = [];
-  //private socket;
+
   socket = webSocket<SensorsData>(SERVER_URL);
-  subsctiprion:Subscription = null;
+  subsctiprion:Subscription[] = null;
   public initSocket(): void {
-    //this.socket = socketIo(SERVER_URL);
-    this.subsctiprion = this.socket.subscribe(
-      msg =>{ 
-        //console.log('msg: ' + msg); // Called whenever there is a message from the server.
-        //console.log('msg time: ' + msg.time);
-        this.lastData$.next(msg);
-        //this.buffer.push(msg);
-        //if(this.buffer.length>100){
-        //  this.buffer.shift();
-        //}
-      },
-      err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
-      () => console.log('complete') // Called when connection is closed (for whatever reason).
-    );
+      //this.socket = socketIo(SERVER_URL);
+      this.subsctiprion.push( this.socket.subscribe(
+          msg =>{ 
+            //console.log('msg: ' + msg); // Called whenever there is a message from the server.
+            console.log('msg');
+            this.lastData$.next(msg);
+            //this.buffer.push(msg);
+            //if(this.buffer.length>100){
+            //  this.buffer.shift();
+            //}
+          },
+          err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+          () => console.log('complete') // Called when connection is closed (for whatever reason).
+          )
+      );
   }
 
   public send(message: SensorsData): void {
@@ -77,10 +78,9 @@ export class SocketService {
     );
   }
   public stopListen(): Observable<any> {
-    const url = "http://localhost:8787/endr";
-    if (this.subsctiprion){
-      this.subsctiprion.unsubscribe();
-    }
+      const url = "http://localhost:8787/endr";
+      this.subsctiprion.forEach(it => { it.unsubscribe(); });
+      this.subsctiprion = [];
     //this.buffer = [];
     //this.lastData$.next(null);
     return this.http.get<any>(url).pipe(

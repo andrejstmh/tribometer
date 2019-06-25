@@ -5,7 +5,7 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
 import { SocketService, SensorsData } from './../../services/socket.service';
-import { SygnalsService } from './../../services/sygnals.service';
+import { SignalsService } from './../../services/signals.service';
 import { LineChartSettings } from './../../services/chart.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { LineChartSettings } from './../../services/chart.service';
 })
 export class WorkshopComponent implements OnInit {
   OnMessage$: Observable<SensorsData> = null;
-  constructor(private socketservice: SocketService, private sygnalsService: SygnalsService) {
+  constructor(private socketservice: SocketService, private signalsService: SignalsService) {
   }
   OnMsgSubscription: Subscription = null;
   OnMinTimer = interval(60000);
@@ -89,7 +89,7 @@ export class WorkshopComponent implements OnInit {
     return `${ds} ${hs}:${ms}:${ss}`;
   }
   public updateWChartData() {
-    this.sygnalsService.GetDataFromResultFile().subscribe(x => {
+    this.signalsService.GetDataFromResultFile().subscribe(x => {
       //temperature, rotationrate, load, frictionforce
       this.ChartFile.lineChartData[0].data = x.temperature;
       this.ChartFile.lineChartData[1].data = x.RPM;
@@ -121,7 +121,7 @@ export class WorkshopComponent implements OnInit {
 
   beginWrite() {
     console.log("Nachat zapis!")
-    this.sygnalsService.beginWrite().subscribe(x => x)
+    this.signalsService.beginWrite().subscribe(x => x)
     
     this.OnMinTimerSubscription = this.OnMinTimer.subscribe(x => {
       this.updateWChartData();
@@ -132,30 +132,30 @@ export class WorkshopComponent implements OnInit {
   endWrite() {
     console.log("Zakoncit zapis!")
     this.OnMinTimerSubscription.unsubscribe();
-    this.sygnalsService.endWrite().subscribe(x => x)
+    this.signalsService.endWrite().subscribe(x => x)
   }
 
   rotation() {
-    this.sygnalsService.SetRPM(this.rpmVal).subscribe(x => {
+    this.signalsService.SetRPM(this.rpmVal).subscribe(x => {
       console.log("Rotation " +x);
     });
     
   }
 
   StopRotation() {
-    this.sygnalsService.SetRPM(0).subscribe(x => {
+    this.signalsService.SetRPM(0).subscribe(x => {
       console.log("StopRotation "+x);
     });
   }
 
   loadPlus() {
-    this.sygnalsService.SetLoad(10).subscribe(x => {
+    this.signalsService.SetLoad(10).subscribe(x => {
       console.log("Load " +x);
     });
   }
 
   loadMinus() {
-    this.sygnalsService.SetLoad(-10).subscribe(x => {
+    this.signalsService.SetLoad(-10).subscribe(x => {
       console.log("Load" + x);
     });
   }

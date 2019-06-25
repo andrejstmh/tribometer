@@ -37,7 +37,7 @@ export class LineChartSettings {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Temperature, °C'
+                        labelString: 'Temperature, Â°C'
                     }
                 },
                 {
@@ -78,7 +78,7 @@ export class LineChartSettings {
                         //color: 'rgba(0,0,255,0.2)',
                     },
                     ticks: {
-                        fontColor: 'blue',
+                        fontColor: 'green',
                     },
                     scaleLabel: {
                         display: true,
@@ -115,7 +115,7 @@ export class LineChartSettings {
         },
         { // blue
             //backgroundColor: 'rgba(0,0,255,0.3)',
-            borderColor: 'blue',
+            borderColor: 'green',
             //pointBackgroundColor: 'rgba(148,159,177,1)',
             //pointBorderColor: '#fff',
             //pointHoverBackgroundColor: '#fff',
@@ -131,7 +131,7 @@ export const chartDataLength: number = 100;
 
 @Injectable()
 export class ChartService {
-    public onChartDataChanged: Observable<SensorsData> = null;
+    public onChartDataChanged: BehaviorSubject<SensorsData> = new BehaviorSubject<SensorsData>(new SensorsData(NaN, NaN, NaN, NaN, NaN));
     public ChartListen: LineChartSettings = new LineChartSettings();
 
     constructor(private http: HttpClient) {
@@ -157,7 +157,8 @@ export class ChartService {
         //for (let i = 0; i <= chartDataLength; i++) {
         //    this.ChartListen.lineChartLabels[i] = String(i);
         //}
-        this.onChartDataChanged = of(new SensorsData());
+        this.onChartDataChanged.next(new SensorsData(NaN, NaN, NaN, NaN, NaN));
+
     }
 
     public initChartData() {
@@ -167,6 +168,9 @@ export class ChartService {
                 this.ChartListen.lineChartData[i].data[j] = 0;
             }
         }
+    }
+    NanToNum(v: number) {
+        return isNaN(v) ? 0.0 : v;
     }
     public updateChartData(x: SensorsData): void {
         if (x) {
@@ -185,11 +189,11 @@ export class ChartService {
                 this.ChartListen.lineChartData[2].data[j] = this.ChartListen.lineChartData[2].data[j - 1];
                 this.ChartListen.lineChartData[3].data[j] = this.ChartListen.lineChartData[3].data[j - 1];
             }
-            this.ChartListen.lineChartData[0].data[0] = x.temperature;
-            this.ChartListen.lineChartData[1].data[0] = x.rotationrate;
-            this.ChartListen.lineChartData[2].data[0] = x.load;
-            this.ChartListen.lineChartData[3].data[0] = x.frictionforce;
-            this.onChartDataChanged = of(true);
+            this.ChartListen.lineChartData[0].data[0] = this.NanToNum(x.temperature);
+            this.ChartListen.lineChartData[1].data[0] = this.NanToNum(x.rotationrate);
+            this.ChartListen.lineChartData[2].data[0] = this.NanToNum(x.load);
+            this.ChartListen.lineChartData[3].data[0] = this.NanToNum(x.frictionforce);
+            this.onChartDataChanged.next(x);
         }
     }
 
