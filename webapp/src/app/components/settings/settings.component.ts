@@ -1,82 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators, FormBuilder } from '@angular/forms';
-import { CustomValidators } from './../../services/validators';
+import { SignalsService, trTotalState, trState, trSettings, DeepCopyOfState} from './../../services/signals.service';
+import { ChartService, LineChartSettings } from './../../services/chart.service';
+
+
+export class ProgramPoint {
+    constructor(
+        public duration: number,
+        public load: number,
+        public RPM: number
+    ) { }
+}
+
+export class ExperimentSettings {
+    constructor(
+        public user: string = "",
+        public bearing: string = "",
+        public outputFileName: string = "results.h5",
+        //public workingDirectory: string ="/home/pi/tribometer/",
+        //public logFileName: string="log.txt",
+        public totalDuration: number = 72,
+        public program: ProgramPoint[] = []
+    ) { }
+}
+
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+    totState: trTotalState = null;
+    submitted = false;
+    constructor(
+        private signalsService: SignalsService) { }
 
-//  "workingDirectory": "",
-//  "outputFileName": 'temp.h5',
-//  "user": "",
-//  "bearing": "",
-//  "emailTo": [],
-//  #[N]
-//  "loadRegualtionAccuracy": 1,
-//  # rotation per minute
-//  "RPMRegualtionAccuracy": 1,
-//  "frictionForceCalibrationCurveFile": 'FrictionForceCalibration.csv',
-//  "loadCalibrationCurveFile": 'LoadCalibration.csv',
-//  #[N]
-//  "frictionForceTreshold": 10,
-//  "temperatureTreshold": 100,
-//  # seconds
-//  "recordingInterval": 1,
-//  # seconds
-//  "visualisationInterval": 5,
-//  # hours
-//  "totalDuration": 72,
+    ngOnInit() {
+        this.signalsService.totalstate$.subscribe(
+            resOk => {
+                if (resOk) {
+                    console.log(resOk);
+                    this.totState = DeepCopyOfState(resOk);
+                } else {
+                    this.totState = null;
 
-//	"programme": [{ "duration": 0.25, "load": 5, "RPM": 600 }, { "duration": 0.25, "load": 4, "RPM": 600 }],
-//# optional field
-//"readme": "UNITS: intervals[second]; duration[hour]; treshold,load[N]"
+                }
+            },
+            resErr => { },
+            () => { }
+        )
+    }
 
-  profileForm = this.fb.group({
-    user: ['', Validators.required],
-    bearing: ['', Validators.required],
-    address: this.fb.group({
-      outputFileName: [''],
-      workingDirectory: [''],
-      logFileName: [''],
-      
-    }),
-    totalDuration: [''],
-    programme: this.fb.array([
-      this.fb.group({
-        duration: ['', Validators.required],
-        RPM: ['', Validators.required],
-        Load: ['', Validators.required]})
-    ])
-  });
+    
 
-  get programme() {
-    return this.profileForm.get('programme') as FormArray;
-  }
+    onSubmit() {
+        this.submitted = true;
 
-  constructor(private fb: FormBuilder) { }
+    }
 
-  ngOnInit() {
-
-  }
-
-  updateProfile() {
-    this.profileForm.patchValue({
-      firstName: 'Nancy',
-      address: {
-        street: '123 Drew Street'
-      }
-    });
-  }
-
-  addAlias() {
-    this.programme.push(this.fb.control(''));
-  }
-
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.profileForm.value);
-  }
 }

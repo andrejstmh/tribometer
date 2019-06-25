@@ -8,13 +8,18 @@ import { SocketService, SensorsData } from './../../services/socket.service';
 import { SignalsService } from './../../services/signals.service';
 import { LineChartSettings } from './../../services/chart.service';
 
+export enum ExperimentStatus {
+    init = 0, started=1, paused = 2
+}
+
 @Component({
   selector: 'app-workshop',
   templateUrl: './workshop.component.html',
   styleUrls: ['./workshop.component.css']
 })
 export class WorkshopComponent implements OnInit {
-  OnMessage$: Observable<SensorsData> = null;
+    status: ExperimentStatus = 0;
+    OnMessage$: Observable<SensorsData> = null;
   constructor(private socketservice: SocketService, private signalsService: SignalsService) {
   }
   OnMsgSubscription: Subscription = null;
@@ -28,7 +33,13 @@ export class WorkshopComponent implements OnInit {
   @ViewChild("listen", { read: BaseChartDirective }) chart: BaseChartDirective;
   @ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
 
-  
+    startExperiment() {
+        this.status = ExperimentStatus.started;
+    }
+    pauseExperiment() { this.status = ExperimentStatus.paused;}
+    stopExperiment() { this.status = ExperimentStatus.init;}
+    resumeExperiment() { this.status = ExperimentStatus.started; }
+
   ngOnInit() {
     let l: Label[] = [];
     let d1: number[] = [];

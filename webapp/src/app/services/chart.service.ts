@@ -17,7 +17,7 @@ export class LineChartSettings {
     public lineChartData: ChartDataSets[] = [
         { data: [], label: 'Temperature', yAxisID: "y-axis-T", fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
         { data: [], label: 'RPM', yAxisID: "y-axis-RPM", fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
-        { data: [], label: 'load', yAxisID: 'y-axis-load', fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
+        { data: [], label: 'Load', yAxisID: 'y-axis-load', fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
         { data: [], label: 'Friction force', yAxisID: 'y-axis-Fr', fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 }
     ];
     public lineChartLabels: Label[] = [];

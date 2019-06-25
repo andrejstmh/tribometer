@@ -1,100 +1,108 @@
-<h1>Settings</h1>
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-  <label>
-    User name:
-    <input type="text" formControlName="user" required>
-  </label>
+<div class="container">
+    <div *ngIf="totState" [hidden]="submitted">
+        <h1>Settings</h1>
 
-  <label>
-    Bearing:
-    <input type="text" formControlName="bearing" required>
-  </label>
+        <!
+        public working_directory: string,
+        public user: string,
+        public bearing: string,
+        public output_file: string,
+        public log_file: string,
+        public friction_force_calibration_curve_file: string,
+        public load_calibration_curve_file: string,
+        public rpm_calibration_curve_file: string,
+        // miliseconds
+        public listening_interval: number,
+        // listening intervals count
+        public recording_cycle: 2,
+        // listening intervals count
+        public visualisation_cycle: number,
+        // hours (manual mode)
+        public total_duration: number,
+        public manual_mode: boolea
+        public friction_force_treshold: number,
+        // C
+        public temperature_treshold: number,
+        -->
 
-  <div formGroupName="address">
-    <h3>Files</h3>
-    <label>
-      Output file name:
-      <input type="text" formControlName="outputFileName" required>
-    </label>
+        <form (ngSubmit)="onSubmit()" #settingsForm="ngForm">
+            <div class="form-group">
+                <label for="name">*Name</label>
+                <input type="text" class="form-control" id="user" placeholder="Example: John Anyone"
+                       required
+                       [(ngModel)]="totState.user" name="user" #user="ngModel" />
+                <div [hidden]="user.valid || user.pristine"
+                     class="alert alert-danger">
+                    Name is required
+                </div>
+            </div>
 
-    <label>
-      Log file name:
-      <input type="text" formControlName="logFileName" required>
-    </label>
-    <label>
-      Working directory:
-      <input type="text" formControlName="workingDirectory">
-    </label>
-  </div>
-  <label>
-    Experiment total duration:
-    <input type="text" formControlName="totalDuration">
-  </label>
+            <div class="form-group">
+                <label for="name">*Bearing description</label>
+                <textarea type="text" class="form-control" id="bearing" placeholder="Example: Thrust ball bearing 65 (2011) 245-248"
+                          required
+                          [(ngModel)]="totState.bearing" name="bearing" #bearing="ngModel"></textarea>
+                <div [hidden]="bearing.valid || bearing.pristine"
+                     class="alert alert-danger">
+                    Bering description is required
+                </div>
+            </div>
 
-  <div formArrayName="programme">
-    <h3>Programme</h3> <button (click)="addAlias()">Add point</button>
+            <div class="form-group">
+                <label for="name">*Output file name</label>
+                <input type="text" class="form-control" id="output_file" placeholder="Example: result.h5"
+                       required
+                       [(ngModel)]="totState.output_file" name="output_file" #output_file="ngModel" />
+                <div [hidden]="output_file.valid || output_file.pristine"
+                     class="alert alert-danger">
+                    Output file name is required
+                </div>
+            </div>
 
-    <div *ngFor="let prog of programme.controls; let i=index">
-      <!-- The repeated alias template -->
-      <label>
-        Alias:
-        <input type="text" [formControlName]="i">
-      </label>
+            <div class="form-group">
+                <label for="name">*Recording period</label>
+                <input type="text" class="form-control" id="recording_cycle" placeholder="Example: 1"
+                       required
+                       [(ngModel)]="totState.recording_cycle" name="recording_cycle" #recording_cycle="ngModel" />
+                <div [hidden]="recording_cycle.valid || recording_cycle.pristine"
+                     class="alert alert-danger">
+                    recording_cycle is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">*Experiment total duration, hours</label>
+                <input type="text" class="form-control" id="total_duration" placeholder="Example: 24"
+                       required
+                       [(ngModel)]="totState.total_duration" name="total_duration" #total_duration="ngModel" />
+                <div [hidden]="total_duration.valid || total_duration.pristine"
+                     class="alert alert-danger">
+                    total_duration is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">*Friction force threshold, N</label>
+                <input type="text" class="form-control" id="friction_force_treshold" placeholder="Example: 2"
+                       required
+                       [(ngModel)]="totState.friction_force_treshold" name="friction_force_treshold" #friction_force_treshold="ngModel" />
+                <div [hidden]="friction_force_treshold.valid || friction_force_treshold.pristine"
+                     class="alert alert-danger">
+                    Friction force threshold is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">*Temperature threshold, °C</label>
+                <input type="text" class="form-control" id="temperature_treshold" placeholder="Example: 2"
+                       required
+                       [(ngModel)]="totState.temperature_treshold" name="temperature_treshold" #friction_force_treshold="ngModel" />
+                <div [hidden]="temperature_treshold.valid || temperature_treshold.pristine"
+                     class="alert alert-danger">
+                    Temperature threshold is required
+                </div>
+            </div>
+            <button *ngIf="settingsForm.form.valid" type="submit" class="btn btn-success" [disabled]="!settingsForm.form.valid">Applay</button>
+        </form>
     </div>
-  </div>
-
-  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
-</form>
-
-<hr>
-
-
-<p>
-  Form Value: {{ profileForm.value | json }}
-</p>
-
-<!--<form [formGroup]="myForm" (ngSubmit)="register(myForm)" novalidate>
-  <p> Is "myForm" valid? {{myForm.valid}} </p>
-
-  <div>
-    <label>Name</label>
-    <input type="text" name="name" formControlName="name">
-    <show-errors [control]="myForm.controls.name"></show-errors>
-  </div>
-
-  <div>
-    <label>Birth Year</label>
-    <input type="text" name="birthYear" formControlName="birthYear">
-    <show-errors [control]="myForm.controls.birthYear"></show-errors>
-  </div>
-
-  <div formGroupName="location">
-    <h3>Location</h3>
-    <div>
-      <label>Country</label>
-      <input type="text" name="country" formControlName="country">
-      <show-errors [control]="myForm.controls.location.controls.country"></show-errors>
-    </div>
-    <div>
-      <label>City</label>
-      <input type="text" name="city" formControlName="city">
-    </div>
-  </div>
-
-  <div formArrayName="phoneNumbers">
-    <h3>Phone numbers</h3>
-    <div *ngFor="let phoneNumberControl of myForm.controls.phoneNumbers.controls; let i=index;">
-      <label>Phone number {{i + 1}}</label>
-      <input type="text" name="phoneNumber[{{phoneId}}]" [formControlName]="i">
-      <button type="button" (click)="remove(i); myForm.markAsTouched()">remove</button>
-      <show-errors [control]="phoneNumberControl"></show-errors>
-    </div>
-    <button type="button" (click)="add(); myForm.markAsTouched()">Add phone number</button>
-  </div>
-
-  <show-errors [control]="myForm"></show-errors>
-
-  <pre>{{myForm.value | json}}</pre>
-  <button type="submit" [disabled]="myForm.invalid || myForm.pending">Register</button>
-  <button type="button" (click)="printMyForm()">Print to console</button>
-</form>-->
+</div>

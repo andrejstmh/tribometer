@@ -39,7 +39,7 @@ export class SocketService {
       this.subsctiprion.push( this.socket.subscribe(
           msg =>{ 
             //console.log('msg: ' + msg); // Called whenever there is a message from the server.
-            console.log('msg');
+            //console.log('msg');
             this.lastData$.next(msg);
             //this.buffer.push(msg);
             //if(this.buffer.length>100){

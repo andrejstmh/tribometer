@@ -15,8 +15,8 @@ export class ExperimentSettings {
     public user: string="",
     public bearing: string="",
     public outputFileName: string="results.h5",
-    public workingDirectory: string ="/home/pi/tribometer/",
-    public logFileName: string="log.txt",
+    //public workingDirectory: string ="/home/pi/tribometer/",
+    //public logFileName: string="log.txt",
     public totalDuration: number = 72,
     public program: ProgramPoint[]=[]
   ) { }

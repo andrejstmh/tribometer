@@ -1,21 +1,37 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="container rounded border bg-light">
+        <div class="container rounded border bg-light m-1">
             <h6>Rotation control</h6>
             <input type="text" [(ngModel)]="rpmVal" name="rpm" #rpm>
-            <button type="button" class="btn btn-light" (click)="rotation()">set RPM {{rpmVal}}/{{rpmVal/60.0}}</button>
-            <button type="button" class="btn btn-danger" (click)="StopRotation()">Stop</button>
+            <button type="button" class="btn btn-info m-1" (click)="rotation()">Set RPM {{rpmVal}}[RPM]/{{rpmVal/60.0}}[Hz]</button>
+            <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
+            <div *ngIf="currentData" class="btn btn-light m-1 disabled">{{printNumVal(currentData.rotationrate)}}</div>
         </div>
     </div>
     <div class="row">
-        <div class="container rounded border bg-light">
-            <h6>Load control</h6>
-            <button type="button" class="btn btn-light" (click)="loadPlus()">Increase load+</button>
-            <button type="button" class="btn btn-light" (click)="loadMinus()">Decrease load-</button>
+        <div class="container rounded border bg-light m-1">
+            <div class="row">
+                <div class="col-5">
+                    <h6>Load control</h6>
+                    <div class="row justify-content-between">
+                        <button type="button" class="btn btn-info m-1" (click)="loadPlus()">Increase load</button>
+                        <!-- class="btn btn-light m-1" -->
+                        <div *ngIf="currentData" class="btn btn-light m-1 disabled">{{printNumVal(currentData.load)}}</div>
+                        <button type="button" class="btn btn-info m-1" (click)="loadMinus()">Decrease load</button>
+                    </div>
+                    
+                </div>
+                    <div class="col-7">
+                        <h6>Load threshold</h6>
+                        <!-- [(ngModel)]="rpmVal" name="rpm" #rpm -->
+                        <input type="text">
+                        <button type="button" class="btn btn-info m-1">Apply</button>
+                    </div>
+                </div>
         </div>
     </div>
     <div class="row">
-        <div class="container rounded border bg-light">
+        <div class="container rounded border bg-light m-1">
             <table *ngIf="currentData" class="table">
                 <thead>
                     <tr>
@@ -39,19 +55,8 @@
         </div>
     </div>
     <div class="row">
-        <!--<div class="col-4">
-          <div class="row">
-            <ul *ngIf="currentData">
-                <li>time:{{printNumVal(currentData.time)}}</li>
-                <li>T:{{printNumVal(currentData.temperature)}}</li>
-                <li>RPM:{{printNumVal(currentData.rotationrate)}}</li>
-                <li>Load:{{printNumVal(currentData.load)}}</li>
-                <li>Friction:{{printNumVal(currentData.frictionforce)}}</li>
-            </ul>
-          </div>
-        </div>-->
         <div class="col">
-            <div class="container rounded border bg-light">
+            <div class="container rounded border bg-light m-1">
                 <canvas baseChart #listen height="400"
                         [datasets]="ChartListen.lineChartData"
                         [labels]="ChartListen.lineChartLabels"

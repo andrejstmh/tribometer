@@ -24,8 +24,6 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     }
     rpmVal: number = 0;
     public ChartListen: LineChartSettings =null;
-    //public ChartFile: LineChartSettings = new LineChartSettings();
-    //@ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
     @ViewChild("listen", { read: BaseChartDirective }) chart: BaseChartDirective;
     //@ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
@@ -37,7 +35,7 @@ export class TribControlsComponent implements OnInit, OnDestroy {
             reOk => {
                 this.currentData = reOk;
                 this.chart.update();
-                console.log("update trib-control");
+                //console.log("update trib-control");
             },
             resErr => { },
             () => { }
@@ -50,23 +48,6 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     printNumVal(v: number) {
         return isNaN(v) ? "-" : v.toFixed(2)
     }
-    //public updateChartData(x: SensorsData): void {
-    //    if (x) {
-    //        let jj = this.ChartListen.lineChartData[0].data.length - 1;
-    //        for (let j = 0; j < jj; j++) {
-    //        this.ChartListen.lineChartData[0].data[j] = this.ChartListen.lineChartData[0].data[j + 1];
-    //        this.ChartListen.lineChartData[1].data[j] = this.ChartListen.lineChartData[1].data[j + 1];
-    //        this.ChartListen.lineChartData[2].data[j] = this.ChartListen.lineChartData[2].data[j + 1];
-    //        this.ChartListen.lineChartData[3].data[j] = this.ChartListen.lineChartData[3].data[j + 1];
-    //        }
-    //        this.ChartListen.lineChartData[0].data[jj] = x.temperature;
-    //        this.ChartListen.lineChartData[1].data[jj] = x.rotationrate;
-    //        this.ChartListen.lineChartData[2].data[jj] = x.load;
-    //        this.ChartListen.lineChartData[3].data[jj] = x.frictionforce;
-    //        this.chart.update();
-    //    }
-    //}
-
 
     public secondsToSting(s: number) {
     let t = Math.floor(s / 86400);
