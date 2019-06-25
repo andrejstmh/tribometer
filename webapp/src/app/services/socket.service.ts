@@ -8,12 +8,13 @@ import { webSocket } from "rxjs/webSocket";
 //import { Message } from '../model/message';
 //import { Event } from '../model/event';
 
-export interface SensorsData {
-  time: number;
-  temperature?: number;
-  rotationrate?: number;
-  load?: number;
-  frictionforce?: number;
+export class SensorsData {
+    constructor(
+        public time: number,
+        public temperature?: number,
+        public rotationrate?: number,
+        public load?: number,
+        public frictionforce?: number) { }
 }
 
 //export interface Message {

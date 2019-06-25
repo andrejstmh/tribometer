@@ -131,7 +131,7 @@ export const chartDataLength: number = 100;
 
 @Injectable()
 export class ChartService {
-    public onChartDataChanged: Observable<Boolean> = null;
+    public onChartDataChanged: Observable<SensorsData> = null;
     public ChartListen: LineChartSettings = new LineChartSettings();
 
     constructor(private http: HttpClient) {
@@ -157,7 +157,7 @@ export class ChartService {
         //for (let i = 0; i <= chartDataLength; i++) {
         //    this.ChartListen.lineChartLabels[i] = String(i);
         //}
-        this.onChartDataChanged = of(true);
+        this.onChartDataChanged = of(new SensorsData());
     }
 
     public initChartData() {

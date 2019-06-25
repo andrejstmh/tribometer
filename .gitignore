@@ -4,3 +4,5 @@
 
 /.vs
 /__pycache__
+/webapp/node_modules/.bin
+/webapp/node_modules

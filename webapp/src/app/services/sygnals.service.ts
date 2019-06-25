@@ -138,8 +138,7 @@ export class SygnalsService {
 
   EditCalibrationCurve(clbr_curve_name: string, curve_data: CalibrationCurve): Observable<CalibrationCurve> {
     let url = base_url +`sett?case=${clbr_curve_name}`;
-    return this.http.post<CalibrationCurve>(url, curve_data, httpOptions)
-      .pipe(
+    return this.http.post<CalibrationCurve>(url, curve_data, httpOptions).pipe(
         catchError(this.handleError('EditCalibrationCurve', curve_data))
       );
   }

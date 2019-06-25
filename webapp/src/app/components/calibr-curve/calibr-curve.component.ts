@@ -9,7 +9,7 @@ class CurveRow {
 
 
 class CurveInfo {
-    constructor(public name?: string, public path?: string, public title: string[]) { }
+    constructor(public name?: string, public path?: string, public title?: string[]) { }
 }
 
 @Component({
