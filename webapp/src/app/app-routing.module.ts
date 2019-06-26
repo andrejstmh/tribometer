@@ -13,9 +13,8 @@ const routes: Routes = [
     { path: "controls", component: TribControlsComponent, data: { title: "Controls" } },
     { path: "settings", component: SettingsComponent, data: { title: "Settings" } },
     { path: "experiment", component: ExperimentComponent, data: { title: "Workshop" } },
-    
     { path: "", redirectTo: "settings", pathMatch: "full" },
-    { path: "**", component: NotFoundComponent, data: { title: "Lapa nav atrasta" } }
+    { path: "**", component: NotFoundComponent, data: { title: "Page not found" } }
 ];
 
 @NgModule({
