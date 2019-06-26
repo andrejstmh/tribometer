@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SignalsService, CalibrationCurve, trTotalState } from './../../services/signals.service';
+import { SignalsService } from './../../services/signals.service';
+import { trTotalState } from './../../models/message.model';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',

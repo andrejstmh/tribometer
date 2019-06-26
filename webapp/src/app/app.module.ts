@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { ChartsModule } from 'ng2-charts';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +23,7 @@ import { SignalsService } from './services/signals.service';
 import { ChartService } from './services/chart.service';
 import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,9 +37,10 @@ import { TabulatorTableComponent } from './components/controls/tabulator-table/t
     TabulatorTableComponent,
     TribControlsComponent
   ],
-  imports: [
-    HttpClientModule, BrowserModule, ReactiveFormsModule, FormsModule, ChartsModule,
-    AppRoutingModule
+    imports: [
+        //BrowserAnimationsModule, MatButtonModule, MatCheckboxModule,
+        HttpClientModule, BrowserModule, ReactiveFormsModule, FormsModule, ChartsModule,
+        AppRoutingModule
   ],
     providers: [SocketService, SignalsService, ChartService],
   bootstrap: [AppComponent]

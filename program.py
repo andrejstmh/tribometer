@@ -19,9 +19,9 @@ class Program:
 
 	def makeProgramArray(self):
 		colNames = ["time", "load","RPM", "maxFfr","maxT","maxVibr","Nr"]
-		maxFfr = np.float(self.Settings.friction_force_treshold)
-		maxT = np.float(self.Settings.temperature_treshold)
-		maxVibr = np.float(self.Settings.vibration_treshold)
+		maxFfr = np.float(self.Settings.friction_force_threshold)
+		maxT = np.float(self.Settings.temperature_threshold)
+		maxVibr = np.float(self.Settings.vibration_threshold)
 		maxTime = np.float(self.Settings.total_duration)
 		if len(self.Settings.program)<1:
 			self.Settings.manual_mode = True

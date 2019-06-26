@@ -43,6 +43,25 @@ def checkServer():
     http_client.close()
     return res
 
+class SocketMessageData:
+    @classmethod
+    def ToJSON(cls,sensorData=None,state=None,i=0):
+        data = None
+        st  = None
+        if (sensorData is not None):
+            #sd = np.nan_to_num(sensorData)
+            mask = np.isnan(sensorData);
+            sd = np.array(sensorData, copy=True)
+            sd[mask] = -1.0;
+            data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":sd[5]}
+        if (state is not None):
+            st = dict(vars(state))
+        return json.dumps( {"sensorData":data,"state":st} )
+
+    def __init__(self,sensorData=None,state=None):
+        self.sensorData = sensorData
+        self.state = state
+
 class DataSocketHandler(tornado.websocket.WebSocketHandler):
     waiters = set()
     def check_origin(self, param):
@@ -69,9 +88,14 @@ class DataSocketHandler(tornado.websocket.WebSocketHandler):
     @classmethod
     def send_message_to_client(cls,i):
         sd = Tibometer.Experiment.currentRecordData
-        sd = np.nan_to_num(sd)
-        data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":sd[5]}
-        cls.send_updates(json.dumps(data))
+        #sd = np.nan_to_num(sd)
+        #data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":sd[5]}
+        cls.send_updates(SocketMessageData.ToJSON(sd,None,i))#json.dumps(data))
+        return sd
+
+    @classmethod
+    def send_state_message_to_client(cls, expState):
+        cls.send_updates(json.dumps(SocketMessageData(None,expState)))
         return data
 
     def on_message(self, msg):
@@ -90,6 +114,7 @@ class DataSocketHandler(tornado.websocket.WebSocketHandler):
         #)
         #ChatSocketHandler.update_cache(chat)
         #ChatSocketHandler.send_updates(chat)
+
 class ClientApplication(tornado.web.RequestHandler):
     def get(self):
         self.write('<html><body>'
@@ -163,7 +188,9 @@ class SettingsHandler(tornado.web.RequestHandler):
             if rc > maxCount:
                 step = rc // maxCount + 1
             print("rc:{0},step:{1},sh:{2}".format(rc,step,sh))
-            dt = dt[:rc:step]
+            dt = np.array(dt[:rc:step],copy=True)
+            mask = np.isnan(dt)
+            dt[mask] = -1;
             #"time[s], Load[Pa], FrictionForce[N], RPM[rotation per minute],
             #temperature[C], Acoustic[??]"
             self.write(json.dumps({"time": dt[:,0].tolist(),"load": list(dt[:,1].tolist()), "RPM": list(dt[:,3].tolist()), 

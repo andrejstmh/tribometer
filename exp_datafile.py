@@ -30,7 +30,7 @@ class ExperimentDataFile:
 	
 	def MakeHdf5File(self):
 		if self.hdf5f is None:
-			self.hdf5f = h5py.File(self.settings.outputFileName, 'w', libver='latest')		
+			self.hdf5f = h5py.File(self.settings.outputFileName, 'w', libver='latest')
 			#--- calibration curve
 			d = self.hdf5f.create_dataset("calibrFr",data=self.settings.calibrationData.friction.curve1d.astype(np.float32))
 			d.attrs['calibration'] = b"Friction force calibration curve [volt]=>[newton]"

@@ -4,13 +4,12 @@ import { Observable, Subscription, interval } from 'rxjs';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
-import { SocketService, SensorsData } from './../../services/socket.service';
+import { SocketService,  } from './../../services/socket.service';
+import { SensorsData, ExperimentStatus } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { LineChartSettings } from './../../services/chart.service';
 
-export enum ExperimentStatus {
-    init = 0, started = 1, completed = 2
-}
+
 
 @Component({
     selector: 'app-experiment',
@@ -55,14 +54,20 @@ export class ExperimentComponent implements OnInit {
         let ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
         return `${ds} ${hs}:${ms}:${ss}`;
     }
+    public removeNaN(data: number[]) {
+        data.forEach(function (item, i) { if (isNaN(item)) data[i] = -1; });
+        return data;
+    }
     public updateWChartData() {
         this.signalsService.GetDataFromResultFile().subscribe(x => {
-            //temperature, rotationrate, load, frictionforce
-            this.ChartFile.lineChartData[0].data = x.temperature;
-            this.ChartFile.lineChartData[1].data = x.RPM;
-            this.ChartFile.lineChartData[2].data = x.load;
-            this.ChartFile.lineChartData[3].data = x.friction;
-            this.ChartFile.lineChartLabels = x.time.map(this.secondsToSting);
+            if (x) {
+                //temperature, rotationrate, load, frictionforce
+                this.ChartFile.lineChartData[0].data = this.removeNaN(x.temperature);
+                this.ChartFile.lineChartData[1].data = this.removeNaN(x.RPM);
+                this.ChartFile.lineChartData[2].data = this.removeNaN(x.load);
+                this.ChartFile.lineChartData[3].data = this.removeNaN(x.friction);
+                this.ChartFile.lineChartLabels = x.time.map(this.secondsToSting);
+            }
         });
         this.chartW.update();
     }

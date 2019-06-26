@@ -1,27 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SignalsService, trTotalState, trState, trSettings, DeepCopyOfState} from './../../services/signals.service';
+import { trTotalState, trState, trSettings, DeepCopyOfState } from './../../models/message.model';
+import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
-
-
-export class ProgramPoint {
-    constructor(
-        public duration: number,
-        public load: number,
-        public RPM: number
-    ) { }
-}
-
-export class ExperimentSettings {
-    constructor(
-        public user: string = "",
-        public bearing: string = "",
-        public outputFileName: string = "results.h5",
-        //public workingDirectory: string ="/home/pi/tribometer/",
-        //public logFileName: string="log.txt",
-        public totalDuration: number = 72,
-        public program: ProgramPoint[] = []
-    ) { }
-}
 
 
 @Component({
@@ -39,8 +19,11 @@ export class SettingsComponent implements OnInit {
         this.signalsService.totalstate$.subscribe(
             resOk => {
                 if (resOk) {
+                    console.log('request');
                     console.log(resOk);
                     this.totState = DeepCopyOfState(resOk);
+                    console.log('form data');
+                    console.log(this.totState);
                 } else {
                     this.totState = null;
 

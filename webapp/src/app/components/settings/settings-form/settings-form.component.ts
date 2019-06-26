@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 
-
 export class ProgramPoint {
   constructor(
     public duration: number,

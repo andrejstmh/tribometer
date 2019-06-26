@@ -59,7 +59,7 @@ class Tibometer:
 			cls.Write_obs = cls.Read_obs.filter(lambda i: i%cls.Experiment.Settings.recording_cycle==0)
 			cls.subscriptWrite = cls.Write_obs.subscribe(send_write, on_errorW)
 		else:
-			print("Nizja!!!")
+			print("Writing error!")
 
 	@classmethod
 	def EndWriteing(cls):

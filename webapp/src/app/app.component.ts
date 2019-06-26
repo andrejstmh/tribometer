@@ -2,9 +2,10 @@ import { Component, OnInit,OnDestroy } from '@angular/core';
 
 import { listener } from '@angular/core/src/render3';
 
-import { SocketService, SensorsData } from './services/socket.service';
+import { SocketService } from './services/socket.service';
+import { SensorsData, trSettings, trState, trTotalState } from './models/message.model';
 import { ChartService } from './services/chart.service';
-import { SignalsService, trSettings, trState, trTotalState } from './services/signals.service'
+import { SignalsService } from './services/signals.service'
 import { Subscription, forkJoin } from 'rxjs';
 
 @Component({
@@ -40,9 +41,23 @@ export class AppComponent {
                 console.log("socketService.startListen: Ok");
                 this.chartService.initChartData();
                 //this.socketService.initSocket();
-                this.socketService.socket.subscribe(x => {
-                    //console.log("updateChartData");
-                    this.chartService.updateChartData(x);
+                this.socketService.socket.subscribe(
+                    msg => {
+                        //console.log("updateChartData");
+                        if (msg.sensorData) {
+                            this.socketService.lastData$.next(msg.sensorData);
+                            this.chartService.updateChartData(msg.sensorData);
+                        }
+                        if (msg.state) {
+                            let prev = this.signalsService.totalstate$.value;
+                            if (prev) {
+                                prev.state = msg.state;
+                                this.signalsService.totalstate$.next(prev);
+                            }
+                            
+                            this.socketService.lastState$.next(msg.state);
+                        }
+                        
                 });
             },
             resErr => { console.log("socketService.startListen: Error"); },

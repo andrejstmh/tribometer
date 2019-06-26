@@ -5,12 +5,11 @@ import { catchError, map, tap } from 'rxjs/operators'
 
 //import * as socketIo from 'socket.io-client';
 import { webSocket } from "rxjs/webSocket";
-//import { Message } from '../model/message';
-//import { Event } from '../model/event';
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
-import { SocketService, SensorsData } from './socket.service';
+import { SensorsData } from './../models/message.model';
+import { SocketService } from './socket.service';
 import { forEach } from '@angular/router/src/utils/collection';
 
 export class LineChartSettings {

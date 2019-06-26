@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SignalsService, CalibrationCurve, trTotalState } from './../../services/signals.service';
+import { SignalsService } from './../../services/signals.service';
+import { CalibrationCurve, trTotalState } from './../../models/message.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 class CurveRow {

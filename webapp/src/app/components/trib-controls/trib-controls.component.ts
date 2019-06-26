@@ -4,7 +4,8 @@ import { Observable, Subscription, interval ,of} from 'rxjs';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
-import { SocketService, SensorsData } from './../../services/socket.service';
+import { SensorsData } from './../../models/message.model';
+import { SocketService } from './../../services/socket.service';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
 
