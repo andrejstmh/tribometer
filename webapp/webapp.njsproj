@@ -31,6 +31,8 @@
     <Content Include="src\app\components\calibr-curve\calibr-curve.component.html" />
     <Content Include="src\app\components\controls\tabulator-table\tabulator-table.component.css" />
     <Content Include="src\app\components\controls\tabulator-table\tabulator-table.component.html" />
+    <Content Include="src\app\components\experiment\experiment.component.css" />
+    <Content Include="src\app\components\experiment\experiment.component.html" />
     <Content Include="src\app\components\navbar\navbar.component.css" />
     <Content Include="src\app\components\navbar\navbar.component.html" />
     <Content Include="src\app\components\not-found\not-found.component.css" />
@@ -60,6 +62,7 @@
     <TypeScriptCompile Include="src\app\components\calibr-curve\calibr-curve.component.ts" />
     <TypeScriptCompile Include="src\app\components\controls\tabulator-table\tabulator-table.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\controls\tabulator-table\tabulator-table.component.ts" />
+    <TypeScriptCompile Include="src\app\components\experiment\experiment.component.ts" />
     <TypeScriptCompile Include="src\app\components\navbar\navbar.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\navbar\navbar.component.ts" />
     <TypeScriptCompile Include="src\app\components\not-found\not-found.component.ts" />
@@ -102,6 +105,7 @@
     <Folder Include="src\app\components\calibr-curve\" />
     <Folder Include="src\app\components\controls\" />
     <Folder Include="src\app\components\controls\tabulator-table\" />
+    <Folder Include="src\app\components\experiment\" />
     <Folder Include="src\app\components\navbar\" />
     <Folder Include="src\app\components\not-found\" />
     <Folder Include="src\app\components\settings\" />

@@ -1,4 +1,4 @@
-# tribometer
+# Tribometer
 
 ## Software
 rasberian 2018-11-26-rpd-x86-stretch
@@ -10,8 +10,8 @@ rasberian 2018-11-26-rpd-x86-stretch
 	1. git clone https://github.com/andrejstmh/tribometer
 	1. git pull origin master
 	1. git fetch https://github.com/andrejstmh/tribometer
-	1. git config --global user.name "andrejstmh"
-	1. git config --global user.email "andrejstmh@gmail.com"
+	1. git config --global user.name XXXX
+	1. git config --global user.email XXXX
 
 ### HDF5
 1. sudo apt-get update
