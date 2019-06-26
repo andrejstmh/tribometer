@@ -58,12 +58,10 @@
     <Content Include="src\tsconfig.app.json" />
     <Content Include="src\tsconfig.spec.json" />
     <Content Include="src\tslint.json" />
-    <TypeScriptCompile Include="src\app\components\calibr-curve\calibr-curve.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\calibr-curve\calibr-curve.component.ts" />
     <TypeScriptCompile Include="src\app\components\controls\tabulator-table\tabulator-table.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\controls\tabulator-table\tabulator-table.component.ts" />
     <TypeScriptCompile Include="src\app\components\experiment\experiment.component.ts" />
-    <TypeScriptCompile Include="src\app\components\navbar\navbar.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\navbar\navbar.component.ts" />
     <TypeScriptCompile Include="src\app\components\not-found\not-found.component.ts" />
     <TypeScriptCompile Include="src\app\components\settings\settings-form\settings-form.component.ts" />

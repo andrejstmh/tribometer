@@ -325,7 +325,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/settings/settings.component */ "./src/app/components/settings/settings.component.ts");
 /* harmony import */ var _components_settings_settings_form_settings_form_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/settings/settings-form/settings-form.component */ "./src/app/components/settings/settings-form/settings-form.component.ts");
-/* harmony import */ var _components_workshop_workshop_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/workshop/workshop.component */ "./src/app/components/workshop/workshop.component.ts");
+/* harmony import */ var _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/experiment/experiment.component */ "./src/app/components/experiment/experiment.component.ts");
 /* harmony import */ var _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/not-found/not-found.component */ "./src/app/components/not-found/not-found.component.ts");
 /* harmony import */ var _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/calibr-curve/calibr-curve.component */ "./src/app/components/calibr-curve/calibr-curve.component.ts");
 /* harmony import */ var _components_trib_controls_trib_controls_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/trib-controls/trib-controls.component */ "./src/app/components/trib-controls/trib-controls.component.ts");
@@ -343,7 +343,7 @@ var routes = [
     { path: "calibr", component: _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_7__["CalibrCurveComponent"], data: { title: "Calibration curves" } },
     { path: "controls", component: _components_trib_controls_trib_controls_component__WEBPACK_IMPORTED_MODULE_8__["TribControlsComponent"], data: { title: "Controls" } },
     { path: "settings", component: _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_3__["SettingsComponent"], data: { title: "Settings" } },
-    { path: "workshop", component: _components_workshop_workshop_component__WEBPACK_IMPORTED_MODULE_5__["WorkshopComponent"], data: { title: "Workshop" } },
+    { path: "experiment", component: _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_5__["ExperimentComponent"], data: { title: "Workshop" } },
     { path: "", redirectTo: "settings", pathMatch: "full" },
     { path: "**", component: _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_6__["NotFoundComponent"], data: { title: "Lapa nav atrasta" } }
 ];
@@ -478,7 +478,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _components_navbar_navbar_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/navbar/navbar.component */ "./src/app/components/navbar/navbar.component.ts");
 /* harmony import */ var _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/settings/settings.component */ "./src/app/components/settings/settings.component.ts");
-/* harmony import */ var _components_workshop_workshop_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/workshop/workshop.component */ "./src/app/components/workshop/workshop.component.ts");
+/* harmony import */ var _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/experiment/experiment.component */ "./src/app/components/experiment/experiment.component.ts");
 /* harmony import */ var _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/calibr-curve/calibr-curve.component */ "./src/app/components/calibr-curve/calibr-curve.component.ts");
 /* harmony import */ var _components_trib_controls_trib_controls_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/trib-controls/trib-controls.component */ "./src/app/components/trib-controls/trib-controls.component.ts");
 /* harmony import */ var _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/not-found/not-found.component */ "./src/app/components/not-found/not-found.component.ts");
@@ -517,7 +517,7 @@ var AppModule = /** @class */ (function () {
                 _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
                 _components_navbar_navbar_component__WEBPACK_IMPORTED_MODULE_8__["NavbarComponent"],
                 _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_9__["SettingsComponent"],
-                _components_workshop_workshop_component__WEBPACK_IMPORTED_MODULE_10__["WorkshopComponent"],
+                _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_10__["ExperimentComponent"],
                 _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_11__["CalibrCurveComponent"],
                 _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_13__["NotFoundComponent"],
                 _components_show_errors_component__WEBPACK_IMPORTED_MODULE_14__["ShowErrorsComponent"],
@@ -996,6 +996,167 @@ var TabulatorTableComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/experiment/experiment.component.css":
+/*!****************************************************************!*\
+  !*** ./src/app/components/experiment/experiment.component.css ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZXhwZXJpbWVudC9leHBlcmltZW50LmNvbXBvbmVudC5jc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/components/experiment/experiment.component.html":
+/*!*****************************************************************!*\
+  !*** ./src/app/components/experiment/experiment.component.html ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h1></h1>\r\n<div class=\"container-fluid\">\r\n\r\n    <div class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <table class=\"table\">\r\n                <thead>\r\n                    <tr>\r\n                        <!--<th scope=\"col\">time, V</th>-->\r\n                        <th scope=\"col\">RPM</th>\r\n                        <th scope=\"col\">Load, N</th>\r\n                        <th scope=\"col\">Friction, N</th>\r\n                        <th scope=\"col\">Temperature, °C</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr>\r\n                        <!--<td>{{20}}</td>-->\r\n                        <td>{{500}}</td>\r\n                        <td>{{58.43}}</td>\r\n                        <td>{{0.58}}</td>\r\n                        <td>{{22.84}}</td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <!--status =  init = 0, started = 1, completed = 2 -->\r\n    <div class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div *ngIf=\"status==0\" class=\"row\">\r\n                <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"startExperiment()\">Start experiment</button>\r\n            </div>\r\n            <div *ngIf=\"status==1\" class=\"row\">\r\n                <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"stopExperiment()\">Stop experiment</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"col-3\">\r\n            <button type=\"button\" class=\"btn btn-info\" (click)=\"resfreshChart()\">Refresh chart</button>\r\n        </div>\r\n        <div class=\"col-9\">\r\n            <h6>Chart refresh period</h6>\r\n            <select id=\"refreshPeriodSelect\" (change)=\"onChangerefreshPeriod($event.target.value)\" [value]='1'>\r\n                <option value=\"0\">off</option>\r\n                <option value=\"1\">1 minute</option>\r\n                <option value=\"2\">2 minutes</option>\r\n                <option value=\"5\">5 minutes</option>\r\n                <option value=\"10\">10 minutes</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <canvas baseChart #writing height=\"400\"\r\n                [datasets]=\"ChartFile.lineChartData\"\r\n                [labels]=\"ChartFile.lineChartLabels\"\r\n                [options]=\"ChartFile.lineChartOptions\"\r\n                [colors]=\"ChartFile.lineChartColors\"\r\n                [legend]=\"ChartFile.lineChartLegend\"\r\n                [chartType]=\"ChartFile.lineChartType\"></canvas>\r\n    </div>\r\n    <!--\r\n\r\n\r\n        height=\"300\"\r\n    [plugins]=\"lineChartPlugins\"\r\n              (chartHover)=\"chartHovered($event)\"\r\n              (chartClick)=\"chartClicked($event)\"\r\n        -->\r\n\r\n\r\n\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/components/experiment/experiment.component.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/components/experiment/experiment.component.ts ***!
+  \***************************************************************/
+/*! exports provided: ExperimentStatus, ExperimentComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExperimentStatus", function() { return ExperimentStatus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExperimentComponent", function() { return ExperimentComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/fesm5/ng2-charts.js");
+/* harmony import */ var _services_socket_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../../services/socket.service */ "./src/app/services/socket.service.ts");
+/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../services/signals.service */ "./src/app/services/signals.service.ts");
+/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../services/chart.service */ "./src/app/services/chart.service.ts");
+
+
+
+
+
+
+
+var ExperimentStatus;
+(function (ExperimentStatus) {
+    ExperimentStatus[ExperimentStatus["init"] = 0] = "init";
+    ExperimentStatus[ExperimentStatus["started"] = 1] = "started";
+    ExperimentStatus[ExperimentStatus["completed"] = 2] = "completed";
+})(ExperimentStatus || (ExperimentStatus = {}));
+var ExperimentComponent = /** @class */ (function () {
+    function ExperimentComponent(socketservice, signalsService) {
+        this.socketservice = socketservice;
+        this.signalsService = signalsService;
+        this.status = 0;
+        this.selected_period_min = 1;
+        this.OnMessage$ = null;
+        this.OnMsgSubscription = null;
+        this.OnMinTimer = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(60000);
+        this.OnMinTimerSubscription = null;
+        this.ChartFile = new _services_chart_service__WEBPACK_IMPORTED_MODULE_6__["LineChartSettings"]();
+    }
+    ExperimentComponent.prototype.startExperiment = function () {
+        this.beginWrite();
+    };
+    ExperimentComponent.prototype.stopExperiment = function () {
+        this.endWrite();
+    };
+    ExperimentComponent.prototype.ngOnInit = function () {
+    };
+    ExperimentComponent.prototype.secondsToSting = function (s) {
+        var t = Math.floor(s / 86400);
+        var ds = t > 0 ? (t < 10 ? " " + String(t) : String(t)) : "  ";
+        var tt = s % 86400;
+        t = Math.floor(tt / 3600);
+        var hs = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
+        tt = tt % 3600;
+        t = Math.floor(tt / 60);
+        var ms = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
+        t = tt % 60;
+        var ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
+        return ds + " " + hs + ":" + ms + ":" + ss;
+    };
+    ExperimentComponent.prototype.updateWChartData = function () {
+        var _this = this;
+        this.signalsService.GetDataFromResultFile().subscribe(function (x) {
+            //temperature, rotationrate, load, frictionforce
+            _this.ChartFile.lineChartData[0].data = x.temperature;
+            _this.ChartFile.lineChartData[1].data = x.RPM;
+            _this.ChartFile.lineChartData[2].data = x.load;
+            _this.ChartFile.lineChartData[3].data = x.friction;
+            _this.ChartFile.lineChartLabels = x.time.map(_this.secondsToSting);
+        });
+        this.chartW.update();
+    };
+    ExperimentComponent.prototype.beginWrite = function () {
+        var _this = this;
+        console.log("Nachat zapis!");
+        this.signalsService.beginWrite().subscribe(function (resOk) {
+            _this.InitTimer(_this.selected_period_min);
+            _this.status = ExperimentStatus.started;
+        }, function (resErr) { }, function () { });
+    };
+    ExperimentComponent.prototype.endWrite = function () {
+        var _this = this;
+        console.log("Zakoncit zapis!");
+        this.UnsubscribeTimer();
+        this.signalsService.endWrite().subscribe(function (resOk) {
+            _this.status = ExperimentStatus.completed;
+            _this.updateWChartData();
+        }, function (resErr) { }, function () { });
+    };
+    ExperimentComponent.prototype.UnsubscribeTimer = function () {
+        if (this.OnMinTimerSubscription) {
+            this.OnMinTimerSubscription.unsubscribe();
+            this.OnMinTimerSubscription = null;
+        }
+    };
+    ExperimentComponent.prototype.InitTimer = function (period) {
+        var _this = this;
+        this.UnsubscribeTimer();
+        if (period > 0) {
+            this.OnMinTimer = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(period * 60000);
+            this.OnMinTimerSubscription = this.OnMinTimer.subscribe(function (x) {
+                _this.updateWChartData();
+            });
+        }
+    };
+    ExperimentComponent.prototype.onChangerefreshPeriod = function (period_min) {
+        this.selected_period_min = 0;
+        var p = +period_min;
+        if (p > 0) {
+            this.selected_period_min = p;
+        }
+        this.InitTimer(this.selected_period_min);
+    };
+    ExperimentComponent.prototype.resfreshChart = function () {
+        this.updateWChartData();
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])("writing", { read: ng2_charts__WEBPACK_IMPORTED_MODULE_3__["BaseChartDirective"] }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", ng2_charts__WEBPACK_IMPORTED_MODULE_3__["BaseChartDirective"])
+    ], ExperimentComponent.prototype, "chartW", void 0);
+    ExperimentComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-experiment',
+            template: __webpack_require__(/*! ./experiment.component.html */ "./src/app/components/experiment/experiment.component.html"),
+            styles: [__webpack_require__(/*! ./experiment.component.css */ "./src/app/components/experiment/experiment.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_socket_service__WEBPACK_IMPORTED_MODULE_4__["SocketService"], _services_signals_service__WEBPACK_IMPORTED_MODULE_5__["SignalsService"]])
+    ], ExperimentComponent);
+    return ExperimentComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/navbar/navbar.component.css":
 /*!********************************************************!*\
   !*** ./src/app/components/navbar/navbar.component.css ***!
@@ -1014,7 +1175,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n\t<a class=\"navbar-brand\" href=\"/\"><img [src]=\"appLogo\" alt=\"logo\"></a>\r\n\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n\t\t<span class=\"navbar-toggler-icon\"></span>\r\n\t</button>\r\n\t<div class=\"collapse navbar-collapse\" id=\"navbarNavDropdown\">\r\n        <ul class=\"navbar-nav\">\r\n            <li class=\"nav-item dropdown\">\r\n                <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarSettings\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                    Options\r\n                </a>\r\n                <div class=\"dropdown-menu\" aria-labelledby=\"navbarSettings\">\r\n                    <a class=\"dropdown-item\" routerLinkActive=\"active\" [routerLink]=\"['/settings']\">Settings</a>\r\n                    <a class=\"dropdown-item\" routerLinkActive=\"active\" [routerLink]=\"['/calibr']\">Calibration</a>\r\n                </div>\r\n            </li>\r\n            <li class=\"nav-item active\">\r\n                <a class=\"nav-link\" routerLinkActive=\"active\" [routerLink]=\"['/controls']\">Manual controls<span class=\"sr-only\">(current)</span></a>\r\n            </li>\r\n            <li class=\"nav-item active\">\r\n                <a class=\"nav-link\" routerLinkActive=\"active\" [routerLink]=\"['/workshop']\">Experiment<span class=\"sr-only\">(current)</span></a>\r\n            </li>\r\n        </ul>\r\n\t</div>\r\n</nav>\r\n\r\n<!--header_latraps-->\r\n<!--<nav class=\"navbar navbar-expand-lg sticky-top navbar-dark bg-dark navbar-custom\">\r\n\r\n  <a class=\"navbar-brand\" href=\"/\"><img [src]=\"appLogo\" alt=\"logo\"></a>\r\n  <button class=\"navbar-toggler\"\r\n\t\t  type=\"button\" data-toggle=\"collapse\"\r\n\t\t  data-target=\"#navbarSupportedContent\"\r\n\t\t  aria-controls=\"navbarSupportedContent\"\r\n\t\t  aria-expanded=\"false\"\r\n\t\t  aria-label=\"Toggle navigation\">\r\n\t<span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n\r\n  <div class=\"collapse navbar-collapse justify-content-between\" id=\"navbarSupportedContent\">\r\n\t<ul class=\"navbar-nav\">\r\n\t  <li class=\"nav-item dropdown\">\r\n\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\"\r\n\t\t   role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t  Settings\r\n\t\t</a>\r\n\t\t<div class=\"dropdown-menu text-center text-lg-left\" aria-labelledby=\"navbarDropdown\">\r\n\t\t  <a class=\"dropdown-item\" [routerLink]=\"['/settings']\">Settings</a>\r\n\t\t  <a class=\"dropdown-item\" [routerLink]=\"['/workshop']\">Wirkshop</a>\r\n\t\t</div>\r\n\t  </li>\r\n\t</ul>\r\n  </div>\r\n</nav>-->\r\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n\t<a class=\"navbar-brand\" href=\"/\"><img [src]=\"appLogo\" alt=\"logo\"></a>\r\n\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n\t\t<span class=\"navbar-toggler-icon\"></span>\r\n\t</button>\r\n\t<div class=\"collapse navbar-collapse\" id=\"navbarNavDropdown\">\r\n        <ul class=\"navbar-nav\">\r\n            <li class=\"nav-item dropdown\">\r\n                <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarSettings\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                    Options\r\n                </a>\r\n                <div class=\"dropdown-menu\" aria-labelledby=\"navbarSettings\">\r\n                    <a class=\"dropdown-item\" routerLinkActive=\"active\" [routerLink]=\"['/settings']\">Settings</a>\r\n                    <a class=\"dropdown-item\" routerLinkActive=\"active\" [routerLink]=\"['/calibr']\">Calibration</a>\r\n                </div>\r\n            </li>\r\n            <li class=\"nav-item active\">\r\n                <a class=\"nav-link\" routerLinkActive=\"active\" [routerLink]=\"['/controls']\">Manual controls<span class=\"sr-only\">(current)</span></a>\r\n            </li>\r\n            <li class=\"nav-item active\">\r\n                <a class=\"nav-link\" routerLinkActive=\"active\" [routerLink]=\"['/experiment']\">Experiment<span class=\"sr-only\">(current)</span></a>\r\n            </li>\r\n        </ul>\r\n\t</div>\r\n</nav>\r\n"
 
 /***/ }),
 
@@ -1030,10 +1191,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarComponent", function() { return NavbarComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../services/signals.service */ "./src/app/services/signals.service.ts");
+
 
 
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent() {
+    function NavbarComponent(signalsService) {
+        this.signalsService = signalsService;
         this.appLogo = __webpack_require__(/*! ../../../assets/bearing.png */ "./src/assets/bearing.png");
     }
     NavbarComponent.prototype.ngOnInit = function () {
@@ -1044,7 +1208,7 @@ var NavbarComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./navbar.component.html */ "./src/app/components/navbar/navbar.component.html"),
             styles: [__webpack_require__(/*! ./navbar.component.css */ "./src/app/components/navbar/navbar.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_signals_service__WEBPACK_IMPORTED_MODULE_2__["SignalsService"]])
     ], NavbarComponent);
     return NavbarComponent;
 }());
@@ -1484,220 +1648,6 @@ var TribControlsComponent = /** @class */ (function () {
             _services_signals_service__WEBPACK_IMPORTED_MODULE_4__["SignalsService"]])
     ], TribControlsComponent);
     return TribControlsComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/components/workshop/workshop.component.css":
-/*!************************************************************!*\
-  !*** ./src/app/components/workshop/workshop.component.css ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvd29ya3Nob3Avd29ya3Nob3AuY29tcG9uZW50LmNzcyJ9 */"
-
-/***/ }),
-
-/***/ "./src/app/components/workshop/workshop.component.html":
-/*!*************************************************************!*\
-  !*** ./src/app/components/workshop/workshop.component.html ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<h1></h1>\r\n<div class=\"container-fluid\">\r\n\r\n    <div class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <table class=\"table\">\r\n                <thead>\r\n                    <tr>\r\n                        <!--<th scope=\"col\">time, V</th>-->\r\n                        <th scope=\"col\">RPM</th>\r\n                        <th scope=\"col\">Load, N</th>\r\n                        <th scope=\"col\">Friction, N</th>\r\n                        <th scope=\"col\">Temperature, °C</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr>\r\n                        <!--<td>{{20}}</td>-->\r\n                        <td>{{500}}</td>\r\n                        <td>{{58.43}}</td>\r\n                        <td>{{0.58}}</td>\r\n                        <td>{{22.84}}</td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <!--status =  init = 0, started=1, paused = 2 -->\r\n    <div class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div *ngIf=\"status==0\" class=\"row\">\r\n                <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"startExperiment()\">Start experiment</button>\r\n            </div>\r\n            <div *ngIf=\"status==1\" class=\"row\">\r\n                <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"pauseExperiment()\">Pause experiment</button>\r\n                <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"stopExperiment()\">Stop experiment</button>\r\n            </div>\r\n            <div *ngIf=\"status==2\" class=\"row\">\r\n                <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"resumeExperiment()\">Resume</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"false\" class=\"row\">\r\n        <input type=\"text\" [(ngModel)]=\"rpmVal\" name=\"rpm\" #rpm>\r\n        <button type=\"button\" class=\"btn btn-light m-1\" (click)=\"rotation()\">set RPM {{rpmVal}}/{{rpmVal/60.0}}</button>\r\n        <button type=\"button\" class=\"btn btn-dangerm-1\" (click)=\"StopRotation()\">Stop</button>\r\n    </div>\r\n    <div *ngIf=\"false\" class=\"row\">\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"loadPlus()\">Load +</button>\r\n        <button type=\"button\" class=\"btn btn-light\" (click)=\"loadMinus()\">Load -</button>\r\n    </div>\r\n    <div *ngIf=\"false\" class=\"row\">\r\n        <div class=\"col-4\">\r\n            <div class=\"row\">\r\n                <button type=\"button\" class=\"btn btn-light\" (click)=\"startListen()\">Start listen</button>\r\n                <button type=\"button\" class=\"btn btn-light\" (click)=\"stopListen()\">Stop listen</button>\r\n            </div>\r\n            <div class=\"row\">\r\n                <ul *ngIf=\"OnMessage$|async as data\">\r\n                    <li>time:{{data.time}}</li>\r\n                    <li>T:{{data.temperature}}</li>\r\n                    <li>RPM:{{data.rotationrate}}</li>\r\n                    <li>Load:{{data.load}}</li>\r\n                    <li>Friction:{{data.frictionforce}}</li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-8\">\r\n            <canvas baseChart #listen height=\"400\"\r\n                    [datasets]=\"ChartListen.lineChartData\"\r\n                    [labels]=\"ChartListen.lineChartLabels\"\r\n                    [options]=\"ChartListen.lineChartOptions\"\r\n                    [colors]=\"ChartListen.lineChartColors\"\r\n                    [legend]=\"ChartListen.lineChartLegend\"\r\n                    [chartType]=\"ChartListen.lineChartType\"></canvas>\r\n            <!--<div style=\"display: block;\">\r\n\r\n            </div>-->\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"false\" class=\"row\">\r\n        <button type=\"button\" class=\"btn btn-light m-1\" (click)=\"beginWrite()\">Start writing</button>\r\n        <button type=\"button\" class=\"btn btn-light m-1\" (click)=\"endWrite()\">Stop writing</button>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-3\">\r\n            <button type=\"button\" class=\"btn btn-info\">Refresh chart</button>\r\n        </div>\r\n        <div class=\"col-9\">\r\n            <h6>Chart refresh period</h6>\r\n            <select>\r\n                <option value=\"0\">off</option>\r\n                <option value=\"1\">1 minute</option>\r\n                <option value=\"2\">2 minutes</option>\r\n                <option value=\"mercedes\">5 minutes</option>\r\n                <option value=\"audi\">10 minutes</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <canvas baseChart #writing height=\"400\"\r\n                [datasets]=\"ChartFile.lineChartData\"\r\n                [labels]=\"ChartFile.lineChartLabels\"\r\n                [options]=\"ChartFile.lineChartOptions\"\r\n                [colors]=\"ChartFile.lineChartColors\"\r\n                [legend]=\"ChartFile.lineChartLegend\"\r\n                [chartType]=\"ChartFile.lineChartType\"></canvas>\r\n    </div>\r\n    <!--\r\n\r\n\r\n        height=\"300\"\r\n    [plugins]=\"lineChartPlugins\"\r\n              (chartHover)=\"chartHovered($event)\"\r\n              (chartClick)=\"chartClicked($event)\"\r\n        -->\r\n\r\n\r\n\r\n</div>\r\n"
-
-/***/ }),
-
-/***/ "./src/app/components/workshop/workshop.component.ts":
-/*!***********************************************************!*\
-  !*** ./src/app/components/workshop/workshop.component.ts ***!
-  \***********************************************************/
-/*! exports provided: ExperimentStatus, WorkshopComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExperimentStatus", function() { return ExperimentStatus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkshopComponent", function() { return WorkshopComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/fesm5/ng2-charts.js");
-/* harmony import */ var _services_socket_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../../services/socket.service */ "./src/app/services/socket.service.ts");
-/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../services/signals.service */ "./src/app/services/signals.service.ts");
-/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../services/chart.service */ "./src/app/services/chart.service.ts");
-
-
-
-
-
-
-
-var ExperimentStatus;
-(function (ExperimentStatus) {
-    ExperimentStatus[ExperimentStatus["init"] = 0] = "init";
-    ExperimentStatus[ExperimentStatus["started"] = 1] = "started";
-    ExperimentStatus[ExperimentStatus["paused"] = 2] = "paused";
-})(ExperimentStatus || (ExperimentStatus = {}));
-var WorkshopComponent = /** @class */ (function () {
-    function WorkshopComponent(socketservice, signalsService) {
-        this.socketservice = socketservice;
-        this.signalsService = signalsService;
-        this.status = 0;
-        this.OnMessage$ = null;
-        this.OnMsgSubscription = null;
-        this.OnMinTimer = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(60000);
-        this.OnMinTimerSubscription = null;
-        this.rpmVal = 1200;
-        this.ChartListen = new _services_chart_service__WEBPACK_IMPORTED_MODULE_6__["LineChartSettings"]();
-        this.ChartFile = new _services_chart_service__WEBPACK_IMPORTED_MODULE_6__["LineChartSettings"]();
-    }
-    WorkshopComponent.prototype.startExperiment = function () {
-        this.status = ExperimentStatus.started;
-    };
-    WorkshopComponent.prototype.pauseExperiment = function () { this.status = ExperimentStatus.paused; };
-    WorkshopComponent.prototype.stopExperiment = function () { this.status = ExperimentStatus.init; };
-    WorkshopComponent.prototype.resumeExperiment = function () { this.status = ExperimentStatus.started; };
-    WorkshopComponent.prototype.ngOnInit = function () {
-        var l = [];
-        var d1 = [];
-        var d2 = [];
-        var d3 = [];
-        var d4 = [];
-        for (var i = 0; i < 101; i++) {
-            l.push(String(i - 100));
-            d1.push(0.0);
-            d2.push(0.0);
-            d3.push(0.0);
-            d4.push(0.0);
-        }
-        this.ChartListen.lineChartData[0].data = d1;
-        this.ChartListen.lineChartData[1].data = d2;
-        this.ChartListen.lineChartData[2].data = d3;
-        this.ChartListen.lineChartData[3].data = d4;
-        this.ChartListen.lineChartLabels = l;
-    };
-    WorkshopComponent.prototype.updateChartData = function (x) {
-        if (x) {
-            var jj = this.ChartListen.lineChartData[0].data.length - 1;
-            for (var j = 0; j < jj; j++) {
-                this.ChartListen.lineChartData[0].data[j] = this.ChartListen.lineChartData[0].data[j + 1];
-                this.ChartListen.lineChartData[1].data[j] = this.ChartListen.lineChartData[1].data[j + 1];
-                this.ChartListen.lineChartData[2].data[j] = this.ChartListen.lineChartData[2].data[j + 1];
-                this.ChartListen.lineChartData[3].data[j] = this.ChartListen.lineChartData[3].data[j + 1];
-            }
-            this.ChartListen.lineChartData[0].data[jj] = x.temperature;
-            this.ChartListen.lineChartData[1].data[jj] = x.rotationrate;
-            this.ChartListen.lineChartData[2].data[jj] = x.load;
-            this.ChartListen.lineChartData[3].data[jj] = x.frictionforce;
-            this.chart.update();
-        }
-    };
-    WorkshopComponent.prototype.initChartData = function () {
-        for (var i = 0; i < this.ChartListen.lineChartData.length; i++) {
-            for (var j = 0; j < this.ChartListen.lineChartData[i].data.length; j++) {
-                this.ChartListen.lineChartData[i].data[j] = 0;
-            }
-        }
-    };
-    WorkshopComponent.prototype.secondsToSting = function (s) {
-        var t = Math.floor(s / 86400);
-        var ds = t > 0 ? (t < 10 ? " " + String(t) : String(t)) : "  ";
-        var tt = s % 86400;
-        t = Math.floor(tt / 3600);
-        var hs = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
-        tt = tt % 3600;
-        t = Math.floor(tt / 60);
-        var ms = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
-        t = tt % 60;
-        var ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
-        return ds + " " + hs + ":" + ms + ":" + ss;
-    };
-    WorkshopComponent.prototype.updateWChartData = function () {
-        var _this = this;
-        this.signalsService.GetDataFromResultFile().subscribe(function (x) {
-            //temperature, rotationrate, load, frictionforce
-            _this.ChartFile.lineChartData[0].data = x.temperature;
-            _this.ChartFile.lineChartData[1].data = x.RPM;
-            _this.ChartFile.lineChartData[2].data = x.load;
-            _this.ChartFile.lineChartData[3].data = x.friction;
-            _this.ChartFile.lineChartLabels = x.time.map(_this.secondsToSting);
-        });
-        this.chartW.update();
-    };
-    WorkshopComponent.prototype.startListen = function () {
-        var _this = this;
-        console.log("Nachat slushat!");
-        this.socketservice.startListen().subscribe(function (x) {
-            _this.initChartData();
-            _this.socketservice.initSocket();
-            _this.OnMessage$ = _this.socketservice.lastData$.asObservable();
-            _this.OnMsgSubscription = _this.OnMessage$.subscribe(function (x) {
-                _this.updateChartData(x);
-            });
-        });
-    };
-    WorkshopComponent.prototype.stopListen = function () {
-        console.log("Zakoncit slushat!");
-        this.socketservice.stopListen().subscribe(function (x) { return x; });
-        this.OnMessage$ = null;
-        this.OnMsgSubscription.unsubscribe();
-        this.OnMsgSubscription = null;
-    };
-    WorkshopComponent.prototype.beginWrite = function () {
-        var _this = this;
-        console.log("Nachat zapis!");
-        this.signalsService.beginWrite().subscribe(function (x) { return x; });
-        this.OnMinTimerSubscription = this.OnMinTimer.subscribe(function (x) {
-            _this.updateWChartData();
-        });
-    };
-    WorkshopComponent.prototype.endWrite = function () {
-        console.log("Zakoncit zapis!");
-        this.OnMinTimerSubscription.unsubscribe();
-        this.signalsService.endWrite().subscribe(function (x) { return x; });
-    };
-    WorkshopComponent.prototype.rotation = function () {
-        this.signalsService.SetRPM(this.rpmVal).subscribe(function (x) {
-            console.log("Rotation " + x);
-        });
-    };
-    WorkshopComponent.prototype.StopRotation = function () {
-        this.signalsService.SetRPM(0).subscribe(function (x) {
-            console.log("StopRotation " + x);
-        });
-    };
-    WorkshopComponent.prototype.loadPlus = function () {
-        this.signalsService.SetLoad(10).subscribe(function (x) {
-            console.log("Load " + x);
-        });
-    };
-    WorkshopComponent.prototype.loadMinus = function () {
-        this.signalsService.SetLoad(-10).subscribe(function (x) {
-            console.log("Load" + x);
-        });
-    };
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])("listen", { read: ng2_charts__WEBPACK_IMPORTED_MODULE_3__["BaseChartDirective"] }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", ng2_charts__WEBPACK_IMPORTED_MODULE_3__["BaseChartDirective"])
-    ], WorkshopComponent.prototype, "chart", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])("writing", { read: ng2_charts__WEBPACK_IMPORTED_MODULE_3__["BaseChartDirective"] }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", ng2_charts__WEBPACK_IMPORTED_MODULE_3__["BaseChartDirective"])
-    ], WorkshopComponent.prototype, "chartW", void 0);
-    WorkshopComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-workshop',
-            template: __webpack_require__(/*! ./workshop.component.html */ "./src/app/components/workshop/workshop.component.html"),
-            styles: [__webpack_require__(/*! ./workshop.component.css */ "./src/app/components/workshop/workshop.component.css")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_socket_service__WEBPACK_IMPORTED_MODULE_4__["SocketService"], _services_signals_service__WEBPACK_IMPORTED_MODULE_5__["SignalsService"]])
-    ], WorkshopComponent);
-    return WorkshopComponent;
 }());
 
 

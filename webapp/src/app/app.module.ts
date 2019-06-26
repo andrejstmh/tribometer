@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { WorkshopComponent } from './components/workshop/workshop.component';
+import { ExperimentComponent } from './components/experiment/experiment.component';
 import { CalibrCurveComponent } from './components/calibr-curve/calibr-curve.component';
 import { TribControlsComponent } from './components/trib-controls/trib-controls.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -26,7 +26,7 @@ import { TabulatorTableComponent } from './components/controls/tabulator-table/t
     AppComponent,
     NavbarComponent,
     SettingsComponent,
-    WorkshopComponent,
+    ExperimentComponent,
     CalibrCurveComponent,
     NotFoundComponent,
     ShowErrorsComponent,

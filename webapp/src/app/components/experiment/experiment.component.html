@@ -25,77 +25,30 @@
             </table>
         </div>
     </div>
-    <!--status =  init = 0, started=1, paused = 2 -->
+    <!--status =  init = 0, started = 1, completed = 2 -->
     <div class="row">
         <div class="container rounded border bg-light m-1">
             <div *ngIf="status==0" class="row">
                 <button type="button" class="btn btn-danger m-1" (click)="startExperiment()">Start experiment</button>
             </div>
             <div *ngIf="status==1" class="row">
-                <button type="button" class="btn btn-danger m-1" (click)="pauseExperiment()">Pause experiment</button>
                 <button type="button" class="btn btn-danger m-1" (click)="stopExperiment()">Stop experiment</button>
             </div>
-            <div *ngIf="status==2" class="row">
-                <button type="button" class="btn btn-danger m-1" (click)="resumeExperiment()">Resume</button>
-            </div>
         </div>
     </div>
 
-    <div *ngIf="false" class="row">
-        <input type="text" [(ngModel)]="rpmVal" name="rpm" #rpm>
-        <button type="button" class="btn btn-light m-1" (click)="rotation()">set RPM {{rpmVal}}/{{rpmVal/60.0}}</button>
-        <button type="button" class="btn btn-dangerm-1" (click)="StopRotation()">Stop</button>
-    </div>
-    <div *ngIf="false" class="row">
-        <button type="button" class="btn btn-light" (click)="loadPlus()">Load +</button>
-        <button type="button" class="btn btn-light" (click)="loadMinus()">Load -</button>
-    </div>
-    <div *ngIf="false" class="row">
-        <div class="col-4">
-            <div class="row">
-                <button type="button" class="btn btn-light" (click)="startListen()">Start listen</button>
-                <button type="button" class="btn btn-light" (click)="stopListen()">Stop listen</button>
-            </div>
-            <div class="row">
-                <ul *ngIf="OnMessage$|async as data">
-                    <li>time:{{data.time}}</li>
-                    <li>T:{{data.temperature}}</li>
-                    <li>RPM:{{data.rotationrate}}</li>
-                    <li>Load:{{data.load}}</li>
-                    <li>Friction:{{data.frictionforce}}</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-8">
-            <canvas baseChart #listen height="400"
-                    [datasets]="ChartListen.lineChartData"
-                    [labels]="ChartListen.lineChartLabels"
-                    [options]="ChartListen.lineChartOptions"
-                    [colors]="ChartListen.lineChartColors"
-                    [legend]="ChartListen.lineChartLegend"
-                    [chartType]="ChartListen.lineChartType"></canvas>
-            <!--<div style="display: block;">
-
-            </div>-->
-        </div>
-    </div>
-
-    <div *ngIf="false" class="row">
-        <button type="button" class="btn btn-light m-1" (click)="beginWrite()">Start writing</button>
-        <button type="button" class="btn btn-light m-1" (click)="endWrite()">Stop writing</button>
-    </div>
     <div class="row">
         <div class="col-3">
-            <button type="button" class="btn btn-info">Refresh chart</button>
+            <button type="button" class="btn btn-info" (click)="resfreshChart()">Refresh chart</button>
         </div>
         <div class="col-9">
             <h6>Chart refresh period</h6>
-            <select>
+            <select id="refreshPeriodSelect" (change)="onChangerefreshPeriod($event.target.value)" [value]='1'>
                 <option value="0">off</option>
                 <option value="1">1 minute</option>
                 <option value="2">2 minutes</option>
-                <option value="mercedes">5 minutes</option>
-                <option value="audi">10 minutes</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
             </select>
         </div>
     </div>
