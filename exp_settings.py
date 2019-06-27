@@ -52,6 +52,9 @@ class ExperimentSettings:
     def set_outputFileName(self, value): self.settings["output_file"] = value
     outputFileName = property(get_outputFileName,set_outputFileName)
 
+    def otputFileExists(self):
+        return os.path.exists(self.outputFileName)
+
     def get_frictionCalibrFileName(self): return self.getFilePath("ExperimentalData/"+self.settings["friction_force_calibration_curve_file"]);
     def set_frictionCalibrFileName(self, value): self.settings["friction_force_calibration_curve_file"] = value
     frictionCalibrFileName = property(get_frictionCalibrFileName,set_frictionCalibrFileName)

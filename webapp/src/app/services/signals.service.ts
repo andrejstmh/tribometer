@@ -4,7 +4,7 @@ import { Observable, of, BehaviorSubject, forkJoin } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {
     trState, trProgram, trSettings, trResultFileData, trTotalState,
-    CalibrationCurve, DeepCopyOfState, base_url
+    CalibrationCurve,  base_url
 } from './../models/message.model';
 
 //const base_url = "http://localhost:8787/";
@@ -46,6 +46,16 @@ export class SignalsService {
         );
     }
 
+    GetTotalState() {
+        forkJoin(this.GetState(), this.GetSettings()).subscribe(
+            ([st, stt]) => {
+                console.log("Get Settings: Ok");
+                this.totalstate$.next(new trTotalState(stt, st))
+            },
+            resErr => { console.log("Get Settings: Error"); },
+            () => { }
+        );
+    }
 
     GetCalibrationCurve(clbr_curve_name: string): Observable<CalibrationCurve> {
         let url = base_url + `sett?case=${clbr_curve_name}`;
@@ -75,6 +85,13 @@ export class SignalsService {
         return this.http.get<trSettings>(url).pipe(
             tap(_ => console.log("GetSettings")),
             catchError(this.handleError<any>("GetSettings"))
+        );
+    }
+
+    EditSettings(data: trSettings): Observable<trSettings> {
+        let url = base_url + "sett?case=base";
+        return this.http.post<trSettings>(url, data, httpOptions).pipe(
+            catchError(this.handleError("EditSettings", data))
         );
     }
 

@@ -156,52 +156,58 @@ export class SocketMessageData {
         public state?: trState) { }
 }
 
-export function DeepCopyOfState(stateObj: trTotalState | trSettings | trState | trProgram) {
-    if (!stateObj) {
-        return null;
-    } else if (stateObj instanceof trTotalState) {
-        return new trTotalState(DeepCopyOfState(stateObj.settings), DeepCopyOfState(stateObj.state));
-    } else if (stateObj instanceof trSettings) {
-        let pr: trProgram[] = [];
-        this.program.forEach(it => { pr.push(DeepCopyOfState(it)); })
-        return new trSettings(
-            stateObj.working_directory,
-            stateObj.user,
-            stateObj.bearing,
-            stateObj.output_file,
-            stateObj.log_file,
-            stateObj.friction_force_calibration_curve_file,
-            stateObj.load_calibration_curve_file,
-            stateObj.rpm_calibration_curve_file,
-            // miliseconds
-            stateObj.listening_interval,
-            // listening intervals count
-            stateObj.recording_cycle,
-            // listening intervals count
-            stateObj.visualisation_cycle,
-            // hours (manual mode)
-            stateObj.total_duration,
-            stateObj.rpm,
-            stateObj.manual_mode, pr,
-            stateObj.friction_force_threshold,
-            stateObj.temperature_threshold,
-            stateObj.vibration_threshold,
-            stateObj.loadRegualtionAccuracy,
-            stateObj.RPMRegualtionAccuracy,
-            stateObj.readme
-        );
-    } else if (stateObj instanceof trState) {
-        return new trState(
-            stateObj.status,
-            stateObj.VFD_on, stateObj.load_on,
-            stateObj.stopTime, stateObj.stopTlim, stateObj.stopFlim,);
-    } else if (stateObj instanceof trProgram) {
-        return new trProgram(
-            stateObj.duration, stateObj.load, stateObj.RPM,
-            stateObj.Tmax, stateObj.Fmax, stateObj.Vibrmax);
+export class ObjHelper {
+    static DeepCopyOfState(stateObj: trTotalState | trSettings | trState | trProgram) {
+        if (!stateObj) {
+            return null;
+        } else if (stateObj instanceof trTotalState) {
+            return new trTotalState(ObjHelper.DeepCopyOfState(stateObj.settings), ObjHelper.DeepCopyOfState(stateObj.state));
+        } else if (stateObj instanceof trSettings) {
+            let pr: trProgram[] = [];
+            stateObj.program.forEach(it => { pr.push(ObjHelper.DeepCopyOfState(it)); })
+            return new trSettings(
+                stateObj.working_directory,
+                stateObj.user,
+                stateObj.bearing,
+                stateObj.output_file,
+                stateObj.log_file,
+                stateObj.friction_force_calibration_curve_file,
+                stateObj.load_calibration_curve_file,
+                stateObj.rpm_calibration_curve_file,
+                // miliseconds
+                stateObj.listening_interval,
+                // listening intervals count
+                stateObj.recording_cycle,
+                // listening intervals count
+                stateObj.visualisation_cycle,
+                // hours (manual mode)
+                stateObj.total_duration,
+                stateObj.rpm,
+                stateObj.manual_mode, pr,
+                stateObj.friction_force_threshold,
+                stateObj.temperature_threshold,
+                stateObj.vibration_threshold,
+                stateObj.loadRegualtionAccuracy,
+                stateObj.RPMRegualtionAccuracy,
+                stateObj.readme
+            );
+        } else if (stateObj instanceof trState) {
+            return new trState(
+                stateObj.status,
+                stateObj.VFD_on, stateObj.load_on,
+                stateObj.stopTime, stateObj.stopTlim, stateObj.stopFlim);
+        } else if (stateObj instanceof trProgram) {
+            return new trProgram(
+                stateObj.duration, stateObj.load, stateObj.RPM,
+                stateObj.Tmax, stateObj.Fmax, stateObj.Vibrmax);
 
-    } else {
-        return JSON.parse(JSON.stringify(stateObj));
+        } else {
+            return JSON.parse(JSON.stringify(stateObj));
+        }
     }
-
+    static printNumVal(v: any) {
+        let vv = +v
+        if (vv) { return isNaN(v) ? "-" : v.toFixed(3) } else { return "" + v; }
+    }
 }
+

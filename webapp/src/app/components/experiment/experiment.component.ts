@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Observable, Subscription, interval } from 'rxjs';
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
 import { SocketService,  } from './../../services/socket.service';
-import { SensorsData, ExperimentStatus } from './../../models/message.model';
+import { SensorsData, ExperimentStatus, ObjHelper } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
-import { LineChartSettings } from './../../services/chart.service';
-
+import { ChartService, LineChartSettings } from './../../services/chart.service';
 
 
 @Component({
@@ -16,11 +15,15 @@ import { LineChartSettings } from './../../services/chart.service';
     templateUrl: './experiment.component.html',
     styleUrls: ['./experiment.component.css']
 })
-export class ExperimentComponent implements OnInit {
+export class ExperimentComponent implements OnInit, OnDestroy {
     status: ExperimentStatus = 0;
     selected_period_min = 1;
     OnMessage$: Observable<SensorsData> = null;
-    constructor(private socketservice: SocketService, private signalsService: SignalsService) {
+    constructor(
+        private socketservice: SocketService,
+        private signalsService: SignalsService,
+        private chartService: ChartService
+    ) {
     }
     OnMsgSubscription: Subscription = null;
     OnMinTimer = interval(60000);
@@ -28,6 +31,23 @@ export class ExperimentComponent implements OnInit {
     public ChartFile: LineChartSettings = new LineChartSettings();
     @ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
 
+    currentData: SensorsData = null;
+    OnChDCh: Subscription = null;
+    ngOnInit() {
+        this.OnChDCh = this.chartService.onChartDataChanged.subscribe(
+            reOk => {
+                this.currentData = reOk;
+            },
+            resErr => { },
+            () => { }
+        );
+    }
+    ngOnDestroy() {
+        if (this.OnChDCh) { this.OnChDCh.unsubscribe(); }
+    }
+    printNumVal(v: any) {
+        return ObjHelper.printNumVal(v);
+    }
     startExperiment() {
         this.beginWrite();
     }
@@ -35,12 +55,6 @@ export class ExperimentComponent implements OnInit {
     stopExperiment() {
         this.endWrite();
     }
-
-    ngOnInit() {
-
-    }
-
-
     public secondsToSting(s: number) {
         let t = Math.floor(s / 86400);
         let ds = t > 0 ? (t < 10 ? " " + String(t) : String(t)) : "  ";

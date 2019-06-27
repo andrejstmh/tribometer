@@ -4,7 +4,7 @@ import { Observable, Subscription, interval ,of} from 'rxjs';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
-import { SensorsData } from './../../models/message.model';
+import { SensorsData, ObjHelper } from './../../models/message.model';
 import { SocketService } from './../../services/socket.service';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
@@ -40,29 +40,27 @@ export class TribControlsComponent implements OnInit, OnDestroy {
             },
             resErr => { },
             () => { }
-        )
+        );
     }
     ngOnDestroy() {
         if (this.OnChDCh) { this.OnChDCh.unsubscribe(); } 
     }
-
-    printNumVal(v: number) {
-        return isNaN(v) ? "-" : v.toFixed(2)
+    printNumVal(v: any) {
+        return ObjHelper.printNumVal(v);
     }
-
-    public secondsToSting(s: number) {
-    let t = Math.floor(s / 86400);
-    let ds = t > 0 ? (t < 10 ? " " + String(t) : String(t)) : "  ";
-    let tt = s % 86400;
-    t = Math.floor(tt / 3600);
-    let hs = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
-    tt = tt % 3600;
-    t = Math.floor(tt / 60);
-    let ms = t > 0 ? (t < 10 ? "0" + String(t):String(t)) : "00";
-    t = tt % 60;
-    let ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
-    return `${ds} ${hs}:${ms}:${ss}`;
-    }
+    //public secondsToSting(s: number) {
+    //let t = Math.floor(s / 86400);
+    //let ds = t > 0 ? (t < 10 ? " " + String(t) : String(t)) : "  ";
+    //let tt = s % 86400;
+    //t = Math.floor(tt / 3600);
+    //let hs = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
+    //tt = tt % 3600;
+    //t = Math.floor(tt / 60);
+    //let ms = t > 0 ? (t < 10 ? "0" + String(t):String(t)) : "00";
+    //t = tt % 60;
+    //let ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
+    //return `${ds} ${hs}:${ms}:${ss}`;
+    //}
 
 
     rotation() {

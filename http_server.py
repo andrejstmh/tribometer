@@ -16,7 +16,7 @@ from rx.subjects import Subject
 import webbrowser
 
 import numpy as np
-
+from exp_settings import ExpStatus
 
 def checkServer():
     #conn = http.client.HTTPConnection('http://localhost', 8787, timeout=100)
@@ -96,7 +96,7 @@ class DataSocketHandler(tornado.websocket.WebSocketHandler):
     @classmethod
     def send_state_message_to_client(cls, expState):
         cls.send_updates(json.dumps(SocketMessageData(None,expState)))
-        return data
+        return expState
 
     def on_message(self, msg):
         if msg.kind == 'message':
@@ -212,11 +212,21 @@ class SettingsHandler(tornado.web.RequestHandler):
 
     def post(self):
         st_case = self.get_argument("case", None, True)
-        self.set_header("Content-Type", "text/plain")
+        self.set_default_headers()
+        #self.set_header("Content-Type", "text/plain")
+        self.set_header("Content-Type", "application/json")
         #sett?case=base
         if st_case == "base":
             #self.get_body_argument("message")
-            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
+            Tibometer.Experiment.Settings.settings.update( json.loads(self.request.body))
+            if Tibometer.Experiment.Settings.otputFileExists():
+                Tibometer.Experiment.Settings.outputFileName=""
+                Tibometer.Experiment.status.status = ExpStatus.invalid
+            else:
+                Tibometer.Experiment.status.status = ExpStatus.valid
+            s = json.dumps(Tibometer.Experiment.Settings.settings)
+            self.write(s)
+            #DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
         elif st_case == "st":
             self.write(Tibometer.Experiment.status.getJson())
         elif st_case == "num":
@@ -276,11 +286,15 @@ class BeginReadingHandler(tornado.web.RequestHandler):
 class EndWriteingHandler(tornado.web.RequestHandler):
     def get(self):
         Tibometer.EndWriteing()
+        Tibometer.Experiment.status.status = ExpStatus.completed
+        DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
 
 class BeginWritingHandler(tornado.web.RequestHandler):
     #tribometer = Tibometer();
     def get(self):
         Tibometer.BeginWriteing()
+        Tibometer.Experiment.status.status = ExpStatus.started
+        DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
 
 class EndProgramHandler(tornado.web.RequestHandler):
     def get(self):

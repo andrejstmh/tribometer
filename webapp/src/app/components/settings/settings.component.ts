@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { trTotalState, trState, trSettings, DeepCopyOfState } from './../../models/message.model';
+import { trTotalState, trState, trSettings, ObjHelper } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
 
@@ -19,11 +19,11 @@ export class SettingsComponent implements OnInit {
         this.signalsService.totalstate$.subscribe(
             resOk => {
                 if (resOk) {
-                    console.log('request');
-                    console.log(resOk);
-                    this.totState = DeepCopyOfState(resOk);
-                    console.log('form data');
-                    console.log(this.totState);
+                    //console.log('request');
+                    //console.log(resOk);
+                    this.totState = ObjHelper.DeepCopyOfState(resOk);
+                    //console.log('form data');
+                    //console.log(this.totState);
                 } else {
                     this.totState = null;
 
@@ -31,14 +31,26 @@ export class SettingsComponent implements OnInit {
             },
             resErr => { },
             () => { }
-        )
+        );
     }
 
     
 
     onSubmit() {
+        this.signalsService.EditSettings(this.totState.settings).subscribe(
+            resOk => {
+                console.log("EditSettingsOk");
+                //console.log(resOk);
+                let v = this.signalsService.totalstate$.value;
+                v.settings = resOk;
+                this.signalsService.totalstate$.next(v);
+                //this.totState = DeepCopyOfState(v);
+                this.signalsService.GetTotalState();
+            },
+            resErr => { console.log("EditSettingsErr"); },
+            () => { }
+        );
         this.submitted = true;
-
     }
 
 }

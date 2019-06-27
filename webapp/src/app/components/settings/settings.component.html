@@ -83,10 +83,10 @@
 
             <div class="form-group">
                 <label for="name">*Friction force threshold, N</label>
-                <input type="text" class="form-control" id="friction_force_treshold" placeholder="Example: 2"
+                <input type="text" class="form-control" id="friction_force_threshold" placeholder="Example: 2"
                        required
-                       [(ngModel)]="totState.settings.friction_force_treshold" name="friction_force_treshold" #friction_force_treshold="ngModel" />
-                <div [hidden]="friction_force_treshold.valid || friction_force_treshold.pristine"
+                       [(ngModel)]="totState.settings.friction_force_threshold" name="friction_force_threshold" #friction_force_threshold="ngModel" />
+                <div [hidden]="friction_force_threshold.valid || friction_force_threshold.pristine"
                      class="alert alert-danger">
                     Friction force threshold is required
                 </div>
@@ -94,10 +94,10 @@
 
             <div class="form-group">
                 <label for="name">*Temperature threshold, °C</label>
-                <input type="text" class="form-control" id="temperature_treshold" placeholder="Example: 2"
+                <input type="text" class="form-control" id="temperature_threshold" placeholder="Example: 2"
                        required
-                       [(ngModel)]="totState.settings.temperature_treshold" name="temperature_treshold" #temperature_treshold="ngModel" />
-                <div [hidden]="temperature_treshold.valid || temperature_treshold.pristine"
+                       [(ngModel)]="totState.settings.temperature_threshold" name="temperature_threshold" #temperature_threshold="ngModel" />
+                <div [hidden]="temperature_threshold.valid || temperature_threshold.pristine"
                      class="alert alert-danger">
                     Temperature threshold is required
                 </div>

@@ -156,7 +156,7 @@ export class ChartService {
         //for (let i = 0; i <= chartDataLength; i++) {
         //    this.ChartListen.lineChartLabels[i] = String(i);
         //}
-        this.onChartDataChanged.next(new SensorsData(NaN, NaN, NaN, NaN, NaN));
+        this.onChartDataChanged.next(new SensorsData(-1, -1, -1, -1, -1));
 
     }
 
