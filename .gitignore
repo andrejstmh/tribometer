@@ -6,3 +6,4 @@
 /__pycache__
 /webapp/node_modules/.bin
 /webapp/node_modules
+ExperimentalData/.h5
