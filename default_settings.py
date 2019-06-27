@@ -49,10 +49,10 @@ DefaultSettings={
     # hours (manual mode)
     "total_duration":72,
     "rpm":600,
+    "load":10.0,
     "manual_mode":True,
     "program":[
-        {"duration":0.25, "load":0.0,"RPM":1000,"Tmax":100,"Fmax":10,"Vibrmax":10},
-        {"duration":0.0, "load":0.0,"RPM":1200}],
+        {"duration":72, "load":10.0,"RPM":1000,"Tmax":100,"Fmax":10,"Vibrmax":10}],
     #=================================================================
     #control parameters
     # [N]

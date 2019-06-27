@@ -8,8 +8,10 @@ import { webSocket } from "rxjs/webSocket";
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
-import { SensorsData } from './../models/message.model';
+import { SensorsData, trResultFileData } from './../models/message.model';
 import { SocketService } from './socket.service';
+import { SignalsService } from './signals.service';
+
 import { forEach } from '@angular/router/src/utils/collection';
 
 export class LineChartSettings {
@@ -130,10 +132,13 @@ export const chartDataLength: number = 100;
 
 @Injectable()
 export class ChartService {
-    public onChartDataChanged: BehaviorSubject<SensorsData> = new BehaviorSubject<SensorsData>(new SensorsData(NaN, NaN, NaN, NaN, NaN));
+    public expFileDataRefreshPeriodMin = 1;
+    public onChartDataChanged$: BehaviorSubject<SensorsData> = new BehaviorSubject<SensorsData>(new SensorsData(NaN, NaN, NaN, NaN, NaN));
     public ChartListen: LineChartSettings = new LineChartSettings();
+    public expFileData$: BehaviorSubject<trResultFileData> = new BehaviorSubject<trResultFileData>(new trResultFileData([],[],[],[],[]));
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+        private signalsService: SignalsService) {
         let l: Label[] = [];  let d1: number[] = []; let d2: number[] = []; let d3: number[] = []; let d4: number[] = [];
         for (let i = 0; i <= chartDataLength; i++) {
             //l.push(String(i - chartDataLength));
@@ -156,9 +161,19 @@ export class ChartService {
         //for (let i = 0; i <= chartDataLength; i++) {
         //    this.ChartListen.lineChartLabels[i] = String(i);
         //}
-        this.onChartDataChanged.next(new SensorsData(-1, -1, -1, -1, -1));
+        this.onChartDataChanged$.next(new SensorsData(-1, -1, -1, -1, -1));
 
     }
+
+    getDataFromFile() {
+        this.signalsService.GetDataFromResultFile().subscribe(x => {
+            if (x) {
+                console.log("this.expFileData$.next(x)");
+                this.expFileData$.next(x);
+            }
+        });
+    }
+    
 
     public initChartData() {
         for (let i = 0; i < this.ChartListen.lineChartData.length; i++) {
@@ -192,7 +207,7 @@ export class ChartService {
             this.ChartListen.lineChartData[1].data[0] = this.NanToNum(x.rotationrate);
             this.ChartListen.lineChartData[2].data[0] = this.NanToNum(x.load);
             this.ChartListen.lineChartData[3].data[0] = this.NanToNum(x.frictionforce);
-            this.onChartDataChanged.next(x);
+            this.onChartDataChanged$.next(x);
         }
     }
 

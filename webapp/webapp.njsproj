@@ -67,9 +67,7 @@
     <TypeScriptCompile Include="src\app\components\show-errors.component.ts" />
     <TypeScriptCompile Include="src\app\components\trib-controls\trib-controls.component.ts" />
     <TypeScriptCompile Include="src\app\services\chart.service.ts" />
-    <TypeScriptCompile Include="src\app\services\socket.service.spec.ts" />
     <TypeScriptCompile Include="src\app\services\socket.service.ts" />
-    <TypeScriptCompile Include="src\app\services\sygnals.service.spec.ts" />
     <TypeScriptCompile Include="src\app\services\signals.service.ts" />
     <TypeScriptCompile Include="src\app\services\validators.ts" />
     <TypeScriptCompile Include="src\main.ts" />
@@ -82,7 +80,6 @@
     <Content Include="src\app\app.component.html" />
     <Content Include="src\app\app.component.css" />
     <TypeScriptCompile Include="src\app\app-routing.module.ts" />
-    <TypeScriptCompile Include="src\app\app.component.spec.ts" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />

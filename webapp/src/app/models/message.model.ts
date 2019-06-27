@@ -1,5 +1,5 @@
 export const base_url = "http://localhost:8787/";
-export const SERVER_URL = 'ws://localhost:8787/ss';
+export const SERVER_URL = "ws://localhost:8787/api/ss";
 
 
 export enum ExperimentStatus {
@@ -73,6 +73,7 @@ export class trSettings {
         // hours (manual mode)
         public total_duration: number,
         public rpm: number,
+        public load: number,
         public manual_mode: boolean,
         public program: trProgram[],
         //=================================================================
@@ -112,6 +113,7 @@ export class trSettings {
             // hours (manual mode)
             this.total_duration,
             this.rpm,
+            this.load,
             this.manual_mode, pr,
             this.friction_force_threshold,
             this.temperature_threshold,
@@ -183,6 +185,7 @@ export class ObjHelper {
                 // hours (manual mode)
                 stateObj.total_duration,
                 stateObj.rpm,
+                stateObj.load,
                 stateObj.manual_mode, pr,
                 stateObj.friction_force_threshold,
                 stateObj.temperature_threshold,

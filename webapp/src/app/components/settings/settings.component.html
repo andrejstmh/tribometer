@@ -1,7 +1,6 @@
 <div class="container">
-    <div *ngIf="totState" [hidden]="submitted">
+    <div *ngIf="totState">
         <h1>Settings</h1>
-
         <!
         public working_directory: string,
         public user: string,
@@ -27,79 +26,144 @@
 
         <form (ngSubmit)="onSubmit()" #settingsForm="ngForm">
             <div class="form-group">
-                <label for="name">*Name</label>
+                <label for="name">Name</label>
                 <input type="text" class="form-control" id="user" placeholder="Example: John Anyone"
                        required
                        [(ngModel)]="totState.settings.user" name="user" #user="ngModel" />
-                <div [hidden]="user.valid || user.pristine"
+                <div [hidden]="user.valid"
                      class="alert alert-danger">
                     Name is required
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="name">*Bearing description</label>
+                <label for="bearing">Bearing description</label>
                 <textarea type="text" class="form-control" id="bearing" placeholder="Example: Thrust ball bearing 65 (2011) 245-248"
                           required
                           [(ngModel)]="totState.settings.bearing" name="bearing" #bearing="ngModel"></textarea>
-                <div [hidden]="bearing.valid || bearing.pristine"
+                <div [hidden]="bearing.valid"
                      class="alert alert-danger">
                     Bering description is required
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="name">*Output file name</label>
+                <label for="output_file">Output file name</label>
                 <input type="text" class="form-control" id="output_file" placeholder="Example: result.h5"
                        required
                        [(ngModel)]="totState.settings.output_file" name="output_file" #output_file="ngModel" />
-                <div [hidden]="output_file.valid || output_file.pristine"
+                <div [hidden]="output_file.valid"
                      class="alert alert-danger">
                     Output file name is required
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="name">*Recording period</label>
+                <label for="recording_cycle">Recording period</label>
                 <input type="text" class="form-control" id="recording_cycle" placeholder="Example: 1"
                        required
                        [(ngModel)]="totState.settings.recording_cycle" name="recording_cycle" #recording_cycle="ngModel" />
-                <div [hidden]="recording_cycle.valid || recording_cycle.pristine"
+                <div [hidden]="recording_cycle.valid"
                      class="alert alert-danger">
                     recording_cycle is required
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="name">*Experiment total duration, hours</label>
+            <div *ngIf="totState.settings.manual_mode" class="form-group">
+                <label for="total_duration">Experiment total duration, hours</label>
                 <input type="text" class="form-control" id="total_duration" placeholder="Example: 24"
                        required
                        [(ngModel)]="totState.settings.total_duration" name="total_duration" #total_duration="ngModel" />
-                <div [hidden]="total_duration.valid || total_duration.pristine"
+                <div [hidden]="total_duration.valid"
                      class="alert alert-danger">
                     total_duration is required
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="name">*Friction force threshold, N</label>
+            <div *ngIf="totState.settings.manual_mode" class="form-group">
+                <label for="friction_force_threshold">Friction force threshold, N</label>
                 <input type="text" class="form-control" id="friction_force_threshold" placeholder="Example: 2"
                        required
                        [(ngModel)]="totState.settings.friction_force_threshold" name="friction_force_threshold" #friction_force_threshold="ngModel" />
-                <div [hidden]="friction_force_threshold.valid || friction_force_threshold.pristine"
+                <div [hidden]="friction_force_threshold.valid"
                      class="alert alert-danger">
                     Friction force threshold is required
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="name">*Temperature threshold, °C</label>
+            <div *ngIf="totState.settings.manual_mode" class="form-group">
+                <label for="temperature_threshold">Temperature threshold, °C</label>
                 <input type="text" class="form-control" id="temperature_threshold" placeholder="Example: 2"
                        required
                        [(ngModel)]="totState.settings.temperature_threshold" name="temperature_threshold" #temperature_threshold="ngModel" />
-                <div [hidden]="temperature_threshold.valid || temperature_threshold.pristine"
+                <div [hidden]="temperature_threshold.valid"
                      class="alert alert-danger">
                     Temperature threshold is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="manual_mode">Manual mode</label>
+                <input type="checkbox" class="form-control" id="manual_mode"
+                       [(ngModel)]="totState.settings.manual_mode" name="manual_mode" #manual_mode="ngModel" />
+            </div>
+            <div *ngIf="!totState.settings.manual_mode">
+                <div class="card-body bg-light border-top">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 pr-sm-0 col-md-12 pr-md-3 col-xl-6 pr-xl-0">
+                            <div class="btn-group btn-block">
+                                <button class="btn btn-secondary" type="button"
+                                        (click)="InserRowBefore()" title="Insert row above">
+                                    <i class="fa fa-plus-circle"></i><i class="fa fa-arrow-up"></i>
+                                </button>
+                                <button class="btn btn-secondary" type="button"
+                                        (click)="InserRowAfter()" title="Insert row below">
+                                    <i class="fa fa-plus-circle"></i><i class="fa fa-arrow-down"></i>
+                                </button>
+                                <button class="btn btn-secondary" type="button" [disabled]="selectedRow==null"
+                                        (click)="MoveUp()" title="Move selected row up">
+                                    <i class="fa fa-long-arrow-up"></i>
+                                </button>
+                                <button class="btn btn-secondary" type="button" [disabled]="selectedRow==null"
+                                        (click)="MoveDown()" title="Move selected row down">
+                                    <i class="fa fa-long-arrow-down"></i>
+                                </button>
+                                <button class="btn btn-secondary" type="button" [disabled]="selectedRow==null"
+                                        (click)="DeleteRow()" title="Dete row">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- "duration":0.25, "load":0.0,"RPM":1000,"Tmax":100,"Fmax":10 -->
+                        <div class="col">Duration, h</div>
+                        <div class="col">Load, N</div>
+                        <div class="col">RPM</div>
+                        <div class="col">Friction force threshold</div>
+                        <div class="col">Temperature threshold, °C</div>
+                    </div>
+                    <div *ngFor="let r of totState.settings.program" class="row" (click)="onSelectRow(r)">
+                        <!-- "duration":0.25, "load":0.0,"RPM":1000,"Tmax":100,"Fmax":10 -->
+                        <div *ngIf="r!=selectedRow" class="card-body bg-light border-top">
+                            <div class="row">
+                                <div class="col">{{r.duration}}</div>
+                                <div class="col">{{r.load}}</div>
+                                <div class="col">{{r.RPM}}</div>
+                                <div class="col">{{r.Fmax}}</div>
+                                <div class="col">{{r.Tmax}}</div>
+                            </div>
+                        </div>
+                        <div *ngIf="r==selectedRow" class="card-body bg-light border-top">
+                            <div class="row">
+                                <div class="col"><input type="text" [(ngModel)]="selectedRow.duration" class="form-control" name="pr_du"/></div>
+                                <div class="col"><input type="text" [(ngModel)]="selectedRow.load" class="form-control" name="pr_load"/></div>
+                                <div class="col"><input type="text" [(ngModel)]="selectedRow.RPM" class="form-control" name="pr_rpm"/></div>
+                                <div class="col"><input type="text" [(ngModel)]="selectedRow.Fmax" class="form-control" name="pr_Fm"/></div>
+                                <div class="col"><input type="text" [(ngModel)]="selectedRow.Tmax" class="form-control" name="pr_Tm"/></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-success" [disabled]="!settingsForm.form.valid">Applay</button>

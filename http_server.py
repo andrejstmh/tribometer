@@ -29,7 +29,7 @@ def checkServer():
     res = False
     http_client = tornado.httpclient.HTTPClient()
     try:
-        response = http_client.fetch("http://localhost:8787/sett?case=state",method="GET")
+        response = http_client.fetch("http://localhost:8787/api/sett?case=state",method="GET")
         res = True
     except tornado.httpclient.HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
@@ -286,15 +286,13 @@ class BeginReadingHandler(tornado.web.RequestHandler):
 class EndWriteingHandler(tornado.web.RequestHandler):
     def get(self):
         Tibometer.EndWriteing()
-        Tibometer.Experiment.status.status = ExpStatus.completed
-        DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
+        #DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
 
 class BeginWritingHandler(tornado.web.RequestHandler):
     #tribometer = Tibometer();
     def get(self):
         Tibometer.BeginWriteing()
-        Tibometer.Experiment.status.status = ExpStatus.started
-        DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
+        #DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
 
 class EndProgramHandler(tornado.web.RequestHandler):
     def get(self):
@@ -316,14 +314,14 @@ def make_app():
         pagePath = "/home/pi/tribometer/webapp/dist/"
     res = tornado.web.Application([#(r"/a",ClientApplication),
         #(r"/myform", MyFormHandler),
-        (r"/sett", SettingsHandler),
-        (r"/beginr", BeginReadingHandler),
-        (r"/endr", EndReadingHandler),
-        (r"/beginw", BeginWritingHandler),
-        (r"/endw", EndWriteingHandler),
-        (r"/beginp", BeginProgramHandler),
-        (r"/endp", EndProgramHandler),
-        (r"/ss", DataSocketHandler),
+        (r"/api/sett", SettingsHandler),
+        (r"/api/beginr", BeginReadingHandler),
+        (r"/api/endr", EndReadingHandler),
+        (r"/api/beginw", BeginWritingHandler),
+        (r"/api/endw", EndWriteingHandler),
+        (r"/api/beginp", BeginProgramHandler),
+        (r"/api/endp", EndProgramHandler),
+        (r"/api/ss", DataSocketHandler),
         (r"/(.*)", tornado.web.StaticFileHandler, 
             {'default_filename': 'index.html',"path": pagePath}),])
     return res

@@ -1,75 +1,70 @@
-<h1></h1>
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="container rounded border bg-light m-1">
-            <table *ngIf="currentData" class="table">
-                <thead>
-                    <tr>
-                        <!--<th scope="col">time, V</th>-->
-                        <th scope="col">RPM</th>
-                        <th scope="col">Load, N</th>
-                        <th scope="col">Friction, N</th>
-                        <th scope="col">Temperature, °C</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <!--<td>{{20}}</td>-->
-                        <td>{{printNumVal(currentData.rotationrate)}}</td>
-                        <td>{{printNumVal(currentData.load)}}</td>
-                        <td>{{printNumVal(currentData.frictionforce)}}</td>
-                        <td>{{printNumVal(currentData.temperature)}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--status =  init = 0, started = 2, completed = 3 -->
-    <div class="row">
-        <div class="container rounded border bg-light m-1">
-            <div *ngIf="status==0" class="row">
-                <button type="button" class="btn btn-danger m-1" (click)="startExperiment()">Start experiment</button>
+<div  class="container-fluid">
+    <div *ngIf="totState|async as totSTATE" class="row">
+        <div class="container rounded border bg-light">
+            <div class="row">
+                <div class="container rounded border bg-light m-1">
+                    <table *ngIf="currentData" class="table">
+                        <thead>
+                            <tr>
+                                <!--<th scope="col">time, V</th>-->
+                                <th scope="col">RPM</th>
+                                <th scope="col">Load, N</th>
+                                <th scope="col">Friction, N</th>
+                                <th scope="col">Temperature, °C</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!--<td>{{20}}</td>-->
+                                <td>{{printNumVal(currentData.rotationrate)}}</td>
+                                <td>{{printNumVal(currentData.load)}}</td>
+                                <td>{{printNumVal(currentData.frictionforce)}}</td>
+                                <td>{{printNumVal(currentData.temperature)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div *ngIf="status==2" class="row">
-                <button type="button" class="btn btn-danger m-1" (click)="stopExperiment()">Stop experiment</button>
+            <!--status =  init = 0, started = 2, completed = 3 -->
+            <div class="row">
+                <div class="container rounded border bg-light m-1">
+                    <div *ngIf="totSTATE.state.status==1" class="row">
+                        <button type="button" class="btn btn-danger m-1" (click)="startExperiment()">Start experiment</button>
+                    </div>
+                    <div *ngIf="totSTATE.state.status==2" class="row">
+                        <button type="button" class="btn btn-danger m-1" (click)="stopExperiment()">Stop experiment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="totSTATE.state.status==2 || totSTATE.state.status==3" class="row">
+                <div class="col-3">
+                    <button type="button" class="btn btn-info" (click)="resfreshChart()">Refresh chart</button>
+                </div>
+                <div *ngIf="totSTATE.state.status==2" class="col-9">
+                    <h6>Chart refresh period</h6>
+                    <select id="refreshPeriodSelect" (change)="onChangerefreshPeriod($event.target.value)" [value]='1'>
+                        <option value="0">off</option>
+                        <option value="1">1 minute</option>
+                        <option value="2">2 minutes</option>
+                        <option value="5">5 minutes</option>
+                        <option value="10">10 minutes</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
-
-    <div *ngIf="status==2 || status==3" class="row">
-        <div class="col-3">
-            <button type="button" class="btn btn-info" (click)="resfreshChart()">Refresh chart</button>
-        </div>
-        <div class="col-9">
-            <h6>Chart refresh period</h6>
-            <select id="refreshPeriodSelect" (change)="onChangerefreshPeriod($event.target.value)" [value]='1'>
-                <option value="0">off</option>
-                <option value="1">1 minute</option>
-                <option value="2">2 minutes</option>
-                <option value="5">5 minutes</option>
-                <option value="10">10 minutes</option>
-            </select>
+    
+    <div class="row">
+        <div class="container rounded border bg-light">
+            <canvas baseChart #writing height="400"
+                    [datasets]="ChartFile.lineChartData"
+                    [labels]="ChartFile.lineChartLabels"
+                    [options]="ChartFile.lineChartOptions"
+                    [colors]="ChartFile.lineChartColors"
+                    [legend]="ChartFile.lineChartLegend"
+                    [chartType]="ChartFile.lineChartType"></canvas>
         </div>
     </div>
-    <div *ngIf="status==2 || status==3" class="row">
-        <canvas baseChart #writing height="400"
-                [datasets]="ChartFile.lineChartData"
-                [labels]="ChartFile.lineChartLabels"
-                [options]="ChartFile.lineChartOptions"
-                [colors]="ChartFile.lineChartColors"
-                [legend]="ChartFile.lineChartLegend"
-                [chartType]="ChartFile.lineChartType"></canvas>
-    </div>
-    <!--
-
-
-        height="300"
-    [plugins]="lineChartPlugins"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"
-        -->
-
-
-
 </div>
+

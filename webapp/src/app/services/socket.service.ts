@@ -58,14 +58,14 @@ export class SocketService {
 
 
     public startListen(): Observable<any> {
-        const url = base_url+"beginr";
+        const url = base_url+"api/beginr";
         return this.http.get<any>(url).pipe(
             tap(_ => console.log("startListen")),
             catchError(this.handleError<any>("startListen"))
         );
     }
     public stopListen(): Observable<any> {
-        const url = base_url +"endr";
+        const url = base_url +"api/endr";
         this.subsctiprion.forEach(it => { it.unsubscribe(); });
         this.subsctiprion = [];
         //this.buffer = [];

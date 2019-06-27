@@ -7,14 +7,11 @@ import {
     CalibrationCurve,  base_url
 } from './../models/message.model';
 
-//const base_url = "http://localhost:8787/";
-
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
     })
 }
-
 
 @Injectable()
 export class SignalsService {
@@ -32,14 +29,14 @@ export class SignalsService {
     }
 
     beginWrite(): Observable<any> {
-        const url = base_url + "beginw";
+        const url = base_url + "api/beginw";
         return this.http.get<any>(url).pipe(
             tap(_ => console.log("beginWrite")),
             catchError(this.handleError<any>("beginWrite"))
         );
     }
     endWrite(): Observable<any> {
-        const url = base_url + "endw";
+        const url = base_url + "api/endw";
         return this.http.get<any>(url).pipe(
             tap(_ => console.log("endWrite")),
             catchError(this.handleError<any>("endWrite"))
@@ -58,7 +55,7 @@ export class SignalsService {
     }
 
     GetCalibrationCurve(clbr_curve_name: string): Observable<CalibrationCurve> {
-        let url = base_url + `sett?case=${clbr_curve_name}`;
+        let url = base_url + `api/sett?case=${clbr_curve_name}`;
         return this.http.get<CalibrationCurve>(url).pipe(
             tap(_ => console.log("GetCalibrationCurve")),
             catchError(this.handleError<any>("GetCalibrationCurve"))
@@ -66,14 +63,14 @@ export class SignalsService {
     }
 
     EditCalibrationCurve(clbr_curve_name: string, curve_data: CalibrationCurve): Observable<CalibrationCurve> {
-        let url = base_url + `sett?case=${clbr_curve_name}`;
+        let url = base_url + `api/sett?case=${clbr_curve_name}`;
         return this.http.post<CalibrationCurve>(url, curve_data, httpOptions).pipe(
             catchError(this.handleError('EditCalibrationCurve', curve_data))
         );
     }
 
     GetState(): Observable<trState> {
-        let url = base_url + "sett?case=st";
+        let url = base_url + "api/sett?case=st";
         return this.http.get<trState>(url).pipe(
             tap(_ => console.log("GetState")),
             catchError(this.handleError<any>("GetState"))
@@ -81,7 +78,7 @@ export class SignalsService {
     }
 
     GetSettings(): Observable<trSettings> {
-        let url = base_url + "sett?case=base";
+        let url = base_url + "api/sett?case=base";
         return this.http.get<trSettings>(url).pipe(
             tap(_ => console.log("GetSettings")),
             catchError(this.handleError<any>("GetSettings"))
@@ -89,14 +86,14 @@ export class SignalsService {
     }
 
     EditSettings(data: trSettings): Observable<trSettings> {
-        let url = base_url + "sett?case=base";
+        let url = base_url + "api/sett?case=base";
         return this.http.post<trSettings>(url, data, httpOptions).pipe(
             catchError(this.handleError("EditSettings", data))
         );
     }
 
     SetRPM(rpm: number): Observable<number> {
-        let url = base_url + `sett?case=rpm&val=${rpm}`;
+        let url = base_url + `api/sett?case=rpm&val=${rpm}`;
         return this.http.get<trSettings>(url).pipe(
             tap(_ => console.log("SetRPM")),
             catchError(this.handleError<any>("SetRPM"))
@@ -104,7 +101,7 @@ export class SignalsService {
     }
 
     SetLoad(load: number): Observable<number> {
-        let url = base_url + `sett?case=load&val=${load}`;
+        let url = base_url + `api/sett?case=load&val=${load}`;
         return this.http.get<trSettings>(url).pipe(
             tap(_ => console.log("SetLoad")),
             catchError(this.handleError<any>("SetLoad"))
@@ -112,7 +109,7 @@ export class SignalsService {
     }
 
     GetDataFromResultFile(): Observable<trResultFileData> {
-        let url = base_url + "sett?case=resultfile";
+        let url = base_url + "api/sett?case=resultfile";
         return this.http.get<trSettings>(url).pipe(
             tap(_ => console.log("GetDataFromResultFile")),
             catchError(this.handleError<any>("GetDataFromResultFile"))

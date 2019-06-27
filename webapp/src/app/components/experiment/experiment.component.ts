@@ -5,7 +5,7 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
 import { SocketService,  } from './../../services/socket.service';
-import { SensorsData, ExperimentStatus, ObjHelper } from './../../models/message.model';
+import { SensorsData, ExperimentStatus, ObjHelper, trState, trTotalState, trResultFileData } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
 
@@ -16,7 +16,7 @@ import { ChartService, LineChartSettings } from './../../services/chart.service'
     styleUrls: ['./experiment.component.css']
 })
 export class ExperimentComponent implements OnInit, OnDestroy {
-    status: ExperimentStatus = 0;
+    totState: Observable<trTotalState> = null;
     selected_period_min = 1;
     OnMessage$: Observable<SensorsData> = null;
     constructor(
@@ -33,21 +33,50 @@ export class ExperimentComponent implements OnInit, OnDestroy {
 
     currentData: SensorsData = null;
     OnChDCh: Subscription = null;
+    subsArr: Subscription[] = [];
     ngOnInit() {
-        this.OnChDCh = this.chartService.onChartDataChanged.subscribe(
+        this.signalsService.GetTotalState();
+        this.totState = this.signalsService.totalstate$.asObservable();
+        this.subsArr.push( this.chartService.onChartDataChanged$.subscribe(
             reOk => {
                 this.currentData = reOk;
             },
             resErr => { },
             () => { }
-        );
+        ));
+        this.subsArr.push(this.chartService.expFileData$.subscribe(
+            resOk => { this.updateChartLines(resOk);},
+            resErr => { },
+            () => { }
+        ));
+        if (this.signalsService.totalstate$.value) {
+            if (this.signalsService.totalstate$.value.state.status == 2) {
+                this.InitTimer(this.chartService.expFileDataRefreshPeriodMin);
+            }
+        }
     }
     ngOnDestroy() {
-        if (this.OnChDCh) { this.OnChDCh.unsubscribe(); }
+        this.subsArr.forEach(it => { if (it) { it.unsubscribe(); } });
     }
     printNumVal(v: any) {
         return ObjHelper.printNumVal(v);
     }
+
+    updateChartLines(x: trResultFileData) {
+        if (x) {
+            //temperature, rotationrate, load, frictionforce
+            this.ChartFile.lineChartData[0].data = this.removeNaN(x.temperature);
+            this.ChartFile.lineChartData[1].data = this.removeNaN(x.RPM);
+            this.ChartFile.lineChartData[2].data = this.removeNaN(x.load);
+            this.ChartFile.lineChartData[3].data = this.removeNaN(x.friction);
+            this.ChartFile.lineChartLabels = x.time.map(this.secondsToSting);
+            if (this.chartW) {
+                console.log("this.chartW.update()");
+                this.chartW.update();
+            }
+        }
+    }
+
     startExperiment() {
         this.beginWrite();
     }
@@ -73,25 +102,15 @@ export class ExperimentComponent implements OnInit, OnDestroy {
         return data;
     }
     public updateWChartData() {
-        this.signalsService.GetDataFromResultFile().subscribe(x => {
-            if (x) {
-                //temperature, rotationrate, load, frictionforce
-                this.ChartFile.lineChartData[0].data = this.removeNaN(x.temperature);
-                this.ChartFile.lineChartData[1].data = this.removeNaN(x.RPM);
-                this.ChartFile.lineChartData[2].data = this.removeNaN(x.load);
-                this.ChartFile.lineChartData[3].data = this.removeNaN(x.friction);
-                this.ChartFile.lineChartLabels = x.time.map(this.secondsToSting);
-            }
-        });
-        this.chartW.update();
+        this.chartService.getDataFromFile();
     }
 
     beginWrite() {
         console.log("Nachat zapis!")
         this.signalsService.beginWrite().subscribe(
             resOk => {
-                this.InitTimer(this.selected_period_min);
-                this.status = ExperimentStatus.started;
+                this.InitTimer(this.chartService.expFileDataRefreshPeriodMin);
+                this.signalsService.GetTotalState();
             },
             resErr => { },
             () => { }
@@ -103,8 +122,8 @@ export class ExperimentComponent implements OnInit, OnDestroy {
         this.UnsubscribeTimer();
         this.signalsService.endWrite().subscribe(
             resOk => {
-                this.status = ExperimentStatus.completed;
                 this.updateWChartData();
+                this.signalsService.GetTotalState();
             },
             resErr => { },
             () => { }
@@ -127,12 +146,12 @@ export class ExperimentComponent implements OnInit, OnDestroy {
 
     }
     onChangerefreshPeriod(period_min: any) {
-        this.selected_period_min = 0;
+        this.chartService.expFileDataRefreshPeriodMin = 0;
         let p = +period_min;
         if (p > 0) {
-            this.selected_period_min = p;
+            this.chartService.expFileDataRefreshPeriodMin = p;
         }
-        this.InitTimer(this.selected_period_min);
+        this.InitTimer(this.chartService.expFileDataRefreshPeriodMin);
     }
     resfreshChart() {
         this.updateWChartData();
