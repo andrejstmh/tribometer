@@ -3,10 +3,9 @@
         <div class="container rounded border bg-light">
             <div class="row">
                 <div class="container rounded border bg-light m-1">
-                    <table *ngIf="currentData" class="table">
+                    <table *ngIf="currentData|async as crData" class="table">
                         <thead>
-                            <tr>
-                                <!--<th scope="col">time, V</th>-->
+                            <tr>                                
                                 <th scope="col">RPM</th>
                                 <th scope="col">Load, N</th>
                                 <th scope="col">Friction, N</th>
@@ -14,12 +13,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <!--<td>{{20}}</td>-->
-                                <td>{{printNumVal(currentData.rotationrate)}}</td>
-                                <td>{{printNumVal(currentData.load)}}</td>
-                                <td>{{printNumVal(currentData.frictionforce)}}</td>
-                                <td>{{printNumVal(currentData.temperature)}}</td>
+                            <tr>                                
+                                <td>{{crData.rotationrate| number}}</td>
+                                <td>{{crData.load| number}}</td>
+                                <td>{{crData.frictionforce| number}}</td>
+                                <td>{{crData.temperature| number}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -138,7 +138,9 @@ class SettingsHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-
+    
+    def numberToString(self,x):
+        return "{0:.4f}".format(x)
     def get(self):
         #sett?case=base
         st_case = self.get_argument("case", None, True)
@@ -193,8 +195,15 @@ class SettingsHandler(tornado.web.RequestHandler):
             dt[mask] = -1;
             #"time[s], Load[Pa], FrictionForce[N], RPM[rotation per minute],
             #temperature[C], Acoustic[??]"
-            self.write(json.dumps({"time": dt[:,0].tolist(),"load": list(dt[:,1].tolist()), "RPM": list(dt[:,3].tolist()), 
-                        "temperature": list(dt[:,4].tolist()), "friction":list(dt[:,2].tolist())}))
+            time=",".join( map(self.numberToString,dt[:,0]))
+            load=",".join( map(self.numberToString,dt[:,1]))
+            RPM=",".join( map(self.numberToString,dt[:,3]))
+            te=",".join( map(self.numberToString,dt[:,4]))
+            fr=",".join( map(self.numberToString,dt[:,2]))
+            s = '{"time":['+time+'], "load":['+load+'], "RPM":['+RPM+'], "temperature":['+te+'], "friction":['+fr+']}'
+            self.write(s)
+            #self.write(json.dumps({"time": dt[:,0].tolist(),"load": list(dt[:,1].tolist()), "RPM": list(dt[:,3].tolist()), 
+            #            "temperature": list(dt[:,4].tolist()), "friction":list(dt[:,2].tolist())}))
             Tibometer.Experiment.DataFile.CloseReader(hdf)
         elif st_case == "clbr_fr":
             self.write(Tibometer.Experiment.Settings.calibrationData.friction.get_json_string())

@@ -17,33 +17,30 @@ import { ChartService, LineChartSettings } from './../../services/chart.service'
 })
 export class ExperimentComponent implements OnInit, OnDestroy {
     totState: Observable<trTotalState> = null;
-    selected_period_min = 1;
-    OnMessage$: Observable<SensorsData> = null;
+    currentData: Observable<SensorsData> = null;
+    subsArr: Subscription[] = [];
+    OnGetFileData_Timer = interval(60000);
+    OnFileData_TimerSubscription: Subscription = null;
+    public ChartFile: LineChartSettings = new LineChartSettings();
+    @ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
+
     constructor(
         private socketservice: SocketService,
         private signalsService: SignalsService,
         private chartService: ChartService
-    ) {
-    }
-    OnMsgSubscription: Subscription = null;
-    OnMinTimer = interval(60000);
-    OnMinTimerSubscription: Subscription = null;
-    public ChartFile: LineChartSettings = new LineChartSettings();
-    @ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
-
-    currentData: SensorsData = null;
-    OnChDCh: Subscription = null;
-    subsArr: Subscription[] = [];
+    ) {  }
+    
     ngOnInit() {
         this.signalsService.GetTotalState();
         this.totState = this.signalsService.totalstate$.asObservable();
-        this.subsArr.push( this.chartService.onChartDataChanged$.subscribe(
-            reOk => {
-                this.currentData = reOk;
-            },
-            resErr => { },
-            () => { }
-        ));
+        this.currentData = this.chartService.onChartDataChanged$.asObservable()
+        //this.subsArr.push( this.chartService.onChartDataChanged$.subscribe(
+        //    reOk => {
+        //        this.currentData = reOk;
+        //    },
+        //    resErr => { },
+        //    () => { }
+        //));
         this.subsArr.push(this.chartService.expFileData$.subscribe(
             resOk => { this.updateChartLines(resOk);},
             resErr => { },
@@ -60,6 +57,20 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     }
     printNumVal(v: any) {
         return ObjHelper.printNumVal(v);
+    }
+
+    public secondsToSting(s: number) {
+        let t = Math.floor(s / 86400);
+        let ds = t > 0 ? (t < 10 ? " " + String(t) : String(t)) : "  ";
+        let tt = s % 86400;
+        t = Math.floor(tt / 3600);
+        let hs = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
+        tt = tt % 3600;
+        t = Math.floor(tt / 60);
+        let ms = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
+        t = tt % 60;
+        let ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
+        return `${ds} ${hs}:${ms}:${ss}`;
     }
 
     updateChartLines(x: trResultFileData) {
@@ -84,19 +95,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     stopExperiment() {
         this.endWrite();
     }
-    public secondsToSting(s: number) {
-        let t = Math.floor(s / 86400);
-        let ds = t > 0 ? (t < 10 ? " " + String(t) : String(t)) : "  ";
-        let tt = s % 86400;
-        t = Math.floor(tt / 3600);
-        let hs = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
-        tt = tt % 3600;
-        t = Math.floor(tt / 60);
-        let ms = t > 0 ? (t < 10 ? "0" + String(t) : String(t)) : "00";
-        t = tt % 60;
-        let ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
-        return `${ds} ${hs}:${ms}:${ss}`;
-    }
+    
     public removeNaN(data: number[]) {
         data.forEach(function (item, i) { if (isNaN(item)) data[i] = -1; });
         return data;
@@ -130,16 +129,16 @@ export class ExperimentComponent implements OnInit, OnDestroy {
         );
     }
     UnsubscribeTimer() {
-        if (this.OnMinTimerSubscription) {
-            this.OnMinTimerSubscription.unsubscribe();
-            this.OnMinTimerSubscription = null;
+        if (this.OnFileData_TimerSubscription) {
+            this.OnFileData_TimerSubscription.unsubscribe();
+            this.OnFileData_TimerSubscription = null;
         }
     }
     InitTimer(period: number) {
         this.UnsubscribeTimer();
         if (period > 0) {
-            this.OnMinTimer = interval(period * 60000);
-            this.OnMinTimerSubscription = this.OnMinTimer.subscribe(x => {
+            this.OnGetFileData_Timer = interval(period * 60000);
+            this.OnFileData_TimerSubscription = this.OnGetFileData_Timer.subscribe(x => {
                 this.updateWChartData();
             });
         }

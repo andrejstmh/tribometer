@@ -3,9 +3,9 @@
         <div class="container rounded border bg-light m-1">
             <h6>Rotation control</h6>
             <input type="text" [(ngModel)]="rpmVal" name="rpm" #rpm>
-            <button type="button" class="btn btn-info m-1" (click)="rotation()">Set RPM {{rpmVal}}[RPM]/{{rpmVal/60.0}}[Hz]</button>
+            <button type="button" class="btn btn-info m-1" (click)="rotation()">Set RPM {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>
             <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
-            <div *ngIf="currentData" class="btn btn-light m-1 disabled">{{printNumVal(currentData.rotationrate)}}</div>
+            <div *ngIf="currentData" class="btn btn-light m-1 disabled">{{currentData.rotationrate| number}}</div>
         </div>
     </div>
     <div class="row">
@@ -44,11 +44,11 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <!--<td>{{printNumVal(currentData.time)}}</td>-->
-                        <td>{{printNumVal(currentData.rotationrate)}}</td>
-                        <td>{{printNumVal(currentData.load)}}</td>
-                        <td>{{printNumVal(currentData.frictionforce)}}</td>
-                        <td>{{printNumVal(currentData.temperature)}}</td>
+                        <!--<td>{{currentData.time| number}}</td>-->
+                        <td>{{currentData.rotationrate| number}}</td>
+                        <td>{{currentData.load| number}}</td>
+                        <td>{{currentData.frictionforce| number}}</td>
+                        <td>{{currentData.temperature| number}}</td>
                     </tr>
                 </tbody>
             </table>
