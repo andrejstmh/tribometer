@@ -12,7 +12,7 @@
     <div class="row"> <h3>Calibration curves</h3> </div>
     <div class="row">
         <div class="col">
-            <div class="row">
+            <!--<div class="row">
                 <ul class="ccurves">
                     <li *ngFor="let curve of CCurves"
                         [class.selected]="curve === selectedCurve"
@@ -20,12 +20,17 @@
                         {{curve.name}}
                     </li>
                 </ul>
-            </div>
+            </div>-->
             <div class="row">
                 <div *ngIf="data$|async as data" class="card-body bg-light border-top">
                     <div class="row">
                         <div class="col-9">
-                            <h6>{{selectedCurve.name}}</h6>
+                            <!--<h6>{{selectedCurve.name}}</h6>-->
+                            <select [(ngModel)]="selectedCurve" (change)="onSelect($event.target.value)" 
+                                    class="browser-default custom-select"
+                                    [disabled]="editCurve">
+                                <option *ngFor="let curve of CCurves" [ngValue]="curve">{{curve.name}}</option>
+                            </select>
                         </div>
                         <div class="col-3">
                             <button class="btn btn-danger" type="button" (click)="EditClic()" [hidden]="editCurve">

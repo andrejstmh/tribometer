@@ -97,10 +97,11 @@ export class CalibrCurveComponent implements OnInit {
         //plt.show(p);
     }
 
-    onSelect(curve) {
-        if (curve) {
+    onSelect(curve1) {
+        if (this.selectedCurve) {
+            let curve = this.selectedCurve;
             console.log("onSelect");
-            this.selectedCurve = curve;
+            //this.selectedCurve = curve;
             //this.CurveTable = null;
             //this.CcurvData = null;
             //this.tableSettings.columns[0].title = curve.title[0];
