@@ -43,6 +43,8 @@
     <Compile Include="motor3.py" />
     <Compile Include="program.py" />
     <Compile Include="read_RPM.py" />
+    <Compile Include="relay_control.py" />
+    <Compile Include="RPM_i2c.py" />
     <Compile Include="SDL_Pi_HDC1000.py" />
     <Compile Include="sensor_data.py">
       <SubType>Code</SubType>
@@ -58,6 +60,7 @@
     <Compile Include="tribometer.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="trib_emulator.py" />
     <Compile Include="VFD.py" />
   </ItemGroup>
   <ItemGroup>

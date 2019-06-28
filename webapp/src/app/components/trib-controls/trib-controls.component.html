@@ -2,7 +2,7 @@
     <div class="row">
         <div class="container rounded border bg-light m-1">
             <h6>Rotation control</h6>
-            <input type="text" [(ngModel)]="rpmVal" name="rpm" #rpm>
+            <input type="number" [(ngModel)]="rpmVal" name="rpm" #rpm>
             <button type="button" class="btn btn-info m-1" (click)="rotation()">Set RPM {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>
             <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
             <div *ngIf="currentData" class="btn btn-light m-1 disabled">{{currentData.rotationrate| number}}</div>
@@ -24,7 +24,7 @@
                     <div class="col-7">
                         <h6>Load threshold</h6>
                         <!-- [(ngModel)]="rpmVal" name="rpm" #rpm -->
-                        <input type="text">
+                        <input type="number">
                         <button type="button" class="btn btn-info m-1">Apply</button>
                     </div>
                 </div>

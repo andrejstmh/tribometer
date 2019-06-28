@@ -3,15 +3,21 @@ if platform.system()!='Windows':
     from motor3 import P_motor;
     from VFD import set_speed,start,stop
 else:
+    import trib_emulator
+    import numpy
     def P_motor(steps,direction):
-        return 0
-    def set_speed(speed):
-        return 0;
-    def start():
-        return 0;
-    def stop():
-        return 0;
+        delta = 1.8*steps*(steps*2-1)
+        trib_emulator.tribometer_Emul.setLoad(delta);
 
+    def set_speed(speed):
+        trib_emulator.tribometer_Emul.set_WFD(-speed)
+    def start():
+        trib_emulator.tribometer_Emul.set_WFD(numpy.abs( trib_emulator.tribometer_Emul.WFD))
+
+    def stop():
+        trib_emulator.tribometer_Emul.set_WFD(0)
+
+from relay_control import setReleyState;
 
 if __name__ == '__main__':
     #P_motor(100,1)  #(first) number of steps (second) dirrection (0 or 1) one step 1,8 degree

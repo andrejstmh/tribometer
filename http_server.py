@@ -45,6 +45,13 @@ def checkServer():
 
 class SocketMessageData:
     @classmethod
+    def numberToString4(cls,x):
+            return "{0:.4f}".format(x)
+    @classmethod
+    def get_list_string(cls,l:list):
+        return "["+",".join( map(SocketMessageData.numberToString,l))+"]"
+
+    @classmethod
     def ToJSON(cls,sensorData=None,state=None,i=0):
         data = None
         st  = None
@@ -53,7 +60,8 @@ class SocketMessageData:
             mask = np.isnan(sensorData);
             sd = np.array(sensorData, copy=True)
             sd[mask] = -1.0;
-            data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":sd[5]}
+            data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":0.0}
+
         if (state is not None):
             st = dict(vars(state))
         return json.dumps( {"sensorData":data,"state":st} )

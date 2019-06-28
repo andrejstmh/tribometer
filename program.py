@@ -5,6 +5,16 @@ import collections
 
 import exp_settings
 
+class ProgramItem:
+    def __init__(self,id,time_start,time_end=None, TargetLoad=None, TargetRPM=None,
+    ThresholdMaxFricdtionForce=None, ThresholdMaxTemperature=None):
+        self.id=id
+        self.StartTime=time_start
+        self.EndTime = time_end
+        self.TargetLoad = TargetLoad
+        self.TargetRPM = TargetRPM
+        self.ThresholdMaxFricdtionForce = ThresholdMaxFricdtionForce
+        self.ThresholdMaxTemperature = ThresholdMaxTemperature
 
 class Program:
 	def __init__(self, settings:exp_settings.ExperimentSettings):
@@ -18,19 +28,18 @@ class Program:
 		self.programHistory = collections.deque(maxlen=bl)
 
 	def makeProgramArray(self):
-		colNames = ["time", "load","RPM", "maxFfr","maxT","maxVibr","Nr"]
+		colNames = ["time", "load","RPM", "maxFfr","maxT","Nr"]
 		maxFfr = np.float(self.Settings.friction_force_threshold)
 		maxT = np.float(self.Settings.temperature_threshold)
-		maxVibr = np.float(self.Settings.vibration_threshold)
 		maxTime = np.float(self.Settings.total_duration)
-		if len(self.Settings.program)<1:
+		if self.Settings.manual_mode or len(self.Settings.program)<1:
 			self.Settings.manual_mode = True
 		prlist = []
 		time = 0.0;
 		if self.Settings.manual_mode:
-			prlist.append([time,np.nan, np.nan,maxFfr,maxT,maxVibr,0])
+			prlist.append([time,np.nan, np.nan,maxFfr,maxT,0])
 			time+=maxTime*3600
-			prlist.append([time,np.nan, np.nan,maxFfr,maxT,maxVibr,0])
+			prlist.append([time,np.nan, np.nan,maxFfr,maxT,0])
 		else:
 			pr = self.Settings.program
 			def getFieldValue(it:dict,name:str,defaulV:np.float=None)->np.float:
@@ -44,9 +53,8 @@ class Program:
 				rpm = getFieldValue(it,"RPM")
 				F = getFieldValue(it,"maxFfr",maxFfr)
 				T = getFieldValue(it,"maxT",maxT)
-				V = getFieldValue(it,"maxVibr",maxVibr)
-				prlist.append([time if i==0 else time+1E-3,load,rpm,F,T,V,i])
-				time+=t*3600
+				prlist.append([time if i==0 else time+1E-3,load,rpm,F,T,i])
+				time+=t*60
 				prlist.append([time,load,rpm,F,T,V,i])
 		df = pnd.DataFrame(data =np.array(prlist,dtype=np.float), columns=colNames).T
 		self.program = df;

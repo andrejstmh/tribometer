@@ -72,7 +72,7 @@ class ExperimentSettings:
     listening_interval = property(get_listening_interval,set_listening_interval)
 
     def get_recording_cycle(self):return self.settings["recording_cycle"]
-    def set_recording_cycle(self, value):self.settings["recording_cycle"] = value
+    def set_recording_cycle(self, value):self.settings["recording_cycle"] = np.around(value*1000/self.listening_interval).astype(np.int)
     recording_cycle = property(get_recording_cycle,set_recording_cycle)
 
     def get_visualisation_cycle(self):return self.settings["visualisation_cycle"]
@@ -83,6 +83,14 @@ class ExperimentSettings:
     def set_total_duration(self, value):self.settings["total_duration"] = value
     total_duration = property(get_total_duration,set_total_duration)
 
+    def get_target_load(self):return self.settings["load"]
+    def set_target_load(self, value):self.settings["load"] = value
+    target_load = property(get_target_load,set_target_load)
+
+    def get_target_rpm(self):return self.settings["rpm"]
+    def set_target_rpm(self, value):self.settings["rpm"] = value
+    target_rpm= property(get_target_rpm,set_target_rpm)
+
     def get_manual_mode(self):return self.settings["manual_mode"]
     def set_manual_mode(self, value):self.settings["manual_mode"] = value
     manual_mode = property(get_manual_mode,set_manual_mode)
@@ -90,6 +98,8 @@ class ExperimentSettings:
     def get_program(self):return self.settings["program"]
     def set_program(self, value):self.settings["program"] = value
     program = property(get_program,set_program)    
+
+
 
     def get_friction_force_threshold(self):return self.settings["friction_force_threshold"]
     def set_friction_force_threshold(self, value):self.settings["friction_force_threshold"] = value

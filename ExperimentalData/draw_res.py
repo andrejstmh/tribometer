@@ -24,7 +24,7 @@ prevCount = -1
 last_rec=0
 print('do cikla')
 while prevCount!=last_rec or True:
-    #"time[s], Load[Pa], FrictionForce[N], RPM[rotation per minute], temperature[C], Acoustic[??]"
+    #"time[s], Load[Pa], FrictionForce[N], RPM[rotation per minute], temperature[C]"
     prevCount = last_rec
     dt = hdf["data"]
     last_rec = np.argmax(dt[:,0])

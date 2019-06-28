@@ -20,13 +20,13 @@
                           [(ngModel)]="totState.settings.bearing" name="bearing" #bearing="ngModel"></textarea>
                 <div [hidden]="bearing.valid"
                      class="alert alert-danger">
-                    Bering description is required
+                    Bearing description is required
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="output_file">Output file name</label>
-                <input type="text" class="form-control" id="output_file" placeholder="Example: result.h5"
+                <input type="text" class="form-control" pattern="[0-9]*" id="output_file" placeholder="Example: result.h5"
                        required
                        [(ngModel)]="totState.settings.output_file" name="output_file" #output_file="ngModel" />
                 <div [hidden]="output_file.valid"
@@ -36,9 +36,9 @@
             </div>
 
             <div class="form-group">
-                <label for="recording_cycle">Recording period</label>
-                <input type="text" class="form-control" id="recording_cycle" placeholder="Example: 1"
-                       required
+                <label for="recording_cycle">Recording interval, s</label>
+                <input type="number" class="form-control" id="recording_cycle" placeholder=""
+                       required min="0" max="60"
                        [(ngModel)]="totState.settings.recording_cycle" name="recording_cycle" #recording_cycle="ngModel" />
                 <div [hidden]="recording_cycle.valid"
                      class="alert alert-danger">
@@ -47,20 +47,42 @@
             </div>
 
             <div *ngIf="totState.settings.manual_mode" class="form-group">
-                <label for="total_duration">Experiment total duration, hours</label>
-                <input type="text" class="form-control" id="total_duration" placeholder="Example: 24"
-                       required
+                <label for="total_duration">Maximum experiment duration, minutes</label>
+                <input type="number" class="form-control" id="total_duration" placeholder="Example: 24"
+                       required min="1" max="10000"
                        [(ngModel)]="totState.settings.total_duration" name="total_duration" #total_duration="ngModel" />
                 <div [hidden]="total_duration.valid"
                      class="alert alert-danger">
-                    total_duration is required
+                    Maximum experiment duration is required
+                </div>
+            </div>
+
+            <div *ngIf="totState.settings.manual_mode" class="form-group">
+                <label for="load">Applied load, N</label>
+                <input type="number" class="form-control" id="load" placeholder="1<load<1000"
+                       required min="1" max="1000"
+                       [(ngModel)]="totState.settings.load" name="load" #load="ngModel" />
+                <div [hidden]="load.valid"
+                     class="alert alert-danger">
+                    Applied load is required
+                </div>
+            </div>
+
+            <div *ngIf="totState.settings.manual_mode" class="form-group">
+                <label for="rpm">Revolutions per minute(RPM)</label>
+                <input type="number" class="form-control" id="rpm" placeholder="300<load<3000"
+                       required min="300" max="3000"
+                       [(ngModel)]="totState.settings.rpm" name="rpm" #rpm="ngModel" />
+                <div [hidden]="rpm.valid"
+                     class="alert alert-danger">
+                    Applied load is required
                 </div>
             </div>
 
             <div *ngIf="totState.settings.manual_mode" class="form-group">
                 <label for="friction_force_threshold">Friction force threshold, N</label>
-                <input type="text" class="form-control" id="friction_force_threshold" placeholder="Example: 2"
-                       required
+                <input type="number" class="form-control" id="friction_force_threshold" placeholder="Example: 2"
+                       required min="10" max="1000"
                        [(ngModel)]="totState.settings.friction_force_threshold" name="friction_force_threshold" #friction_force_threshold="ngModel" />
                 <div [hidden]="friction_force_threshold.valid"
                      class="alert alert-danger">
@@ -70,8 +92,8 @@
 
             <div *ngIf="totState.settings.manual_mode" class="form-group">
                 <label for="temperature_threshold">Temperature threshold, °C</label>
-                <input type="text" class="form-control" id="temperature_threshold" placeholder="Example: 2"
-                       required
+                <input type="number" class="form-control" id="temperature_threshold" placeholder="Example: 2"
+                       required min="25" max="120"
                        [(ngModel)]="totState.settings.temperature_threshold" name="temperature_threshold" #temperature_threshold="ngModel" />
                 <div [hidden]="temperature_threshold.valid"
                      class="alert alert-danger">
@@ -114,9 +136,9 @@
                     </div>
                     <div class="row">
                         <!-- "duration":0.25, "load":0.0,"RPM":1000,"Tmax":100,"Fmax":10 -->
-                        <div class="col">Duration, h</div>
+                        <div class="col">Duration, minutes</div>
                         <div class="col">Load, N</div>
-                        <div class="col">RPM</div>
+                        <div class="col">Revolutions per minute</div>
                         <div class="col">Friction force threshold</div>
                         <div class="col">Temperature threshold, °C</div>
                     </div>
@@ -133,17 +155,33 @@
                         </div>
                         <div *ngIf="r==selectedRow" class="card-body bg-light border-top">
                             <div class="row">
-                                <div class="col"><input type="text" [(ngModel)]="selectedRow.duration" class="form-control" name="pr_du"/></div>
-                                <div class="col"><input type="text" [(ngModel)]="selectedRow.load" class="form-control" name="pr_load"/></div>
-                                <div class="col"><input type="text" [(ngModel)]="selectedRow.RPM" class="form-control" name="pr_rpm"/></div>
-                                <div class="col"><input type="text" [(ngModel)]="selectedRow.Fmax" class="form-control" name="pr_Fm"/></div>
-                                <div class="col"><input type="text" [(ngModel)]="selectedRow.Tmax" class="form-control" name="pr_Tm"/></div>
+                                <div class="col">
+                                    <input type="number" required min="1" max="10000"
+                                           [(ngModel)]="selectedRow.duration" class="form-control" name="pr_du" />
+                                </div>
+                                <div class="col">
+                                    <input type="number" required min="1" max="1000"
+                                           [(ngModel)]="selectedRow.load" class="form-control" name="pr_load" />
+                                </div>
+                                <div class="col">
+                                    <input type="number" required min="300" max="3000"
+                                           [(ngModel)]="selectedRow.RPM" class="form-control" name="pr_rpm" />
+                                </div>
+                                <div class="col">
+                                    <input type="number" required min="10" max="1000"
+                                           [(ngModel)]="selectedRow.Fmax" class="form-control" name="pr_Fm" />
+                                </div>
+                                <div class="col">
+                                    <input type="number" required min="25" max="120"
+                                           [(ngModel)]="selectedRow.Tmax" class="form-control" name="pr_Tm" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success" [disabled]="!settingsForm.form.valid">Applay</button>
+
+            <button type="submit" class="btn btn-success" [disabled]="!settingsForm.form.valid">Apply</button>
         </form>
-    </div>
+</div>
 </div>

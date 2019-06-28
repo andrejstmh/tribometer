@@ -15,6 +15,7 @@ while hdc1000 is None:
         hdc1000 = SDL_Pi_HDC1000.SDL_Pi_HDC1000()
     except:
         hdc1000 = None
+
 isSetHumidityResolution=False
 while not isSetHumidityResolution:
     try:
