@@ -40,14 +40,14 @@ class TibometerEmulator:
     def setLoad(self,rotation_deg):
         c = 0.5 if rotation_deg > 0 else 1.0
         delta = 0.4 * (1.1 - self.Load_rot_pos) * rotation_deg * c
-        if delta * rot_delta < 0:
-            self.rot_delta = 0
-        self.rot_delta+=delta
-        self.Load_rot_pos += delta
+        #if delta * self.rot_delta < 0:
+        #    self.rot_delta = 0
+        self.Load_rot_pos += delta/360/2
         if self.Load_rot_pos < 0:self.Load_rot_pos = 0
         if self.Load_rot_pos > 1:self.Load_rot_pos = 1
-        step = 90/360/20
-        if np.abs(self.rot_delta)>np.random.normal(0, step + 5*self.Load_rot_pos*step):
+        self.rot_delta+= np.abs(np.random.normal(0, 30))*rotation_deg/90.0
+        if np.abs(self.rot_delta)>120:
+            self.rot_delta = 0.0
             self.press_reduct = self.Load_rot_pos
 
 tribometer_Emul = TibometerEmulator()

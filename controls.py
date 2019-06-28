@@ -6,7 +6,7 @@ else:
     import trib_emulator
     import numpy
     def P_motor(steps,direction):
-        delta = 1.8*steps*(steps*2-1)
+        delta = -1.8*steps*(direction*2-1)
         trib_emulator.tribometer_Emul.setLoad(delta);
 
     def set_speed(speed):
