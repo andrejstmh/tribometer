@@ -2,6 +2,7 @@ import numpy as np
 import datetime
 import collections
 import platform
+import base64
 
 import exp_settings
 import exp_datafile
@@ -20,28 +21,28 @@ class Experiment:
     avgBuffreSize = 20;
     sensorDataVecLength = 5#time,load, friction, rpm, temperatura
     sensorVoltageVecLength = 2
+    targetVecLength = 2
     def __init__(self):
         self.Settings = exp_settings.ExperimentSettings()
         self.DataFile = exp_datafile.ExperimentDataFile(self.Settings)
         self.Program = program.Program(self.Settings)
         self.Sensors = sensor_data.SensorData()
         self.status = exp_settings.ExpState()
-        #self.currentSensorData = None
-        #self.currentRecordData = None
-        self.currentAverageData = None
-        self.currentAverageVoltage = None
-        self.currentTargetData = None
+
+        self.currentAverageData = np.full(shape=(Experiment.sensorDataVecLength), fill_value=np.nan, dtype=np.float)
+        self.currentAverageVoltage = np.full(shape=(Experiment.sensorVoltageVecLength), fill_value=np.nan, dtype=np.float)
+        self.currentTargetData = np.full(shape=(Experiment.targetVecLength), fill_value=np.nan, dtype=np.float)
 
         self.DataBufferPointer = 0;
         self.SensorVoltageBuffer = np.full(shape=(Experiment.avgBuffreSize,Experiment.sensorVoltageVecLength),
-                                           fill_value=np.nan,dtype=np.float);
+                                           fill_value=np.nan,dtype=np.float)
         self.SensorDataBuffer = np.full(shape=(Experiment.avgBuffreSize,Experiment.sensorDataVecLength),
-                                        fill_value=np.nan, dtype=np.float);
+                                        fill_value=np.nan, dtype=np.float)
         self.SensorDataBuffer[:,0] = 0.0
     
-    def get_currentSensorData(self):
+    def get_currentSensorVoltage(self):
         return self.SensorVoltageBuffer[self.DataBufferPointer]
-    currentRecordData = property(get_currentSensorData)
+    currentRecordVoltage = property(get_currentSensorVoltage)
 
     def get_currentRecordData(self):
         return self.SensorDataBuffer[self.DataBufferPointer]
@@ -68,11 +69,22 @@ class Experiment:
         self.SensorDataBuffer[self.DataBufferPointer,:] = np.array([time, load, fr, rpm, t], dtype=np.float);
         self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
         self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
-
-        self.currentTargetData = None
-
+        #self.currentTargetData = np.full(shape=(Experiment.targetVecLength), fill_value=np.nan, dtype=np.float)
         return self.currentRecordData;
     
+
+    def ConvertTob64String(self):
+        #testar =np.array([1.1,2.2,0,np.nan, 1], dtype=np.float)
+        #s = np.fromstring( testar.tobytes(),dtype=np.dtype('B'));
+        #db = '"'+base64.b64encode(testar).decode("utf-8")+'"'
+        db = '"'+base64.b64encode(self.currentRecordData).decode("utf-8")+'"'
+        vb = '"'+base64.b64encode(self.currentRecordVoltage).decode("utf-8")+'"'
+        adb = '"'+base64.b64encode(self.currentAverageData).decode("utf-8")+'"'
+        avb = '"'+base64.b64encode(self.currentAverageVoltage).decode("utf-8")+'"'
+        tb = '"'+base64.b64encode(self.currentTargetData).decode("utf-8")+'"'
+        s = '{"db":'+db +',"vb":'+vb+',"adb":'+adb+',"avb":'+avb+',"tb":'+tb+'}'
+        return s;
+
     def SetRotationFrequency(FrInHz):
         return 0
 

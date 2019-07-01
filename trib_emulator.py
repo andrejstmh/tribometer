@@ -21,7 +21,7 @@ class TibometerEmulator:
         return self.WFD + 1.0 + np.sin(datetime.datetime.now().minute / 60.0 * 2 * np.pi) if self.WFD > 0.1 else 0.0
 
     def get_RPM(self):
-        return np.power(4 / 5,self.WFD * 60) + np.random.normal(0, 2) if self.WFD>0.1 else 0.0
+        return 2.0375*np.power(self.get_WFD() * 60,0.8756) + np.random.normal(0, 2) if self.WFD>0.1 else 0.0
 
     def get_Temp(self):
         return self.Temperature + np.random.normal(0, 0.5)

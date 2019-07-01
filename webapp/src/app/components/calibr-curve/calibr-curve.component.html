@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-9">
                             <!--<h6>{{selectedCurve.name}}</h6>-->
-                            <select [(ngModel)]="selectedCurve" (change)="onSelect($event.target.value)" 
+                            <select [(ngModel)]="selectedCurve" (change)="onSelect($event.target.value)"
                                     class="browser-default custom-select"
                                     [disabled]="editCurve">
                                 <option *ngFor="let curve of CCurves" [ngValue]="curve">{{curve.name}}</option>
@@ -38,7 +38,25 @@
                             </button>
                         </div>
                     </div>
-                    
+                    <div class="row">
+                        <div *ngIf="currentData" class="container rounded border bg-light m-1">
+                            <div class="row h5">
+                                <div class="col">Value</div>
+                                <div class="col">Voltage, V</div>
+                                <div class="col">Force, N</div>
+                            </div>
+                            <div class="row border-top">
+                                <div class="col">average</div>
+                                <div class="col">{{currentData.avgVoltage| number}}</div>
+                                <div class="col">{{currentData.avgForce| number}}</div>
+                            </div>
+                            <div class="row border-top font-weight-light">
+                                <div class="col">actual</div>
+                                <div class="col">{{currentData.currVoltage| number}}</div>
+                                <div class="col">{{currentData.currForce| number}}</div>
+                            </div>
+                        </div>
+                    </div>
                     <div *ngIf="editCurve" class="row">
                         <!--*ngIf="edit"-->
                         <div class="col-12 col-sm-6 pr-sm-0 col-md-12 pr-md-3 col-xl-6 pr-xl-0">

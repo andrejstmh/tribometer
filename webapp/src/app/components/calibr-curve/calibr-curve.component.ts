@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { SignalsService } from './../../services/signals.service';
 import { CalibrationCurve, trTotalState, ObjHelper } from './../../models/message.model';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { ChartService } from './../../services/chart.service';
 
 class CurveRow {
     constructor(public x: number = 0, public y: number = 0, public Nr: number = null) { }
 }
 
-
 class CurveInfo {
     constructor(public name?: string, public path?: string, public title?: string[]) { }
+}
+
+class CurrentData {
+    constructor(public avgVoltage?: number, public avgForce?: number,
+        public currVoltage?: number, public currForce?: number) { }
+    
 }
 
 @Component({
@@ -18,20 +24,24 @@ class CurveInfo {
     templateUrl: './calibr-curve.component.html',
     styleUrls: ['./calibr-curve.component.css']
 })
-export class CalibrCurveComponent implements OnInit {
+export class CalibrCurveComponent implements OnInit, OnDestroy {
     selectedCurve: CurveInfo = null;
     CCurves = [
         new CurveInfo("Friction force calibration curve", "clbr_fr", ["Voltage, V", "Force, N"]),
         new CurveInfo("Load calibration curve", "clbr_load", ["Voltage, V", "Force, N"])
     ]
+    currentData: CurrentData = new CurrentData(NaN, NaN, NaN, NaN);
     data$: BehaviorSubject<CurveRow[]> = new BehaviorSubject<CurveRow[]>([]);
     editCurve: boolean = false;
     selectedRow: CurveRow = new CurveRow();
     prevData: CurveRow[] = [];
-
+    OnChDCh: Subscription = null;
     CcurvData: CalibrationCurve = null;
     status$: BehaviorSubject<trTotalState> = null;
-    constructor(private sygnalServ: SignalsService) {
+    constructor(
+        private sygnalServ: SignalsService,
+        private chartService: ChartService
+    ) {
         this.status$ = this.sygnalServ.totalstate$;
         this.selectedCurve = this.CCurves[0];
     }
@@ -53,6 +63,29 @@ export class CalibrCurveComponent implements OnInit {
     //}
     ngOnInit() {
         this.onSelect(this.CCurves[0]);
+        this.OnChDCh = this.chartService.onChartDataChanged$.subscribe(
+            reOk => {
+                if (reOk) {
+                    //load, fr
+                    // time, load, fr
+                    if (this.selectedCurve == this.CCurves[0]) {
+                        // friction
+                        this.currentData = new CurrentData(reOk.avb[1], reOk.adb[2], reOk.vb[1], reOk.db[2]);
+                    } else {
+                        //load
+                        this.currentData = new CurrentData(reOk.avb[0], reOk.adb[1], reOk.vb[0], reOk.db[1]);
+                    }
+                    
+                    
+                }
+                //console.log("update trib-control");
+            },
+            resErr => { },
+            () => { }
+        );
+    }
+    ngOnDestroy() {
+        if (this.OnChDCh) { this.OnChDCh.unsubscribe(); } 
     }
     printNumVal(v: any) {
         return ObjHelper.printNumVal(v);

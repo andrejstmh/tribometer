@@ -133,7 +133,7 @@ export const chartDataLength: number = 100;
 @Injectable()
 export class ChartService {
     public expFileDataRefreshPeriodMin = 1;
-    public onChartDataChanged$: BehaviorSubject<SensorsData> = new BehaviorSubject<SensorsData>(new SensorsData(NaN, NaN, NaN, NaN, NaN));
+    public onChartDataChanged$: BehaviorSubject<SensorsData> = new BehaviorSubject<SensorsData>(null);
     public ChartListen: LineChartSettings = new LineChartSettings();
     public expFileData$: BehaviorSubject<trResultFileData> = new BehaviorSubject<trResultFileData>(new trResultFileData([],[],[],[],[]));
 
@@ -161,7 +161,7 @@ export class ChartService {
         //for (let i = 0; i <= chartDataLength; i++) {
         //    this.ChartListen.lineChartLabels[i] = String(i);
         //}
-        this.onChartDataChanged$.next(new SensorsData(-1, -1, -1, -1, -1));
+        //this.onChartDataChanged$.next(new SensorsData(-1, -1, -1, -1, -1));
 
     }
 
@@ -203,10 +203,11 @@ export class ChartService {
                 this.ChartListen.lineChartData[2].data[j] = this.ChartListen.lineChartData[2].data[j - 1];
                 this.ChartListen.lineChartData[3].data[j] = this.ChartListen.lineChartData[3].data[j - 1];
             }
-            this.ChartListen.lineChartData[0].data[0] = this.NanToNum(x.temperature);
-            this.ChartListen.lineChartData[1].data[0] = this.NanToNum(x.rotationrate);
-            this.ChartListen.lineChartData[2].data[0] = this.NanToNum(x.load);
-            this.ChartListen.lineChartData[3].data[0] = this.NanToNum(x.frictionforce);
+            //"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]
+            this.ChartListen.lineChartData[0].data[0] = x.db[4];//this.NanToNum(x.temperature);
+            this.ChartListen.lineChartData[1].data[0] = x.db[3];//this.NanToNum(x.rotationrate);
+            this.ChartListen.lineChartData[2].data[0] = x.db[1];//this.NanToNum(x.load);
+            this.ChartListen.lineChartData[3].data[0] = x.db[2];//this.NanToNum(x.frictionforce);
             this.onChartDataChanged$.next(x);
         }
     }

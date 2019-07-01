@@ -20,7 +20,7 @@ class Tibometer:
     @classmethod
     def getValues(cls,i):
         sd = cls.Experiment.GetSensorData()
-        cls.Experiment.currentTargetData = cls.Experiment.Program.MoveToTarget(sd)
+        #cls.Experiment.currentTargetData = cls.Experiment.Program.MoveToTarget(sd)
         return (sd,cls.Experiment.currentTargetData)
 
     @classmethod

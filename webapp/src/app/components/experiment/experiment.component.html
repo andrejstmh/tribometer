@@ -1,11 +1,45 @@
 <div  class="container-fluid">
     <div *ngIf="totState|async as totSTATE" class="row">
         <div class="container rounded border bg-light">
+            <!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
             <div class="row">
+                <div *ngIf="currentData|async as crData" class="container rounded border bg-light m-1">
+                    <!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
+                    <div class="row h5">
+                        <div class="col">Value</div>
+                        <div class="col">Time, min</div>
+                        <div class="col">RPM</div>
+                        <div class="col">Load, N</div>
+                        <div class="col">Friction, N</div>
+                        <div class="col">T, °C</div>
+                        <div class="col">μ,-</div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col">average</div>
+                        <div class="col">{{crData.db[0]/60.0| number:'1.2-2'}}</div>
+                        <div class="col">{{crData.adb[3]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.adb[1]| number}}</div>
+                        <div class="col">{{crData.adb[2]| number}}</div>
+                        <div class="col">{{crData.adb[4]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.adb[2]/crData.adb[1]| number}}</div>
+                    </div>
+                    <div class="row border-top font-weight-light">
+                        <div class="col">actual</div>
+                        <div class="col">{{crData.db[0]/60.0| number:'1.2-2'}}</div>
+                        <div class="col">{{crData.db[3]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.db[1]| number}}</div>
+                        <div class="col">{{crData.db[2]| number}}</div>
+                        <div class="col">{{crData.db[4]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.db[2]/crData.db[1]| number}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="row">
                 <div class="container rounded border bg-light m-1">
                     <table *ngIf="currentData|async as crData" class="table">
                         <thead>
-                            <tr>                                
+                            <tr>
                                 <th scope="col">RPM</th>
                                 <th scope="col">Load, N</th>
                                 <th scope="col">Friction, N</th>
@@ -13,16 +47,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>                                
-                                <td>{{crData.rotationrate| number}}</td>
-                                <td>{{crData.load| number}}</td>
-                                <td>{{crData.frictionforce| number}}</td>
-                                <td>{{crData.temperature| number}}</td>
+                            <tr>
+                        <td>{{crData.load| number}}</td>
+                        <td>{{crData.frictionforce| number}}</td>
+                        <td>{{crData.temperature| number}}</td>
+                                <td>{{crData.adb[3]| number}}</td>
+                                <td>{{crData.adb[1]| number}}</td>
+                                <td>{{crData.adb[2]| number}}</td>
+                                <td>{{crData.adb[4]| number}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>-->
             <!--status =  init = 0, started = 2, completed = 3 -->
             <div class="row">
                 <div class="container rounded border bg-light m-1">

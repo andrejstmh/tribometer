@@ -17,6 +17,7 @@ import webbrowser
 
 import numpy as np
 from exp_settings import ExpStatus
+import convert2JSON
 
 def checkServer():
     #conn = http.client.HTTPConnection('http://localhost', 8787, timeout=100)
@@ -43,33 +44,6 @@ def checkServer():
     http_client.close()
     return res
 
-class SocketMessageData:
-    @classmethod
-    def numberToString4(cls,x):
-            return "{0:.4f}".format(x)
-    @classmethod
-    def get_list_string(cls,l:list):
-        return "["+",".join( map(SocketMessageData.numberToString,l))+"]"
-
-    @classmethod
-    def ToJSON(cls,sensorData=None,state=None,i=0):
-        data = None
-        st  = None
-        if (sensorData is not None):
-            #sd = np.nan_to_num(sensorData)
-            mask = np.isnan(sensorData);
-            sd = np.array(sensorData, copy=True)
-            sd[mask] = -1.0;
-            data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":0.0}
-
-        if (state is not None):
-            st = dict(vars(state))
-        return json.dumps( {"sensorData":data,"state":st} )
-
-    def __init__(self,sensorData=None,state=None):
-        self.sensorData = sensorData
-        self.state = state
-
 class DataSocketHandler(tornado.websocket.WebSocketHandler):
     waiters = set()
     def check_origin(self, param):
@@ -95,11 +69,13 @@ class DataSocketHandler(tornado.websocket.WebSocketHandler):
 
     @classmethod
     def send_message_to_client(cls,i):
-        sd = Tibometer.Experiment.currentRecordData
+        #sd = Tibometer.Experiment.currentRecordData
         #sd = np.nan_to_num(sd)
         #data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":sd[5]}
-        cls.send_updates(SocketMessageData.ToJSON(sd,None,i))#json.dumps(data))
-        return sd
+        #cls.send_updates(convert2JSON.SocketMessageData.ToJSON(sd,None,i))#json.dumps(data))
+        s = convert2JSON.SocketMessageData.ToJSON_b64(Tibometer.Experiment,None,i)
+        cls.send_updates(s);
+        return None
 
     @classmethod
     def send_state_message_to_client(cls, expState):

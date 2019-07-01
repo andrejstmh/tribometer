@@ -9,7 +9,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 //import { Message } from '../model/message';
 //import { Event } from '../model/event';
 
-import { SensorsData, SocketMessageData, trState, SERVER_URL, base_url } from './../models/message.model';
+import { SensorsData, SocketMessageData, SensorsDataBase64, SocketMessageDataBase64, trState, SERVER_URL, base_url } from './../models/message.model';
 
 //const SERVER_URL = 'ws://localhost:8787/ss';
 
@@ -18,7 +18,12 @@ export class SocketService {
     constructor(private http: HttpClient) { }
     lastData$: BehaviorSubject<SensorsData> = new BehaviorSubject(null);
     lastState$: BehaviorSubject<trState> = new BehaviorSubject(null);
-    socket = webSocket<SocketMessageData>(SERVER_URL);
+    //socket = webSocket<SocketMessageData>(SERVER_URL);
+    socket = webSocket<SocketMessageDataBase64>(SERVER_URL).pipe(map(x => {
+        //console.log(x.sensorData);
+        return new SocketMessageData(x);
+    }));
+    
     subsctiprion: Subscription[] = null;
     public initSocket(): void {
         //this.socket = socketIo(SERVER_URL);

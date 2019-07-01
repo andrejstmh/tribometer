@@ -34,8 +34,10 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.OnChDCh = this.chartService.onChartDataChanged$.subscribe(
             reOk => {
-                this.currentData = reOk;
-                this.chart.update();
+                if (reOk) {
+                    this.currentData = reOk;
+                    this.chart.update();
+                }
                 //console.log("update trib-control");
             },
             resErr => { },

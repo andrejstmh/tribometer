@@ -143,19 +143,74 @@ export class trResultFileData {
     }
 }
 
-export class SensorsData {
+//export class SensorsData {
+//    constructor(
+//        public time: number,
+//        public temperature?: number,
+//        public rotationrate?: number,
+//        public load?: number,
+//        public frictionforce?: number) { }
+//}
+
+export class SensorsDataBase64 {
     constructor(
-        public time: number,
-        public temperature?: number,
-        public rotationrate?: number,
-        public load?: number,
-        public frictionforce?: number) { }
+        public db?: string,
+        public vb?: string,
+        public adb?: string,
+        public avb?: string,
+        public tb?: string) { }
+}
+
+export class SensorsData{
+    constructor(
+        public db?: Float64Array,
+        public vb?: Float64Array,
+        public adb?: Float64Array,
+        public avb?: Float64Array,
+        public tb?: Float64Array) { }
+}
+
+export class SocketMessageDataBase64 {
+    constructor(
+        public sensorData?: SensorsDataBase64,
+        public state?: trState) { }
 }
 
 export class SocketMessageData {
+    sensorData: SensorsData = null;
+    state: trState = null;
     constructor(
-        public sensorData?: SensorsData,
-        public state?: trState) { }
+        sm:SocketMessageDataBase64
+    ) {
+        this.state = sm.state;
+        if (sm.sensorData) {
+            this.sensorData = new SensorsData(
+                this.Base64_2_float64(sm.sensorData.db),
+                this.Base64_2_float64(sm.sensorData.vb),
+                this.Base64_2_float64(sm.sensorData.adb),
+                this.Base64_2_float64(sm.sensorData.avb),
+                this.Base64_2_float64(sm.sensorData.tb)
+            );
+            
+            //let fa = this.Base64_2_float64(sm.sensorData.db);
+            //this.sensorData = new SensorsData(fa[0], fa[1], fa[2], fa[3], fa[4]);
+        } else {
+            this.sensorData = null;
+        }
+        
+    }
+
+    Base64_2_float64(b64str: string) {
+        let bs = atob(b64str);
+        let rawLength = bs.length;
+        //let ab = new ArrayBuffer(rawLength);
+        let ab = new Uint8Array(rawLength);
+        for (let i = 0; i < rawLength; i++) {
+            ab[i] = bs.charCodeAt(i);
+        }
+        //let fa = new Float64Array(ab.buffer,0,5);
+        return new Float64Array(ab.buffer);
+    }
 }
 
 export class ObjHelper {
