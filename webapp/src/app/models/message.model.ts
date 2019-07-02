@@ -133,13 +133,45 @@ export class trTotalState {
     }
 }
 
-export class trResultFileData {
+export class trResultBase64FileData {
     constructor(
-        public time: number[],
-        public load: number[],
-        public RPM: number[],
-        public temperature: number[],
-        public friction: number[]) {
+        public time: string,
+        public load: string,
+        public RPM: string,
+        public temperature: string,
+        public friction: string) {
+    }
+}
+
+export class trResultFileData {
+    time: number[] = [];
+    load: number[] = [];
+    RPM: number[] = [];
+    temperature: number[] = [];
+    friction: number[] = [];
+    constructor(res:trResultBase64FileData
+    ) {
+        if (res) {
+            this.time = this.Base64_2_float32(res.time);
+            this.load = this.Base64_2_float32(res.load);
+            this.RPM = this.Base64_2_float32(res.RPM);
+            this.temperature = this.Base64_2_float32(res.temperature);
+            this.friction = this.Base64_2_float32(res.friction);
+        }
+    }
+    Base64_2_float32(b64str: string) {
+        let bs = atob(b64str);
+        let rawLength = bs.length;
+        //let ab = new ArrayBuffer(rawLength);
+        let ab = new Uint8Array(rawLength);
+        for (let i = 0; i < rawLength; i++) {
+            ab[i] = bs.charCodeAt(i);
+        }
+        //let fa = new Float64Array(ab.buffer,0,5);
+        let fa = new Float32Array(ab.buffer);
+        let res: number[] = [];
+        fa.forEach(x => res.push(x));
+        return res;
     }
 }
 

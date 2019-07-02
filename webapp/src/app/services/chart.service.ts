@@ -8,7 +8,7 @@ import { webSocket } from "rxjs/webSocket";
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
-import { SensorsData, trResultFileData } from './../models/message.model';
+import { SensorsData, trResultFileData, trResultBase64FileData } from './../models/message.model';
 import { SocketService } from './socket.service';
 import { SignalsService } from './signals.service';
 
@@ -135,7 +135,7 @@ export class ChartService {
     public expFileDataRefreshPeriodMin = 1;
     public onChartDataChanged$: BehaviorSubject<SensorsData> = new BehaviorSubject<SensorsData>(null);
     public ChartListen: LineChartSettings = new LineChartSettings();
-    public expFileData$: BehaviorSubject<trResultFileData> = new BehaviorSubject<trResultFileData>(new trResultFileData([],[],[],[],[]));
+    public expFileData$: BehaviorSubject<trResultFileData> = new BehaviorSubject<trResultFileData>(new trResultFileData(null));
 
     constructor(private http: HttpClient,
         private signalsService: SignalsService) {
@@ -169,7 +169,8 @@ export class ChartService {
         this.signalsService.GetDataFromResultFile().subscribe(x => {
             if (x) {
                 console.log("this.expFileData$.next(x)");
-                this.expFileData$.next(x);
+                let xx = new trResultFileData(x);
+                this.expFileData$.next(xx);
             }
         });
     }

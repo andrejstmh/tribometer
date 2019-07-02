@@ -1,51 +1,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="container rounded border bg-light m-1">
-            <h6>Rotation control</h6>
-            <input type="number" min="300" max="3000" [(ngModel)]="rpmVal" name="rpm" #rpm>
-            <button type="button" class="btn btn-info m-1" (click)="rotation()">Set RPM {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>
-            <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
-            <div *ngIf="currentData" class="btn btn-light m-1 disabled">{{currentData.rotationrate| number}}</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="container rounded border bg-light m-1">
-            <div class="row">
-                <div class="col-5">
-                    <h6>Load control</h6>
-                    <div class="row justify-content-between">
-                        <button type="button" class="btn btn-info m-1" (click)="loadPlus()">Increase load</button>
-                        <!-- class="btn btn-light m-1" -->
-                        <div *ngIf="currentData" class="btn btn-light m-1 disabled">{{printNumVal(currentData.load)}}</div>
-                        <button type="button" class="btn btn-info m-1" (click)="loadMinus()">Decrease load</button>
-                    </div>
-
-                </div>
-                <div class="col-7">
-                    <h6>Load threshold</h6>
-                    <!-- [(ngModel)]="rpmVal" name="rpm" #rpm -->
-                    <input type="number">
-                    <button type="button" class="btn btn-info m-1">Apply</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="container rounded border bg-light m-1">
             <div class="row h5">
-                <div class="col">Rotation control</div>
-                <div class="col">Auto</div>
-                <div class="col">Manusl</div>
+                <div class="col-3">Rotations control</div>
+                <div class="col-4">Auto</div>
+                <div class="col-5">Manual(VFD)</div>
             </div>
             <div class="row border-top">
-                <div class="col"></div>
-                <div class="col">
+                <div class="col-3"></div>
+                <div class="col-4">
                     <input type="number" min="5" max="125" name="rpm_auto" #rpm_auto>
                     <button type="button" class="btn btn-info m-1">Apply</button>
                 </div>
-                <div class="col">
-                    <input type="number" min="5" max="125" name="rpm_manual" #rpm_manual>
-                    <button type="button" class="btn btn-info m-1">Apply</button>
+                <div class="col-5">
+                    <input type="number" min="300" max="3000" [(ngModel)]="rpmVal" name="rpm_manual" #rpm_manual>
+                    <button type="button" class="btn btn-info m-1" (click)="rotation()">Apply {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>
+                    <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
                 </div>
             </div>
         </div>
@@ -53,17 +23,17 @@
     <div class="row">
         <div class="container rounded border bg-light m-1">
            <div class="row h5">
-               <div class="col">Load control</div>
-                <div class="col">Auto</div>
-                <div class="col">Manul</div>
+               <div class="col-3">Load control</div>
+                <div class="col-4">Auto</div>
+                <div class="col-5">Manual</div>
             </div>
             <div class="row border-top">
-                <div class="col"></div>
-                <div class="col">
-                    <input type="number" min="5" max="125" name="rpm_auto" #load_auto>
+                <div class="col-3"></div>
+                <div class="col-4">
+                    <input type="number" class="m-1" min="5" max="125" name="rpm_auto" #load_auto>
                     <button type="button" class="btn btn-info m-1">Apply</button>
                 </div>
-                <div class="col">
+                <div class="col-5">
                     <button type="button" class="btn btn-info m-1" (click)="loadPlus()">Increase load</button>
                     <button type="button" class="btn btn-info m-1" (click)="loadMinus()">Decrease load</button>
                 </div>
@@ -78,9 +48,9 @@
                 <div class="col">T, °C</div>
             </div>
             <div class="row border-top">
-                <div class="col"><button type="button" class="btn btn-info m-1">Apply</button></div>
-                <div class="col"><input type="number" min="5" max="125" name="fr_threshold" #fr_threshold></div>
-                <div class="col"><input type="number" min="15" max="100" name="t_threshold" #t_threshold></div>
+                <div class="col text-center mx-auto"><button type="button" class="btn btn-info m-1">Apply</button></div>
+                <div class="col text-center mx-auto"><input type="number" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold></div>
+                <div class="col text-center mx-auto"><input type="number" class="m-1" min="15" max="100" name="t_threshold" #t_threshold></div>
             </div>
         </div>
     </div>

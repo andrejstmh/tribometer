@@ -4,7 +4,6 @@ import datetime
 import h5py
 import os
 import json
-
 import exp_settings
 
 class ExperimentDataFile:

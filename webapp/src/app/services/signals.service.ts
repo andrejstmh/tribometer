@@ -4,7 +4,7 @@ import { Observable, of, BehaviorSubject, forkJoin } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {
     trState, trProgram, trSettings, trResultFileData, trTotalState,
-    CalibrationCurve,  base_url
+    CalibrationCurve,  base_url, trResultBase64FileData
 } from './../models/message.model';
 
 const httpOptions = {
@@ -22,11 +22,11 @@ export class SignalsService {
         //this.GetSettings().subscribe(x => { this.settings = x });
     }
 
-    getTotalState() {
-        forkJoin(this.GetState(), this.GetSettings()).subscribe(([st, stt]) => {
-            this.totalstate$.next(new trTotalState(stt, st));
-        })
-    }
+    //getTotalState() {
+    //    forkJoin(this.GetState(), this.GetSettings()).subscribe(([st, stt]) => {
+    //        this.totalstate$.next(new trTotalState(stt, st));
+    //    })
+    //}
 
     beginWrite(): Observable<any> {
         const url = base_url + "api/beginw";
@@ -59,6 +59,22 @@ export class SignalsService {
         return this.http.get<CalibrationCurve>(url).pipe(
             tap(_ => console.log("GetCalibrationCurve")),
             catchError(this.handleError<any>("GetCalibrationCurve"))
+        );
+    }
+
+    //st_case == "operators" fileexists val
+    GetOperators(): Observable<string[]> {
+        let url = base_url + "api/sett?case=operators";
+        return this.http.get<string[]>(url).pipe(
+            tap(_ => console.log("GetOperators")),
+            catchError(this.handleError<any>("GetOperators"))
+        );
+    }
+    GetOutputFileExists(fileName:string): Observable<string> {
+        let url = base_url + `api/sett?case=fileexists&val=${fileName}`;
+        return this.http.get<string>(url).pipe(
+            tap(_ => console.log("GetOutputFileExists")),
+            catchError(this.handleError<any>("GetOutputFileExists"))
         );
     }
 
@@ -108,9 +124,9 @@ export class SignalsService {
         );
     }
 
-    GetDataFromResultFile(): Observable<trResultFileData> {
+    GetDataFromResultFile(): Observable<trResultBase64FileData> {
         let url = base_url + "api/sett?case=resultfile";
-        return this.http.get<trSettings>(url).pipe(
+        return this.http.get<trResultBase64FileData>(url).pipe(
             tap(_ => console.log("GetDataFromResultFile")),
             catchError(this.handleError<any>("GetDataFromResultFile"))
         );

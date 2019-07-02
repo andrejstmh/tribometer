@@ -72,16 +72,19 @@ class Experiment:
         #self.currentTargetData = np.full(shape=(Experiment.targetVecLength), fill_value=np.nan, dtype=np.float)
         return self.currentRecordData;
     
+    @classmethod
+    def ConvertDataTob64String(sls,data):
+        return '"'+base64.b64encode(data).decode("utf-8")+'"'
 
     def ConvertTob64String(self):
         #testar =np.array([1.1,2.2,0,np.nan, 1], dtype=np.float)
         #s = np.fromstring( testar.tobytes(),dtype=np.dtype('B'));
         #db = '"'+base64.b64encode(testar).decode("utf-8")+'"'
-        db = '"'+base64.b64encode(self.currentRecordData).decode("utf-8")+'"'
-        vb = '"'+base64.b64encode(self.currentRecordVoltage).decode("utf-8")+'"'
-        adb = '"'+base64.b64encode(self.currentAverageData).decode("utf-8")+'"'
-        avb = '"'+base64.b64encode(self.currentAverageVoltage).decode("utf-8")+'"'
-        tb = '"'+base64.b64encode(self.currentTargetData).decode("utf-8")+'"'
+        db = Experiment.ConvertDataTob64String(self.currentRecordData)
+        vb = Experiment.ConvertDataTob64String(self.currentRecordVoltage)
+        adb = Experiment.ConvertDataTob64String(self.currentAverageData)
+        avb = Experiment.ConvertDataTob64String(self.currentAverageVoltage)
+        tb = Experiment.ConvertDataTob64String(self.currentTargetData)
         s = '{"db":'+db +',"vb":'+vb+',"adb":'+adb+',"avb":'+avb+',"tb":'+tb+'}'
         return s;
 

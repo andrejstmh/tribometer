@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of, Subject, BehaviorSubject, forkJoin } from 'rxjs';
+import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { trTotalState, trState, trSettings, ObjHelper, trProgram } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
@@ -10,14 +12,27 @@ import { ChartService, LineChartSettings } from './../../services/chart.service'
     styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+    private outputFileName$ = new Subject<string>();
+    fileExists$: Observable<string>;
+    users$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
     totState: trTotalState = null;
     constructor(
         private signalsService: SignalsService) { }
-
+    
     ngOnInit() {
+        this.fileExists$ = this.outputFileName$.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap(fileName =>
+                this.signalsService.GetOutputFileExists(fileName))
+        );
+        
         this.signalsService.totalstate$.subscribe(
             resOk => {
                 if (resOk) {
+                    this.signalsService.GetOperators().subscribe(
+                        resOk => { this.users$.next(resOk) }
+                    );
                     //console.log('request');
                     //console.log(resOk);
                     this.totState = ObjHelper.DeepCopyOfState(resOk);
@@ -27,6 +42,9 @@ export class SettingsComponent implements OnInit {
                     //    this.totState.settings.program.push(this.CreateNewItem());
                     //}
                     //this.selectedRow = this.totState.settings.program[0];
+
+                    
+
                 } else {
                     this.totState = null;
 
@@ -146,5 +164,7 @@ export class SettingsComponent implements OnInit {
             () => { }
         );
     }
-
+    ResFileExists(fileName: string) {
+        this.outputFileName$.next(fileName);
+    }
 }

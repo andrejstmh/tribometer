@@ -14,6 +14,7 @@ class ExpStatus:
     completed = 3
 
 class ExpState:
+    
     def __init__(self):
         self.status = ExpStatus.invalid
         #self.description = False
@@ -31,35 +32,82 @@ class ExpState:
         return json.dumps(dict(vars(self)))
 
 class ExperimentSettings:
+    resultsFolder = "ExperimentalData/"
     def __init__(self):
-        self.SettingsFileName="ExperimentalData/settings.json"
         self.settings = default_settings.DefaultSettings
+        self.SettingsFileName=self.getFilePath(ExperimentSettings.resultsFolder+"settings.json")
         self.calibrationData = None
         if os.path.exists(self.SettingsFileName):
-            with open(self.SettingsFileName) as f:
+            with open(self.SettingsFileName,"r") as f:
                 self.settings = json.load(f);
         else:
             print("Warning:Setting file not exists");
+
         err = self.checkSettings();
         if len(err)==0:
             self.MakeCalibrationData()
+
+        self.operators = [];
+        if os.path.exists(self.operatorsFileName):
+            with open(self.operatorsFileName,"r") as f:
+                for l in f.readlines():
+                    ll = l.strip()
+                    if ll:
+                        self.operators.append(ll);
+        self.user = self.user
+        self.SaveOperatorsToFile();
+
 
     def MakeCalibrationData(self):
         self.calibrationData = calibration.CalibrationData(
                 self.loadCalibrFileName,self.frictionCalibrFileName)#,self.rpmCalibrFileName
 
-    def get_outputFileName(self): return self.getFilePath( "ExperimentalData/"+self.settings["output_file"]+".h5");
+    def SaveOperatorsToFile(self):
+        with open(self.operatorsFileName,"w") as f:
+            for l in self.operators:
+                ll = l.strip()
+                if ll:
+                    f.write(ll+"\n");
+
+    def get_user(self): return self.settings["user"];
+    def set_user(self, value): 
+        v = value.strip()
+        if v:
+            try:
+                i=self.operators.index(v)
+            except:
+                i=-1
+            if i<0:
+                self.operators.append(v)
+                self.SaveOperatorsToFile()
+        self.settings["user"] = v
+    user = property(get_user,set_user)
+
+    def get_operatorsFN(self): return self.getFilePath(ExperimentSettings.resultsFolder+self.settings["operatorsFileName"]);
+    def set_operatorsFN(self, value): self.settings["operatorsFileName"] = value
+    operatorsFileName = property(get_operatorsFN,set_operatorsFN)
+
+    def MakeOutputFile(self,fileName):
+        return ExperimentSettings.resultsFolder+fileName+".h5"
+
+
+    def get_outputFileName(self): return self.getFilePath( self.MakeOutputFile(self.settings["output_file"]));
     def set_outputFileName(self, value): self.settings["output_file"] = value
     outputFileName = property(get_outputFileName,set_outputFileName)
 
-    def otputFileExists(self):
-        return os.path.exists(self.outputFileName)
 
-    def get_frictionCalibrFileName(self): return self.getFilePath("ExperimentalData/"+self.settings["friction_force_calibration_curve_file"]);
+    def outputFileExists(self, fileName=None):
+        if fileName is not None:
+            fn = self.getFilePath( self.MakeOutputFile(fileName))
+        else:
+            fn = self.outputFileName
+        return os.path.exists(fn)
+
+    def get_frictionCalibrFileName(self): return self.getFilePath(ExperimentSettings.resultsFolder+self.settings["friction_force_calibration_curve_file"]);
     def set_frictionCalibrFileName(self, value): self.settings["friction_force_calibration_curve_file"] = value
     frictionCalibrFileName = property(get_frictionCalibrFileName,set_frictionCalibrFileName)
 
-    def get_loadCalibrFileName(self): return self.getFilePath("ExperimentalData/"+self.settings["load_calibration_curve_file"]);
+    def get_loadCalibrFileName(self): return self.getFilePath(ExperimentSettings.resultsFolder+self.settings["load_calibration_curve_file"]);
     def set_loadCalibrFileName(self, value): self.settings["load_calibration_curve_file"] = value
     loadCalibrFileName = property(get_loadCalibrFileName,set_loadCalibrFileName)
 

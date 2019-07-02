@@ -16,8 +16,9 @@ from rx.subjects import Subject
 import webbrowser
 
 import numpy as np
-from exp_settings import ExpStatus
 import convert2JSON
+from experiment import Experiment
+from exp_settings import ExpStatus
 
 def checkServer():
     #conn = http.client.HTTPConnection('http://localhost', 8787, timeout=100)
@@ -164,6 +165,7 @@ class SettingsHandler(tornado.web.RequestHandler):
                 controls.P_motor(5 / 1.8,1)
             self.write("{0}".format(load))
         elif st_case == "resultfile":
+            import exp_settings
             hdf = Tibometer.Experiment.DataFile.OpenRead()
             dt = hdf["data"]
             rc = sh = dt.shape[0]
@@ -175,16 +177,22 @@ class SettingsHandler(tornado.web.RequestHandler):
                 step = rc // maxCount + 1
             print("rc:{0},step:{1},sh:{2}".format(rc,step,sh))
             dt = np.array(dt[:rc:step],copy=True)
-            mask = np.isnan(dt)
-            dt[mask] = -1;
+            #mask = np.isnan(dt)
+            #dt[mask] = -1;
             #"time[s], Load[Pa], FrictionForce[N], RPM[rotation per minute],
             #temperature[C], Acoustic[??]"
-            time=",".join( map(self.numberToString,dt[:,0]))
-            load=",".join( map(self.numberToString,dt[:,1]))
-            RPM=",".join( map(self.numberToString,dt[:,3]))
-            te=",".join( map(self.numberToString,dt[:,4]))
-            fr=",".join( map(self.numberToString,dt[:,2]))
-            s = '{"time":['+time+'], "load":['+load+'], "RPM":['+RPM+'], "temperature":['+te+'], "friction":['+fr+']}'
+            #time=",".join( map(self.numberToString,dt[:,0]))
+            #load=",".join( map(self.numberToString,dt[:,1]))
+            #RPM=",".join( map(self.numberToString,dt[:,3]))
+            #te=",".join( map(self.numberToString,dt[:,4]))
+            #fr=",".join( map(self.numberToString,dt[:,2]))
+            #s = '{"time":['+time+'], "load":['+load+'], "RPM":['+RPM+'], "temperature":['+te+'], "friction":['+fr+']}'
+            time=Experiment.ConvertDataTob64String(np.array(dt[:,0],copy=True))
+            load=Experiment.ConvertDataTob64String(np.array(dt[:,1],copy=True))
+            RPM=Experiment.ConvertDataTob64String(np.array(dt[:,3],copy=True))
+            te=Experiment.ConvertDataTob64String(np.array(dt[:,4],copy=True))
+            fr=Experiment.ConvertDataTob64String(np.array(dt[:,2],copy=True))
+            s = '{"time":'+time+', "load":'+load+', "RPM":'+RPM+', "temperature":'+te+', "friction":'+fr+'}'
             self.write(s)
             #self.write(json.dumps({"time": dt[:,0].tolist(),"load": list(dt[:,1].tolist()), "RPM": list(dt[:,3].tolist()), 
             #            "temperature": list(dt[:,4].tolist()), "friction":list(dt[:,2].tolist())}))
@@ -193,11 +201,18 @@ class SettingsHandler(tornado.web.RequestHandler):
             self.write(Tibometer.Experiment.Settings.calibrationData.friction.get_json_string())
         elif st_case == "clbr_load":
             self.write(Tibometer.Experiment.Settings.calibrationData.load.get_json_string())
-        #elif st_case=="clbr_rpm":
+        elif st_case == "operators":
+            #self.write('{"operators":['+",".join(map(x=>'"'+x+'"',Tibometer.Experiment.Settings.operators))+"]}")
+            self.write(json.dumps(Tibometer.Experiment.Settings.operators));
+        elif st_case == "fileexists": 
+            fileName = self.get_argument("val")
+            #self.write('{"operators":'+Tibometer.Experiment.Settings.outputFileExists(fileName));
+            res = Tibometer.Experiment.Settings.outputFileExists(fileName)
+            self.write("1" if res else "");
+        #elif st_case=="clbr_rpm": 
         #    self.write(Tibometer.Experiment.Settings.calibrationData.RPM.get_json_string())
         else :
             self.write("{}")
-
         #self.write('<html><body><form action="/myform" method="POST">'
         #            '<input type="text" name="message">'
         #            '<input type="submit" value="Submit">'
@@ -212,7 +227,8 @@ class SettingsHandler(tornado.web.RequestHandler):
         if st_case == "base":
             #self.get_body_argument("message")
             Tibometer.Experiment.Settings.settings.update( json.loads(self.request.body))
-            if Tibometer.Experiment.Settings.otputFileExists():
+            Tibometer.Experiment.Settings.user=Tibometer.Experiment.Settings.user;
+            if Tibometer.Experiment.Settings.outputFileExists():
                 Tibometer.Experiment.Settings.outputFileName=""
                 Tibometer.Experiment.status.status = ExpStatus.invalid
             else:

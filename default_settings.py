@@ -45,6 +45,7 @@ DefaultCalibration_Friction=np.array([
 DefaultSettings={
     "working_directory":"",
     "user":"",
+    "operatorsFileName":"operators.csv",
     "bearing":"",
     "output_file":"temp",
     "log_file":"log.txt",

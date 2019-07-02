@@ -42,7 +42,9 @@ export class ExperimentComponent implements OnInit, OnDestroy {
         //    () => { }
         //));
         this.subsArr.push(this.chartService.expFileData$.subscribe(
-            resOk => { this.updateChartLines(resOk);},
+            resOk => {
+                this.updateChartLines(resOk);
+            },
             resErr => { },
             () => { }
         ));
@@ -76,8 +78,8 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     updateChartLines(x: trResultFileData) {
         if (x) {
             //temperature, rotationrate, load, frictionforce
-            this.ChartFile.lineChartData[0].data = this.removeNaN(x.temperature);
-            this.ChartFile.lineChartData[1].data = this.removeNaN(x.RPM);
+            this.ChartFile.lineChartData[0].data = x.temperature;//this.removeNaN(x.temperature);
+            this.ChartFile.lineChartData[1].data = x.RPM;//this.removeNaN(x.RPM);
             this.ChartFile.lineChartData[2].data = this.removeNaN(x.load);
             this.ChartFile.lineChartData[3].data = this.removeNaN(x.friction);
             this.ChartFile.lineChartLabels = x.time.map(this.secondsToSting);
