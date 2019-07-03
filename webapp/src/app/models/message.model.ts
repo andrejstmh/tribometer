@@ -18,7 +18,7 @@ export class trState {
         public load_on: boolean,
         public stopTime: boolean,
         public stopTlim: boolean,
-        public stopFlim: boolean,
+        public stopFlim: boolean
         //public listening: boolean,
         //public writing: boolean,
         //public autoMode: boolean,

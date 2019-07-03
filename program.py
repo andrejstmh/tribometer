@@ -15,118 +15,112 @@ class ProgramItem:
         self.TargetRPM = TargetRPM
         self.ThresholdMaxFricdtionForce = ThresholdMaxFricdtionForce
         self.ThresholdMaxTemperature = ThresholdMaxTemperature
+class ProgrCol:
+    time=0
+    load=1
+    RPM=2
+    maxFfr=3
+    maxT=4
+    size=5
+    colNames = ["time", "load","RPM", "maxFfr","maxT"]
+    SettFields = ["duration","load","RPM","Tmax","Fmax"]
 
 class Program:
-	def __init__(self, settings:exp_settings.ExperimentSettings):
-		self.Settings = settings
-		self.OneSecond = np.timedelta64(1, 's')
-		self.programStartTime = None
-		self.program = None
-		self.makeProgramArray()
-		# one minute buffer 
-		bl = int(np.min([60,60000//self.Settings.listening_interval]))
-		self.programHistory = collections.deque(maxlen=bl)
+    def __init__(self, settings:exp_settings.ExperimentSettings):
+        self.Settings = settings
+        self.OneSecond = np.timedelta64(1, 's')
+        self.programmStarted = False
+        self.LoadAutoRegulation = True
+        self.RPMAutoRegulation = True
+        self.programData = np.array([[0.0,0.0,0.0,0.0,0.0]])#t,load,rpm, maxFriction, maxTemp/5
+        self.makeProgramArray()
 
-	def makeProgramArray(self):
-		colNames = ["time", "load","RPM", "maxFfr","maxT","Nr"]
-		maxFfr = np.float(self.Settings.friction_force_threshold)
-		maxT = np.float(self.Settings.temperature_threshold)
-		maxTime = np.float(self.Settings.total_duration)
-		if self.Settings.manual_mode or len(self.Settings.program)<1:
-			self.Settings.manual_mode = True
-		prlist = []
-		time = 0.0;
-		if self.Settings.manual_mode:
-			prlist.append([time,np.nan, np.nan,maxFfr,maxT,0])
-			time+=maxTime*3600
-			prlist.append([time,np.nan, np.nan,maxFfr,maxT,0])
-		else:
-			pr = self.Settings.program
-			def getFieldValue(it:dict,name:str,defaulV:np.float=None)->np.float:
-				v = it.get("duration")
-				if v is None:
-					v = defaulV
-				return np.nan if v is None else np.float(v)
-			for i,it in enumerate(pr):
-				t = getFieldValue(it,"duration")
-				load = getFieldValue(it,"load")
-				rpm = getFieldValue(it,"RPM")
-				F = getFieldValue(it,"maxFfr",maxFfr)
-				T = getFieldValue(it,"maxT",maxT)
-				prlist.append([time if i==0 else time+1E-3,load,rpm,F,T,i])
-				time+=t*60
-				prlist.append([time,load,rpm,F,T,V,i])
-		df = pnd.DataFrame(data =np.array(prlist,dtype=np.float), columns=colNames).T
-		self.program = df;
-		return df
+    def SetTargetLoad(self,load,AutoRegulation = True):
+        self.Settings.target_load = load
+        self.LoadAutoRegulation = AutoRegulation
+        self.programData[0,ProgrCol.load] = load
 
-	@property
-	def ProgramTotalDuration(self):
-		return np.array(self.program)[0][-1]
+    def SetTargetRPM(self,RPM,AutoRegulation = True):
+        self.Settings.target_rpm = RPM
+        self.RPMAutoRegulation = AutoRegulation
+        self.programData[0,ProgrCol.RPM] = RPM
 
-	def ProgrameDurationTimeInSeconds(self):
-		dt = np.datetime64(datetime.datetime.utcnow())
-		dt = (dt-self.programStartTime)/self.OneSecond
-		return dt
+    def SetThresholdTemp(self,temp):
+        self.Settings.temperature_threshold = temp
+        self.programData[0,ProgrCol.maxT] = temp
 
-	def BeginProgram(self):
-		self.makeProgramArray()
-		dt = datetime.datetime.utcnow()
-		self.programStartTime = np.datetime64(dt)
+    def SetThresholdFriction(self,frict):
+        self.Settings.friction_force_threshold = frict
+        self.programData[0,ProgrCol.maxFfr] = frict
 
-	def EndProgram(self):
-		self.programStartTime = None
-		self.programHistory.clear()
+    def MakeManualProgramm(self):
+        self.programData = np.array([[0,
+                            self.Settings.target_load,self.Settings.target_rpm,
+                            self.Settings.friction_force_threshold,self.Settings.temperature_threshold],
+                                    [self.Settings.total_duration*60,-1,-1,-1,-1]],dtype=np.float)
+    def MakeAtoProgramm(self):
+        def getFieldValue(it:dict,name:str,defaulV:np.float=None)->np.float:
+                v = it.get(name)
+                if v is None:
+                    v = defaulV
+                return np.nan if v is None else np.float(v)
+        self.programData = np.full(shape=(len(self.Settings.program)+1,ProgrCol.size),
+                                   fill_value=np.nan,dtype=np.float)
+        startTime = 0.0;
+        for i,it in enumerate(self.Settings.program):
+            t = getFieldValue(it,ProgrCol.SettFields[ProgrCol.time])*60
+            load = getFieldValue(it,ProgrCol.SettFields[ProgrCol.load],self.Settings.target_load)
+            rpm = getFieldValue(it,ProgrCol.SettFields[ProgrCol.RPM],self.Settings.target_rpm)
+            F = getFieldValue(it,ProgrCol.SettFields[ProgrCol.maxFfr],self.Settings.friction_force_threshold)
+            T = getFieldValue(it,ProgrCol.SettFields[ProgrCol.maxT],self.Settings.temperature_threshold)
+            self.programData[i,:] = np.array([startTime,load,rpm,F,T])
+            startTime+=t
+        self.programData[len(self.Settings.program),:] = np.array([startTime,-1,-1,-1,-1]);
 
 
-	def getTargetValues(self):
-		if self.programStartTime is None:
-			return (0.0, np.array([0.0,np.nan,np.nan,np.nan,np.nan,np.nan]))
-		else:
-			t = self.ProgrameDurationTimeInSeconds()
-			data = np.array(self.program)
-			i = np.int(np.interp(t,data[0],data[-1]))
-			return (t, data[:,2*i+1]);
+    def getTargetValues(self, exp_time):
+        idx = np.searchsorted(self.programData[:,0], exp_time, side='right')-1
+        if (idx<0):idx=0
+        res = np.array(self.programData[idx],copy=True);
+        if not self.LoadAutoRegulation:res[ProgrCol.load]=np.nan
+        if not self.RPMAutoRegulation:res[ProgrCol.RPM]=np.nan
+        res[ProgrCol.time] = self.programData[-1,ProgrCol.time]
+        return res
 
-	def MoveToTarget(self,currentVals:np.ndarray):
-		if self.programStartTime is None:
-			return None
-		else:
-			t, targetVals = self.getTargetValues()
-			#time 0,load 1, fr 2, rpm 3, t 4,a 5  = currentVals
-			#"time"0, "load"1,"RPM"2, "maxFfr"3,"maxT"4,"maxVibr"5, "Nr"6 = TargetVals
-			self.programHistory.append((t,targetVals,currentVals))
-			if t>self.ProgramTotalDuration:
-				self.StopTimeIsOver;
-				#return self.StopTimeIsOver;
-			if currentVals[2]>targetVals[3]:
-				self.StopHighFrictionForce();
-				#return self.StopHighFrictionForce();
-			if currentVals[4]>targetVals[4]:
-				self.StopHighTemperature()
-				#return self.StopHighTemperature()
-			if currentVals[5]>targetVals[5]:
-				self.StopHighVibration()
-				#return self.StopHighVibration()
-			#d_Load = currentVals[1]-targetVals[1]
-			#d_RPM = currentVals[3]-targetVals[1]
-			print("control: {0} {1}".format(
-				"dec(Load)" if currentVals[1]>targetVals[1] else "inc(Load)", 
-				"dec(PRM)" if currentVals[3]>targetVals[1] else "inc(PRM)"))
-		return targetVals
+    def makeProgramArray(self):
+        if self.Settings.manual_mode or len(self.Settings.program)<1:
+            self.Settings.manual_mode = True
+        if self.programmStarted:
+            if self.Settings.manual_mode:
+                self.MakeManualProgramm()
+            else:
+                self.MakeAtoProgramm()
+        else:
+            self.MakeManualProgramm()
 
-	def StopTimeIsOver(self):
-		print("stop initiated:time is over!")
-		return None
+    @property
+    def ProgramTotalDuration(self):
+        return self.programData[-1,ProgrCol.time]
 
-	def StopHighTemperature(self):
-		print("stop initiated:temperature!")
-		return None
+    def BeginProgram(self):
+        self.programmStarted= True
+        self.makeProgramArray()
 
-	def StopHighFrictionForce(self):
-		print("stop initiated:friction force!")
-		return None
-	
-	def StopHighVibration(self):
-		print("stop initiated:vibration!")
-		return None
+    def EndProgram(self):
+        self.programmStarted= False
+
+    def StopTimeIsOver(self):
+        print("stop initiated:time is over!")
+        return None
+
+    def StopHighTemperature(self):
+        print("stop initiated:temperature!")
+        return None
+
+    def StopHighFrictionForce(self):
+        print("stop initiated:friction force!")
+        return None
+    
+    def StopHighVibration(self):
+        print("stop initiated:vibration!")
+        return None

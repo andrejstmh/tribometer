@@ -23,7 +23,6 @@ export class AppComponent {
     
     //private SockServLastDataSubsc: Subscription = null;
     ngOnInit() {
-
         forkJoin(this.signalsService.GetState(), this.signalsService.GetSettings()).subscribe(
             ([st, stt]) => {
                 console.log("Get Settings: Ok");

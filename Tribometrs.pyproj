@@ -25,6 +25,7 @@
     <Compile Include="controls.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="convert2JSON.py" />
     <Compile Include="default_settings.py">
       <SubType>Code</SubType>
     </Compile>

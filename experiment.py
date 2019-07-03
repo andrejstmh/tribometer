@@ -21,7 +21,7 @@ class Experiment:
     avgBuffreSize = 20;
     sensorDataVecLength = 5#time,load, friction, rpm, temperatura
     sensorVoltageVecLength = 2
-    targetVecLength = 2
+    targetVecLength = program.ProgrCol.size
     def __init__(self):
         self.Settings = exp_settings.ExperimentSettings()
         self.DataFile = exp_datafile.ExperimentDataFile(self.Settings)
@@ -69,7 +69,7 @@ class Experiment:
         self.SensorDataBuffer[self.DataBufferPointer,:] = np.array([time, load, fr, rpm, t], dtype=np.float);
         self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
         self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
-        #self.currentTargetData = np.full(shape=(Experiment.targetVecLength), fill_value=np.nan, dtype=np.float)
+        self.currentTargetData = self.Program.getTargetValues(time);
         return self.currentRecordData;
     
     @classmethod

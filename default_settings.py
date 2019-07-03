@@ -57,13 +57,13 @@ DefaultSettings={
     "recording_cycle":2,
     # listening intervals count
     "visualisation_cycle":4,
-    # hours (manual mode)
-    "total_duration":72,
+    # minutes (manual mode)
+    "total_duration":20*60,
     "rpm":600,
     "load":10.0,
     "manual_mode":True,
     "program":[
-        {"duration":72, "load":10.0,"RPM":1000,"Tmax":100,"Fmax":10,"Vibrmax":10}],
+        {"duration":10, "load":10.0,"RPM":1000,"Tmax":100,"Fmax":10}],
     #=================================================================
     #control parameters
     # [N]
@@ -77,6 +77,6 @@ DefaultSettings={
     # rotation per minute
     "RPMRegualtionAccuracy":1,
     # optional field
-    "readme":"UNITS: intervals[second]; duration[hour]; threshold,load[N]"
+    "readme":"UNITS: intervals[second]; duration[minutes]; threshold,load[N]"
 }
 
