@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Exec=python3.5 /home/pi/tribometer/http_server.py
+Name=Tribometer
+Comment=Tribometer
+Icon=/home/pi/tribometer/webapp/src/assets/bearing.png
