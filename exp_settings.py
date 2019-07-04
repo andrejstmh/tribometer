@@ -14,7 +14,6 @@ class ExpStatus:
     completed = 3
 
 class ExpState:
-    
     def __init__(self):
         self.status = ExpStatus.invalid
         #self.description = False
@@ -23,17 +22,28 @@ class ExpState:
         self.stopTime = False
         self.stopTlim =False
         self.stopFlim =False
-        #self.listening =False
-        #self.writing =False
-        #self.autoMode =False
-        #self.manualMode =True
-        #self.manualFictionForceThreshold=False
+        self.rpmReg =False
+        self.loadReg =False
+        self.rpmRegTimedOut=False
+        self.loadRegTimedOut=False
+
+    def isContentEqual(self, other):
+        return self.status==other.status and self.VFD_on==other.VFD_on and self.load_on==other.load_on and \
+            self.stopTime==other.stopTime and self.stopTlim==other.stopTlim and self.stopFlim==other.stopFlim and \
+            self.rpmReg==other.rpmReg and self.loadReg==other.loadReg and \
+            self.rpmRegTimedOut==other.rpmRegTimedOut and self.loadRegTimedOut==other.loadRegTimedOut
     def getJson(self):
         return json.dumps(dict(vars(self)))
 
 class ExperimentSettings:
     resultsFolder = "ExperimentalData/"
     def __init__(self):
+        self.rpmMaxRegTime=2*60 # 2 minutes
+        self.loadMaxRegTime=3*60 # 3 minutes
+        self.avgBufferSize = 20 # 
+        self.rpmRegCikleSize=30
+        self.loadRegCikleSize=25
+
         self.settings = default_settings.DefaultSettings
         self.SettingsFileName=self.getFilePath(ExperimentSettings.resultsFolder+"settings.json")
         self.calibrationData = None

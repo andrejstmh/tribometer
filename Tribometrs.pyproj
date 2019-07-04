@@ -29,9 +29,6 @@
     <Compile Include="default_settings.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="draw_res.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="experiment.py">
       <SubType>Code</SubType>
     </Compile>

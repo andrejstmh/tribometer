@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router"
 import { Observable, of, Subject, BehaviorSubject, forkJoin } from 'rxjs';
 import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { trTotalState, trState, trSettings, ObjHelper, trProgram } from './../../models/message.model';
@@ -17,7 +18,9 @@ export class SettingsComponent implements OnInit {
     users$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
     totState: trTotalState = null;
     constructor(
-        private signalsService: SignalsService) { }
+        private signalsService: SignalsService,
+        private router: Router
+    ) { }
     
     ngOnInit() {
         this.fileExists$ = this.outputFileName$.pipe(
@@ -159,6 +162,9 @@ export class SettingsComponent implements OnInit {
                 //this.signalsService.totalstate$.next(v);
                 //this.totState = DeepCopyOfState(v);
                 this.signalsService.GetTotalState();
+                if (resOk.output_file) {
+                    this.router.navigate(['/experiment']);
+                }
             },
             resErr => { console.log("EditSettingsErr"); },
             () => { }

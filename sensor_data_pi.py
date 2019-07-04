@@ -40,8 +40,7 @@ class SensorData:
     #   self.
     #p = read_RPM.RPM_reader(pigpio.pi(), RPM_GPIO,1,30)    
     def readRPM(self):
-        return rpm.RPM() 
-
+        return rpm.RPM()
 
     def readFriction(self):
         try:
@@ -60,6 +59,8 @@ class SensorData:
     def readTemperature(self):
         try:
             res=hdc1000.readTemperature()
+            if res<10 or res>120:
+                res = np.nan
         except:
               res=np.nan
         return res

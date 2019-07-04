@@ -3,6 +3,7 @@ import datetime
 import collections
 import platform
 import base64
+import copy
 
 import exp_settings
 import exp_datafile
@@ -18,7 +19,6 @@ else:
     import sensor_data
 
 class Experiment:
-    avgBuffreSize = 20;
     sensorDataVecLength = 5#time,load, friction, rpm, temperatura
     sensorVoltageVecLength = 2
     targetVecLength = program.ProgrCol.size
@@ -28,15 +28,17 @@ class Experiment:
         self.Program = program.Program(self.Settings)
         self.Sensors = sensor_data.SensorData()
         self.status = exp_settings.ExpState()
-
+        self.prevStatus = copy.deepcopy(self.status);
+        self.StopReasonStatus = None
         self.currentAverageData = np.full(shape=(Experiment.sensorDataVecLength), fill_value=np.nan, dtype=np.float)
         self.currentAverageVoltage = np.full(shape=(Experiment.sensorVoltageVecLength), fill_value=np.nan, dtype=np.float)
         self.currentTargetData = np.full(shape=(Experiment.targetVecLength), fill_value=np.nan, dtype=np.float)
+        self.prevTargetData = np.full(shape=(Experiment.targetVecLength), fill_value=np.nan, dtype=np.float)
 
         self.DataBufferPointer = 0;
-        self.SensorVoltageBuffer = np.full(shape=(Experiment.avgBuffreSize,Experiment.sensorVoltageVecLength),
+        self.SensorVoltageBuffer = np.full(shape=(self.Settings.avgBufferSize,Experiment.sensorVoltageVecLength),
                                            fill_value=np.nan,dtype=np.float)
-        self.SensorDataBuffer = np.full(shape=(Experiment.avgBuffreSize,Experiment.sensorDataVecLength),
+        self.SensorDataBuffer = np.full(shape=(self.Settings.avgBufferSize,Experiment.sensorDataVecLength),
                                         fill_value=np.nan, dtype=np.float)
         self.SensorDataBuffer[:,0] = 0.0
     
@@ -52,7 +54,7 @@ class Experiment:
     #Acoustic[??]
     def GetSensorData(self):
         self.DataBufferPointer+=1
-        if self.DataBufferPointer>=Experiment.avgBuffreSize:
+        if self.DataBufferPointer>=self.Settings.avgBufferSize:
             self.DataBufferPointer = 0;
 
         load = self.Sensors.readLoad()
@@ -67,11 +69,51 @@ class Experiment:
         if not np.isnan(fr):
             fr = cd.friction.getCalibratedValue(fr)
         self.SensorDataBuffer[self.DataBufferPointer,:] = np.array([time, load, fr, rpm, t], dtype=np.float);
-        self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
-        self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
+        #self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
+        #self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
+        self.currentAverageVoltage = np.nanpercentile(self.SensorVoltageBuffer, 50, axis=0)
+        self.currentAverageData = np.nanpercentile(self.SensorDataBuffer,50, axis=0)
+        self.prevTargetData = self.currentTargetData
         self.currentTargetData = self.Program.getTargetValues(time);
-        return self.currentRecordData;
+        self.CheckTribometerState()
     
+    def CheckTribometerState(self):
+        #Data:time:0, load:1, fr:2, rpm:3, t:4
+        #TargetData:"time:0", "load:1","RPM:2", "maxFfr:3","maxT:4"
+        self.prevStatus = copy.deepcopy(self.status);
+        self.status.load_on = (self.currentAverageData[2]>0.1)and(self.currentAverageData[1]>0.1)
+        self.status.VFD_on=self.currentAverageData[3]>0.1
+        time = self.currentRecordData[0]
+        self.status.stopTime = time>self.currentTargetData[0]
+        self.status.stopTlim = self.currentAverageData[4]>self.currentTargetData[4]
+        self.status.stopFlim = self.currentAverageData[2]>self.currentTargetData[3]
+
+    def CheckStateAndSendComand(self):
+        if not self.status.isContentEqual( self.prevStatus):
+            # send state message 
+            pass
+
+        if self.Program.programmStarted:
+            if self.status.stopTime or self.status.stopTlim or self.status.stopTime or (not self.status.load_on) or (not self.status.VFD_on):
+                # stop programm
+                pass
+
+        if not self.Program.LoadAutoRegulation:
+            # stop load regulator
+            pass
+        else:
+            if self.currentTargetData[1]!=self.prevTargetData[1]:
+                # restart load regulator
+                pass
+        if not self.Program.RPMAutoRegulation:
+            # stop RPM regulator
+            pass
+        else:
+            if self.currentTargetData[2]!=self.prevTargetData[2]:
+                # restart RPM regulator
+                pass
+
+
     @classmethod
     def ConvertDataTob64String(sls,data):
         return '"'+base64.b64encode(data).decode("utf-8")+'"'

@@ -19,7 +19,10 @@
                 <a class="nav-link" routerLinkActive="active" [routerLink]="['/controls']">Manual controls<span class="sr-only">(current)</span></a>
             </li>
             <li *ngIf="tstate.state.status!==0" class="nav-item active">
-                <a class="nav-link" routerLinkActive="active" [routerLink]="['/experiment']">Experiment<span class="sr-only">(current)</span></a>
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/experiment']">
+                    Experiment: {{tstate.settings.output_file}}
+                    <span class="sr-only">(current)</span>
+                </a>
             </li>
         </ul>
     </div>

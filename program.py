@@ -30,8 +30,8 @@ class Program:
         self.Settings = settings
         self.OneSecond = np.timedelta64(1, 's')
         self.programmStarted = False
-        self.LoadAutoRegulation = True
-        self.RPMAutoRegulation = True
+        self.LoadAutoRegulation = False
+        self.RPMAutoRegulation = False
         self.programData = np.array([[0.0,0.0,0.0,0.0,0.0]])#t,load,rpm, maxFriction, maxTemp/5
         self.makeProgramArray()
 
@@ -120,7 +120,4 @@ class Program:
     def StopHighFrictionForce(self):
         print("stop initiated:friction force!")
         return None
-    
-    def StopHighVibration(self):
-        print("stop initiated:vibration!")
-        return None
+

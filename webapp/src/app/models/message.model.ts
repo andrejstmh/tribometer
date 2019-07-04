@@ -18,12 +18,11 @@ export class trState {
         public load_on: boolean,
         public stopTime: boolean,
         public stopTlim: boolean,
-        public stopFlim: boolean
-        //public listening: boolean,
-        //public writing: boolean,
-        //public autoMode: boolean,
-        //public manualMode: boolean,
-       // public manualFictionForceThreshold: boolean
+        public stopFlim: boolean,
+        public rpmReg: boolean,
+        public loadReg: boolean,
+        public rpmRegTimedOut: boolean,
+        public loadRegTimedOut: boolean
     ) {
     }
     copy() {
@@ -32,8 +31,8 @@ export class trState {
             //this.description,
             this.VFD_on, this.load_on,
             this.stopTime, this.stopTlim, this.stopFlim,
-            //this.listening, this.writing,
-            //this.autoMode, this.manualMode, this.manualFictionForceTreshold
+            this.rpmReg, this.loadReg,
+            this.rpmRegTimedOut, this.loadRegTimedOut
         );
     }
 }
@@ -285,7 +284,9 @@ export class ObjHelper {
             return new trState(
                 stateObj.status,
                 stateObj.VFD_on, stateObj.load_on,
-                stateObj.stopTime, stateObj.stopTlim, stateObj.stopFlim);
+                stateObj.stopTime, stateObj.stopTlim, stateObj.stopFlim,
+                stateObj.rpmReg, stateObj.loadReg,
+                stateObj.rpmRegTimedOut, stateObj.loadRegTimedOut);
         } else if (stateObj instanceof trProgram) {
             return new trProgram(
                 stateObj.duration, stateObj.load, stateObj.RPM,

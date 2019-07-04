@@ -57,25 +57,24 @@ DefaultSettings={
     "recording_cycle":2,
     # listening intervals count
     "visualisation_cycle":4,
-    # minutes (manual mode)
+    # minutes (manual mode, default 20 hours)
     "total_duration":20*60,
     "rpm":600,
-    "load":10.0,
+    "load":20.0,
     "manual_mode":True,
     "program":[
-        {"duration":10, "load":10.0,"RPM":1000,"Tmax":100,"Fmax":10}],
+        {"duration":10, "load":20.0,"RPM":600,"Tmax":100,"Fmax":10}],
     #=================================================================
     #control parameters
     # [N]
-    "friction_force_threshold":10,
+    "friction_force_threshold":100,
     # C
     "temperature_threshold":100,
-    # ?
-    "vibration_threshold":100,
+
     # [N]
-    "loadRegualtionAccuracy":1,
+    "loadRegualtionAccuracy":2,
     # rotation per minute
-    "RPMRegualtionAccuracy":1,
+    "RPMRegualtionAccuracy":2,
     # optional field
     "readme":"UNITS: intervals[second]; duration[minutes]; threshold,load[N]"
 }

@@ -11,17 +11,14 @@ class Tibometer:
     subscriptRead = None
     subscriptWrite = None
     #def __init__(self):
-    #    self.a=""
-    #    #for i in range(50):
-    #    #    sd = self.Experiment.GetSensorData()
-    #    #    sd = self.Experiment.DataFile.write(sd)
-    #    #    print(sd)
-    #    #self.Experiment.DataFile.StopRecording()
+    #    pass
+
     @classmethod
     def getValues(cls,i):
         sd = cls.Experiment.GetSensorData()
         #cls.Experiment.currentTargetData = cls.Experiment.Program.MoveToTarget(sd)
-        return (sd,cls.Experiment.currentTargetData)
+        return sd
+
 
     @classmethod
     def BeginReading(cls,send_updates_function):
