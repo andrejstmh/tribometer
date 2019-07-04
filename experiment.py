@@ -56,7 +56,6 @@ class Experiment:
         self.DataBufferPointer+=1
         if self.DataBufferPointer>=self.Settings.avgBufferSize:
             self.DataBufferPointer = 0;
-
         load = self.Sensors.readLoad()
         fr = self.Sensors.readFriction()
         rpm = self.Sensors.readRPM()
