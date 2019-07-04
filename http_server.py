@@ -226,7 +226,7 @@ class SettingsHandler(tornado.web.RequestHandler):
         #sett?case=base
         if st_case == "base":
             #self.get_body_argument("message")
-            Tibometer.Experiment.Settings.settings.update( json.loads(self.request.body))
+            Tibometer.Experiment.Settings.settings.update( json.loads(self.request.body.decode("utf-8")))
             Tibometer.Experiment.Settings.user=Tibometer.Experiment.Settings.user;
             if Tibometer.Experiment.Settings.outputFileExists():
                 Tibometer.Experiment.Settings.outputFileName=""
@@ -242,10 +242,10 @@ class SettingsHandler(tornado.web.RequestHandler):
             self.write(json.dumps(Tibometer.Experiment.Settings.settings))
         elif st_case == "clbr_fr":
             #xy = json.loads(self.get_body_argument("message"))
-            Tibometer.Experiment.Settings.calibrationData.friction.initJSON(self.request.body)
+            Tibometer.Experiment.Settings.calibrationData.friction.initJSON(self.request.body.decode("utf-8"))
             self.write(Tibometer.Experiment.Settings.calibrationData.friction.get_json_string())
         elif st_case == "clbr_load":
-            Tibometer.Experiment.Settings.calibrationData.load.initJSON(self.request.body)
+            Tibometer.Experiment.Settings.calibrationData.load.initJSON(self.request.body.decode("utf-8"))
             self.write(Tibometer.Experiment.Settings.calibrationData.load.get_json_string())
         #elif st_case=="clbr_rpm":
         #    Tibometer.Experiment.Settings.calibrationData.RPM.initJSON(self.request.body)

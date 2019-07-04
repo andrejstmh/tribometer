@@ -79,4 +79,7 @@ DefaultSettings={
     # optional field
     "readme":"UNITS: intervals[second]; duration[minutes]; threshold,load[N]"
 }
+import platform
+if platform.system() != 'Windows':
+    DefaultSettings["working_directory"] = "/home/pi/tribometer/"
 

@@ -47,13 +47,13 @@
                             </div>
                             <div class="row border-top">
                                 <div class="col">average</div>
-                                <div class="col">{{currentData.avgVoltage| number}}</div>
-                                <div class="col">{{currentData.avgForce| number}}</div>
+                                <div class="col">{{currentData.avgVoltage| number:"1.0-3"}}</div>
+                                <div class="col">{{currentData.avgForce| number:"1.0-3"}}</div>
                             </div>
                             <div class="row border-top font-weight-light">
                                 <div class="col">actual</div>
-                                <div class="col">{{currentData.currVoltage| number}}</div>
-                                <div class="col">{{currentData.currForce| number}}</div>
+                                <div class="col">{{currentData.currVoltage| number:"1.0-3"}}</div>
+                                <div class="col">{{currentData.currForce| number:"1.0-3"}}</div>
                             </div>
                         </div>
                     </div>
