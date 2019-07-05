@@ -4,7 +4,6 @@ import { Observable, Subscription, interval } from 'rxjs';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
-import { SocketService,  } from './../../services/socket.service';
 import { SensorsData, ExperimentStatus, ObjHelper, trState, trTotalState, trResultFileData } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
@@ -25,14 +24,12 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     @ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
 
     constructor(
-        private socketservice: SocketService,
-        private signalsService: SignalsService,
+        public signalsService: SignalsService,
         private chartService: ChartService
     ) {  }
     
     ngOnInit() {
         this.signalsService.GetTotalState();
-        this.totState = this.signalsService.totalstate$.asObservable();
         this.currentData = this.chartService.onChartDataChanged$.asObservable()
         //this.subsArr.push( this.chartService.onChartDataChanged$.subscribe(
         //    reOk => {
@@ -48,8 +45,8 @@ export class ExperimentComponent implements OnInit, OnDestroy {
             resErr => { },
             () => { }
         ));
-        if (this.signalsService.totalstate$.value) {
-            if (this.signalsService.totalstate$.value.state.status == 2) {
+        if (this.signalsService.lastState$.value) {
+            if (this.signalsService.lastState$.value.status == 2) {
                 this.InitTimer(this.chartService.expFileDataRefreshPeriodMin);
             }
         }

@@ -66,8 +66,8 @@
     <TypeScriptCompile Include="src\app\components\settings\settings.component.ts" />
     <TypeScriptCompile Include="src\app\components\show-errors.component.ts" />
     <TypeScriptCompile Include="src\app\components\trib-controls\trib-controls.component.ts" />
+    <TypeScriptCompile Include="src\app\models\message.model.ts" />
     <TypeScriptCompile Include="src\app\services\chart.service.ts" />
-    <TypeScriptCompile Include="src\app\services\socket.service.ts" />
     <TypeScriptCompile Include="src\app\services\signals.service.ts" />
     <TypeScriptCompile Include="src\app\services\validators.ts" />
     <TypeScriptCompile Include="src\main.ts" />

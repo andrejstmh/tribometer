@@ -74,7 +74,11 @@ class DataSocketHandler(tornado.websocket.WebSocketHandler):
         #sd = np.nan_to_num(sd)
         #data = {"time": i, "load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4],"vibration":sd[5]}
         #cls.send_updates(convert2JSON.SocketMessageData.ToJSON(sd,None,i))#json.dumps(data))
-        s = convert2JSON.SocketMessageData.ToJSON_b64(Tibometer.Experiment,None,i)
+        trst=None
+        if not Tibometer.Experiment.status.isContentEqual( Tibometer.Experiment.prevStatus):
+            trst=Tibometer.Experiment.status
+            Tibometer.Experiment.UpdatePrevStatuis();
+        s = convert2JSON.SocketMessageData.ToJSON_b64(Tibometer.Experiment,trst,i)
         cls.send_updates(s);
         return None
 
@@ -135,35 +139,14 @@ class SettingsHandler(tornado.web.RequestHandler):
             s = json.dumps(Tibometer.Experiment.Settings.settings)
             self.write(s)
         elif st_case == "rpm":
-            rpm = self.get_argument("val")
-            #rpm = self.get_body_argument("val")
-            rpm = float(rpm)
-            print("rpm:{0}".format(rpm))
-            if rpm > 0:
-                freq = float(rpm) / 60.0
-                print("Set rotation:{0}".format(rpm))
-                controls.set_speed(freq)
-                controls.start()
-                Tibometer.Experiment.RPM = rpm
-            else:
-                print("Stop rotation:{0}".format(rpm))
-                controls.stop()
-                Tibometer.Experiment.RPM = 0
-            self.write("{0}".format(rpm))
+            rpm = float(self.get_argument("val"))
+            Tibometer.Experiment.SetRPM(rpm)
+            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
         elif st_case == "load":
             load = self.get_argument("val")
-            #load = self.get_body_argument("val")
             load = float(load)
-            print("load:{0}".format(load))
-            if load > 0:
-                print("Laod:{0}".format(load))
-                controls.P_motor(90 / 1.8,1)
-                controls.P_motor(5 / 1.8,0)
-            else:
-                print("Laod:{0}".format(load))
-                controls.P_motor(90 / 1.8,0)
-                controls.P_motor(5 / 1.8,1)
-            self.write("{0}".format(load))
+            Tibometer.Experiment.SetLoad(load)
+            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
         elif st_case == "resultfile":
             import exp_settings
             hdf = Tibometer.Experiment.DataFile.OpenRead()
@@ -179,14 +162,6 @@ class SettingsHandler(tornado.web.RequestHandler):
             dt = np.array(dt[:rc:step],copy=True)
             #mask = np.isnan(dt)
             #dt[mask] = -1;
-            #"time[s], Load[Pa], FrictionForce[N], RPM[rotation per minute],
-            #temperature[C], Acoustic[??]"
-            #time=",".join( map(self.numberToString,dt[:,0]))
-            #load=",".join( map(self.numberToString,dt[:,1]))
-            #RPM=",".join( map(self.numberToString,dt[:,3]))
-            #te=",".join( map(self.numberToString,dt[:,4]))
-            #fr=",".join( map(self.numberToString,dt[:,2]))
-            #s = '{"time":['+time+'], "load":['+load+'], "RPM":['+RPM+'], "temperature":['+te+'], "friction":['+fr+']}'
             time=Experiment.ConvertDataTob64String(np.array(dt[:,0],copy=True))
             load=Experiment.ConvertDataTob64String(np.array(dt[:,1],copy=True))
             RPM=Experiment.ConvertDataTob64String(np.array(dt[:,3],copy=True))
@@ -203,12 +178,24 @@ class SettingsHandler(tornado.web.RequestHandler):
             self.write(Tibometer.Experiment.Settings.calibrationData.load.get_json_string())
         elif st_case == "operators":
             #self.write('{"operators":['+",".join(map(x=>'"'+x+'"',Tibometer.Experiment.Settings.operators))+"]}")
-            self.write(json.dumps(Tibometer.Experiment.Settings.operators));
+            self.write(json.dumps(Tibometer.Experiment.Settings.operators))
         elif st_case == "fileexists": 
             fileName = self.get_argument("val")
-            #self.write('{"operators":'+Tibometer.Experiment.Settings.outputFileExists(fileName));
             res = Tibometer.Experiment.Settings.outputFileExists(fileName)
-            self.write("1" if res else "");
+            self.write("1" if res else "")
+        elif st_case == "manualload":
+            delta = float(self.get_argument("val"))
+            Tibometer.Experiment.SetLoadManual(delta)
+            self.write('1')
+        elif st_case == "manualrpm":
+            delta = float(self.get_argument("val"))
+            Tibometer.Experiment.SetRPMManual(delta)
+            self.write('1')
+        elif st_case == "threshold":
+            t = float(self.get_argument("t"))
+            fr = float(self.get_argument("f"))
+            Tibometer.Experiment.SetThresholds(fr,t)
+            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
         #elif st_case=="clbr_rpm": 
         #    self.write(Tibometer.Experiment.Settings.calibrationData.RPM.get_json_string())
         else :
@@ -236,10 +223,10 @@ class SettingsHandler(tornado.web.RequestHandler):
             s = json.dumps(Tibometer.Experiment.Settings.settings)
             self.write(s)
             #DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
-        elif st_case == "st":
-            self.write(Tibometer.Experiment.status.getJson())
-        elif st_case == "num":
-            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
+        #elif st_case == "st":
+        #    self.write(Tibometer.Experiment.status.getJson())
+        #elif st_case == "num":
+        #    self.write(json.dumps(Tibometer.Experiment.Settings.settings))
         elif st_case == "clbr_fr":
             #xy = json.loads(self.get_body_argument("message"))
             Tibometer.Experiment.Settings.calibrationData.friction.initJSON(self.request.body.decode("utf-8"))
@@ -250,18 +237,18 @@ class SettingsHandler(tornado.web.RequestHandler):
         #elif st_case=="clbr_rpm":
         #    Tibometer.Experiment.Settings.calibrationData.RPM.initJSON(self.request.body)
         #    self.write(Tibometer.Experiment.Settings.calibrationData.RPM.get_json_string());
-        elif st_case == "freq":
-            if Tibometer.Experiment.Settings.settings.get("manual_mode"):
-                freq = self.get_body_argument("val")
-                Tibometer.Experiment.SetRotationFrequency(float(freq))
-                self.write(json.dumps(Tibometer.Experiment.Settings.settings))
-        elif st_case == "load":
-            load = self.get_body_argument("load")
-            Tibometer.Experiment.SetLoad(float(freq))
-            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
-        elif st_case == "stop":
-            #
-            self.write("details")
+        #elif st_case == "freq":
+        #    if Tibometer.Experiment.Settings.settings.get("manual_mode"):
+        #        freq = self.get_body_argument("val")
+        #        Tibometer.Experiment.SetRotationFrequency(float(freq))
+        #        self.write(json.dumps(Tibometer.Experiment.Settings.settings))
+        #elif st_case == "load":
+        #    load = self.get_body_argument("load")
+        #    Tibometer.Experiment.SetLoad(float(freq))
+        #    self.write(json.dumps(Tibometer.Experiment.Settings.settings))
+        #elif st_case == "stop":
+        #    #
+        #    self.write("details")
         else :
             self.write("")
         #self.write("You wrote " + self.get_body_argument("message"))

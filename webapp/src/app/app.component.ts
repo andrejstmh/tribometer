@@ -2,7 +2,6 @@ import { Component, OnInit,OnDestroy } from '@angular/core';
 
 import { listener } from '@angular/core/src/render3';
 
-import { SocketService } from './services/socket.service';
 import { SensorsData, trSettings, trState, trTotalState } from './models/message.model';
 import { ChartService } from './services/chart.service';
 import { SignalsService } from './services/signals.service'
@@ -17,16 +16,17 @@ export class AppComponent {
     appLogo = require("./../assets/bearing.png");
     title = 'Tribometer';
     constructor(
-        private socketService: SocketService,
         private signalsService: SignalsService,
-        private chartService: ChartService) { }
-    
-    //private SockServLastDataSubsc: Subscription = null;
+        private chartService: ChartService) {
+    }
+
     ngOnInit() {
+        this.signalsService.GetSettings().subscribe();
         forkJoin(this.signalsService.GetState(), this.signalsService.GetSettings()).subscribe(
             ([st, stt]) => {
+                this.signalsService.settings$.next(stt);
+                this.signalsService.lastState$.next(new trState(st));
                 console.log("Get Settings: Ok");
-                this.signalsService.totalstate$.next(new trTotalState(stt, st));
                 this.SocketServiceStart();
             },
             resErr => { console.log("Get Settings: Error"); },
@@ -35,26 +35,20 @@ export class AppComponent {
     }
 
     SocketServiceStart() {
-        this.socketService.startListen().subscribe(
+        this.signalsService.startListen().subscribe(
             x => {
                 console.log("socketService.startListen: Ok");
                 this.chartService.initChartData();
                 //this.socketService.initSocket();
-                this.socketService.socket.subscribe(
+                this.signalsService.socket.subscribe(
                     msg => {
                         //console.log("updateChartData");
                         if (msg.sensorData) {
-                            this.socketService.lastData$.next(msg.sensorData);
+                            this.signalsService.lastData$.next(msg.sensorData);
                             this.chartService.updateChartData(msg.sensorData);
                         }
                         if (msg.state) {
-                            let prev = this.signalsService.totalstate$.value;
-                            if (prev) {
-                                prev.state = msg.state;
-                                this.signalsService.totalstate$.next(prev);
-                            }
-                            
-                            this.socketService.lastState$.next(msg.state);
+                            this.signalsService.lastState$.next(msg.state);
                         }
                         
                 });
@@ -65,6 +59,6 @@ export class AppComponent {
     }
     ngOnDestroy() {
         //if (this.SockServLastDataSubsc) { this.SockServLastDataSubsc.unsubscribe();}
-        this.socketService.stopListen().subscribe();
+        this.signalsService.stopListen().subscribe();
     }
 }

@@ -11,29 +11,43 @@ export class CalibrationCurve {
 }
 
 export class trState {
-    constructor(
-        public status: number,
-        //public description: boolean,
-        public VFD_on: boolean,
-        public load_on: boolean,
-        public stopTime: boolean,
-        public stopTlim: boolean,
-        public stopFlim: boolean,
-        public rpmReg: boolean,
-        public loadReg: boolean,
-        public rpmRegTimedOut: boolean,
-        public loadRegTimedOut: boolean
-    ) {
+    public status: number = 0;
+    public VFD_on: boolean = false;
+    public load_on: boolean = false;
+    public stopTime: boolean = false;
+    public stopTlim: boolean = false;
+    public stopFlim: boolean = false;
+    public rpmReg: boolean = false;
+    public loadReg: boolean = false;
+    public rpmRegTimedOut: boolean = false;
+    public loadRegTimedOut: boolean = false;
+    public rpmRegAuto: boolean = false;
+    public loadRegAuto: boolean = false;
+    constructor( stStr:string) {
+        this.status = +stStr.charAt(0);
+        this.VFD_on=stStr.charAt(1) !== "0";
+        this.load_on=stStr.charAt(2) !== "0";
+        this.stopTime=stStr.charAt(3) !== "0";
+        this.stopTlim=stStr.charAt(4) !== "0";
+        this.stopFlim=stStr.charAt(5) !== "0";
+        this.rpmReg=stStr.charAt(6) !== "0";
+        this.loadReg=stStr.charAt(7) !== "0";
+        this.rpmRegTimedOut=stStr.charAt(8) !== "0";
+        this.loadRegTimedOut = stStr.charAt(9) !== "0";
+        this.rpmRegAuto = stStr.charAt(10) !== "0";
+        this.loadRegAuto = stStr.charAt(11) !== "0";
+    }
+    toStateString() {
+        return "" + this.status +
+            (this.VFD_on ? "1" : "0") + (this.load_on ? "1" : "0")+
+            (this.stopTime ? "1" : "0") + (this.stopTlim ? "1" : "0")+
+            (this.stopFlim ? "1" : "0") + (this.rpmReg ? "1" : "0") +
+            (this.loadReg ? "1" : "0") + (this.rpmRegTimedOut ? "1" : "0") + (this.loadRegTimedOut ? "1" : "0") +
+            (this.rpmRegAuto ? "1" : "0") + (this.loadRegAuto ? "1" : "0");
+        
     }
     copy() {
-        return new trState(
-            this.status,
-            //this.description,
-            this.VFD_on, this.load_on,
-            this.stopTime, this.stopTlim, this.stopFlim,
-            this.rpmReg, this.loadReg,
-            this.rpmRegTimedOut, this.loadRegTimedOut
-        );
+        return new trState( this.toStateString() );
     }
 }
 
@@ -81,8 +95,6 @@ export class trSettings {
         public friction_force_threshold: number,
         // C
         public temperature_threshold: number,
-        // ?
-        public vibration_threshold: number,
         // [N]
         public loadRegualtionAccuracy: number,
         // rotation per minute
@@ -116,7 +128,6 @@ export class trSettings {
             this.manual_mode, pr,
             this.friction_force_threshold,
             this.temperature_threshold,
-            this.vibration_threshold,
             this.loadRegualtionAccuracy,
             this.RPMRegualtionAccuracy,
             this.readme
@@ -204,7 +215,7 @@ export class SensorsData{
 export class SocketMessageDataBase64 {
     constructor(
         public sensorData?: SensorsDataBase64,
-        public state?: trState) { }
+        public state?: string) { }
 }
 
 export class SocketMessageData {
@@ -213,7 +224,7 @@ export class SocketMessageData {
     constructor(
         sm:SocketMessageDataBase64
     ) {
-        this.state = sm.state;
+        this.state = sm.state? new trState(sm.state):null;
         if (sm.sensorData) {
             this.sensorData = new SensorsData(
                 this.Base64_2_float64(sm.sensorData.db),
@@ -222,9 +233,6 @@ export class SocketMessageData {
                 this.Base64_2_float64(sm.sensorData.avb),
                 this.Base64_2_float64(sm.sensorData.tb)
             );
-            
-            //let fa = this.Base64_2_float64(sm.sensorData.db);
-            //this.sensorData = new SensorsData(fa[0], fa[1], fa[2], fa[3], fa[4]);
         } else {
             this.sensorData = null;
         }
@@ -275,18 +283,12 @@ export class ObjHelper {
                 stateObj.manual_mode, pr,
                 stateObj.friction_force_threshold,
                 stateObj.temperature_threshold,
-                stateObj.vibration_threshold,
                 stateObj.loadRegualtionAccuracy,
                 stateObj.RPMRegualtionAccuracy,
                 stateObj.readme
             );
         } else if (stateObj instanceof trState) {
-            return new trState(
-                stateObj.status,
-                stateObj.VFD_on, stateObj.load_on,
-                stateObj.stopTime, stateObj.stopTlim, stateObj.stopFlim,
-                stateObj.rpmReg, stateObj.loadReg,
-                stateObj.rpmRegTimedOut, stateObj.loadRegTimedOut);
+            return new trState(stateObj.toStateString());
         } else if (stateObj instanceof trProgram) {
             return new trProgram(
                 stateObj.duration, stateObj.load, stateObj.RPM,

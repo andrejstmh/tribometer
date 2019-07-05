@@ -1,12 +1,12 @@
 <div class="container">
-    <div *ngIf="totState">
+    <div *ngIf="lSettings">
         <h1>Settings</h1>
         <form (ngSubmit)="onSubmit()" #settingsForm="ngForm">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="user" placeholder="Name Surname"
                        required
-                       [(ngModel)]="totState.settings.user" name="user" #user="ngModel"/>
+                       [(ngModel)]="lSettings.user" name="user" #user="ngModel"/>
                 <div [hidden]="user.valid"
                      class="alert alert-danger">
                     Name is required
@@ -17,7 +17,7 @@
                 <label for="bearing">Bearing description</label>
                 <textarea type="text" class="form-control" id="bearing" placeholder="Example: Thrust ball bearing 65 (2011) 245-248"
                           required
-                          [(ngModel)]="totState.settings.bearing" name="bearing" #bearing="ngModel"></textarea>
+                          [(ngModel)]="lSettings.bearing" name="bearing" #bearing="ngModel"></textarea>
                 <div [hidden]="bearing.valid"
                      class="alert alert-danger">
                     Bearing description is required
@@ -28,7 +28,7 @@
                 <label for="output_file">Output file name</label>
                 <input type="text" class="form-control" id="output_file" placeholder="Example: result.h5"
                        required
-                       [(ngModel)]="totState.settings.output_file" name="output_file" #output_file="ngModel" 
+                       [(ngModel)]="lSettings.output_file" name="output_file" #output_file="ngModel" 
                        (keyup)="ResFileExists($event.target.value)"/>
                 <div [hidden]="output_file.valid"
                      class="alert alert-danger">
@@ -43,62 +43,62 @@
                 <label for="recording_cycle">Recording interval, s</label>
                 <input type="number" class="form-control" id="recording_cycle" placeholder=""
                        required min="0" max="60"
-                       [(ngModel)]="totState.settings.recording_cycle" name="recording_cycle" #recording_cycle="ngModel" />
+                       [(ngModel)]="lSettings.recording_cycle" name="recording_cycle" #recording_cycle="ngModel" />
                 <div [hidden]="recording_cycle.valid"
                      class="alert alert-danger">
                     recording_cycle is required
                 </div>
             </div>
 
-            <div *ngIf="totState.settings.manual_mode" class="form-group">
+            <div *ngIf="lSettings.manual_mode" class="form-group">
                 <label for="total_duration">Maximum experiment duration, minutes</label>
                 <input type="number" class="form-control" id="total_duration" placeholder="Example: 24"
                        required min="1" max="10000"
-                       [(ngModel)]="totState.settings.total_duration" name="total_duration" #total_duration="ngModel" />
+                       [(ngModel)]="lSettings.total_duration" name="total_duration" #total_duration="ngModel" />
                 <div [hidden]="total_duration.valid"
                      class="alert alert-danger">
                     Maximum experiment duration is required
                 </div>
             </div>
 
-            <div *ngIf="totState.settings.manual_mode" class="form-group">
+            <div *ngIf="lSettings.manual_mode" class="form-group">
                 <label for="load">Applied load, N</label>
                 <input type="number" class="form-control" id="load" placeholder="1<load<1000"
                        required min="1" max="1000"
-                       [(ngModel)]="totState.settings.load" name="load" #load="ngModel" />
+                       [(ngModel)]="lSettings.load" name="load" #load="ngModel" />
                 <div [hidden]="load.valid"
                      class="alert alert-danger">
                     Applied load is required
                 </div>
             </div>
 
-            <div *ngIf="totState.settings.manual_mode" class="form-group">
+            <div *ngIf="lSettings.manual_mode" class="form-group">
                 <label for="rpm">Revolutions per minute(RPM)</label>
                 <input type="number" class="form-control" id="rpm" placeholder="300<load<3000"
                        required min="300" max="3000"
-                       [(ngModel)]="totState.settings.rpm" name="rpm" #rpm="ngModel" />
+                       [(ngModel)]="lSettings.rpm" name="rpm" #rpm="ngModel" />
                 <div [hidden]="rpm.valid"
                      class="alert alert-danger">
                     Applied load is required
                 </div>
             </div>
 
-            <div *ngIf="totState.settings.manual_mode" class="form-group">
+            <div *ngIf="lSettings.manual_mode" class="form-group">
                 <label for="friction_force_threshold">Friction force threshold, N</label>
                 <input type="number" class="form-control" id="friction_force_threshold" placeholder="Example: 2"
                        required min="10" max="1000"
-                       [(ngModel)]="totState.settings.friction_force_threshold" name="friction_force_threshold" #friction_force_threshold="ngModel" />
+                       [(ngModel)]="lSettings.friction_force_threshold" name="friction_force_threshold" #friction_force_threshold="ngModel" />
                 <div [hidden]="friction_force_threshold.valid"
                      class="alert alert-danger">
                     Friction force threshold is required
                 </div>
             </div>
 
-            <div *ngIf="totState.settings.manual_mode" class="form-group">
+            <div *ngIf="lSettings.manual_mode" class="form-group">
                 <label for="temperature_threshold">Temperature threshold, °C</label>
                 <input type="number" class="form-control" id="temperature_threshold" placeholder="Example: 2"
                        required min="25" max="120"
-                       [(ngModel)]="totState.settings.temperature_threshold" name="temperature_threshold" #temperature_threshold="ngModel" />
+                       [(ngModel)]="lSettings.temperature_threshold" name="temperature_threshold" #temperature_threshold="ngModel" />
                 <div [hidden]="temperature_threshold.valid"
                      class="alert alert-danger">
                     Temperature threshold is required
@@ -108,9 +108,9 @@
             <div class="form-group">
                 <label for="manual_mode">Freestyle experiment</label>
                 <input type="checkbox" class="form-control" id="manual_mode"
-                       [(ngModel)]="totState.settings.manual_mode" name="manual_mode" #manual_mode="ngModel" />
+                       [(ngModel)]="lSettings.manual_mode" name="manual_mode" #manual_mode="ngModel" />
             </div>
-            <div *ngIf="!totState.settings.manual_mode">
+            <div *ngIf="!lSettings.manual_mode">
                 <div class="card-body bg-light border-top">
                     <div class="row">
                         <div class="col-12 col-sm-6 pr-sm-0 col-md-12 pr-md-3 col-xl-6 pr-xl-0">
@@ -146,7 +146,7 @@
                         <div class="col">Friction force threshold</div>
                         <div class="col">Temperature threshold, °C</div>
                     </div>
-                    <div *ngFor="let r of totState.settings.program" class="row" (click)="onSelectRow(r)">
+                    <div *ngFor="let r of lSettings.program" class="row" (click)="onSelectRow(r)">
                         <!-- "duration":0.25, "load":0.0,"RPM":1000,"Tmax":100,"Fmax":10 -->
                         <div *ngIf="r!=selectedRow" class="card-body bg-light border-top">
                             <div class="row">

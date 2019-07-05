@@ -70,7 +70,6 @@ DefaultSettings={
     "friction_force_threshold":100,
     # C
     "temperature_threshold":100,
-
     # [N]
     "loadRegualtionAccuracy":2,
     # rotation per minute

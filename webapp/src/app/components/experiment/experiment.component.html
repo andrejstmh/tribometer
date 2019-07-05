@@ -1,5 +1,5 @@
 <div  class="container-fluid">
-    <div *ngIf="totState|async as totSTATE" class="row">
+    <div *ngIf="{settings:signalsService.settings$|async,state:signalsService.lastState$|async} as totSTATE" class="row">
         <div class="container rounded border bg-light">
             <!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
             <div class="row">

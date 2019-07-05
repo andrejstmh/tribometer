@@ -5,7 +5,6 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 
 import { SensorsData, ObjHelper } from './../../models/message.model';
-import { SocketService } from './../../services/socket.service';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
 
@@ -19,19 +18,18 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     currentData: SensorsData = null;
     constructor(
         private chartService:ChartService,
-        private socketservice: SocketService,
-        private signalsService: SignalsService) {
+        public signalsService: SignalsService) {
         this.ChartListen = this.chartService.ChartListen;
     }
     rpmVal: number = 0;
     public ChartListen: LineChartSettings =null;
-
+    
     @ViewChild("listen", { read: BaseChartDirective }) chart: BaseChartDirective;
-    //@ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
-
+    
     OnChDCh: Subscription = null;
 
     ngOnInit() {
+        
         this.OnChDCh = this.chartService.onChartDataChanged$.subscribe(
             reOk => {
                 if (reOk) {
@@ -65,27 +63,51 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     //}
 
 
-    rotation() {
-        this.signalsService.SetRPM(this.rpmVal).subscribe(x => {
-            console.log("Rotation " +x);
-        });
-    }
-
     StopRotation() {
         this.signalsService.SetRPM(0).subscribe(x => {
             console.log("StopRotation "+x);
         });
     }
 
-    loadPlus() {
-        this.signalsService.SetLoad(10).subscribe(x => {
-            console.log("Load " +x);
+    loadPlus(val: number) {
+        this.signalsService.UpdateLoadManual(val).subscribe(x => {
+            console.log("Load +" +val);
         });
     }
 
-    loadMinus() {
-        this.signalsService.SetLoad(-10).subscribe(x => {
-            console.log("Load" + x);
+    loadMinus(val: number) {
+        this.signalsService.UpdateLoadManual(-val).subscribe(x => {
+            console.log("Load -" + val);
         });
+    }
+
+    increaseRPM(val: number) {
+        console.log("increaseRPM" + val);
+        this.signalsService.UpdateRPMManual(val).subscribe(
+            resOk => { console.log("RPM" + val); }
+        );
+    }
+    decreaseRPM(val: number) {
+        console.log("decreaseRPM" + val);
+        this.signalsService.UpdateRPMManual(-val).subscribe(
+            resOk => { console.log("RPM" + val); }
+        );
+    }
+    setRPMAuto(val: number) {
+        this.signalsService.SetRPM(val).subscribe(
+            resOk => { this.signalsService.settings$.next(resOk); }
+        );
+        console.log(val);
+    }
+    setLoadAuto(val: number) {
+        this.signalsService.SetLoad(val).subscribe(
+            resOk => { this.signalsService.settings$.next(resOk); }
+        );
+        console.log(val);
+    }
+    setThresholds(maxFr: number, maxTemp: number) {
+        this.signalsService.UpdateThresholds(maxFr, maxTemp).subscribe(
+            resOk => { this.signalsService.settings$.next(resOk); }
+        );
     }
 }

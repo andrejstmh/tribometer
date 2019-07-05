@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router"
-import { Observable, of, Subject, BehaviorSubject, forkJoin } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject, forkJoin, Subscription } from 'rxjs';
 import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { trTotalState, trState, trSettings, ObjHelper, trProgram } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
@@ -12,16 +12,19 @@ import { ChartService, LineChartSettings } from './../../services/chart.service'
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
     private outputFileName$ = new Subject<string>();
     fileExists$: Observable<string>;
     users$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-    totState: trTotalState = null;
+    lSettings: trSettings = null;
+    //totState: trTotalState = new trTotalState(null, null);
+    OnNewSetting: Subscription = null;
+    OnNewStatus: Subscription = null;
     constructor(
         private signalsService: SignalsService,
         private router: Router
     ) { }
-    
+
     ngOnInit() {
         this.fileExists$ = this.outputFileName$.pipe(
             debounceTime(300),
@@ -29,8 +32,11 @@ export class SettingsComponent implements OnInit {
             switchMap(fileName =>
                 this.signalsService.GetOutputFileExists(fileName))
         );
-        
-        this.signalsService.totalstate$.subscribe(
+        //this.OnNewStatus = this.signalsService.lastState$.subscribe(
+        //    resOk => { if (resOk) this.totState.state = ObjHelper.DeepCopyOfState(resOk); }
+        //);
+
+        this.OnNewSetting = this.signalsService.settings$.subscribe(
             resOk => {
                 if (resOk) {
                     this.signalsService.GetOperators().subscribe(
@@ -38,26 +44,26 @@ export class SettingsComponent implements OnInit {
                     );
                     //console.log('request');
                     //console.log(resOk);
-                    this.totState = ObjHelper.DeepCopyOfState(resOk);
-                    //console.log('form data');
-                    //console.log(this.totState);
-                    //if (this.totState.settings.program.length < 1) {
-                    //    this.totState.settings.program.push(this.CreateNewItem());
-                    //}
-                    //this.selectedRow = this.totState.settings.program[0];
-
-                    
-
+                    if (this.lSettings) {
+                        if (this.lSettings.output_file !== resOk.output_file) {
+                            this.outputFileName$.next(resOk.output_file);
+                        }
+                    } else {
+                        this.outputFileName$.next(resOk.output_file);
+                    }
+                    this.lSettings = ObjHelper.DeepCopyOfState(resOk);
                 } else {
-                    this.totState = null;
-
+                    this.lSettings = null;
                 }
             },
             resErr => { },
             () => { }
         );
     }
-
+    ngOnDestroy() {
+        if (this.OnNewSetting) this.OnNewSetting.unsubscribe();
+        if (this.OnNewStatus) this.OnNewStatus.unsubscribe();
+    }
     selectedRow: trProgram = null;
     CreateNewItem(Nr?: number) {
         //if (Nr === undefined) {
@@ -65,8 +71,8 @@ export class SettingsComponent implements OnInit {
         //} else {
         //    return new CurveRow(0, 0, Nr);
         //}
-        return new trProgram(1, this.totState.settings.load, this.totState.settings.rpm,
-            this.totState.settings.temperature_threshold, this.totState.settings.friction_force_threshold,1);
+        return new trProgram(1, this.lSettings.load, this.lSettings.rpm,
+            this.lSettings.temperature_threshold, this.lSettings.friction_force_threshold,1);
     }
 
     onSelectRow(r: any) {
@@ -74,7 +80,7 @@ export class SettingsComponent implements OnInit {
     }
 
     DeleteRow() {
-        let res = this.totState.settings.program;
+        let res = this.lSettings.program;
         let selectedRow_Nr = res.indexOf(this.selectedRow);
         if (selectedRow_Nr != null) {
             if (res.length > 1) {
@@ -85,7 +91,7 @@ export class SettingsComponent implements OnInit {
     }
 
     InsertItem(before: boolean) {
-        let res = this.totState.settings.program;
+        let res = this.lSettings.program;
         let nr: number = res.indexOf(this.selectedRow);
         let newItem = this.CreateNewItem();
         if (nr != null) {
@@ -117,7 +123,7 @@ export class SettingsComponent implements OnInit {
     }
 
     MoveItem(up: boolean) {
-        let res = this.totState.settings.program;
+        let res = this.lSettings.program;
         let nr: number = res.indexOf(this.selectedRow);
         let moved: boolean = false;
         if (nr != null) {
@@ -153,7 +159,7 @@ export class SettingsComponent implements OnInit {
     }
 
     onSubmit() {
-        this.signalsService.EditSettings(this.totState.settings).subscribe(
+        this.signalsService.EditSettings(this.lSettings).subscribe(
             resOk => {
                 console.log("EditSettingsOk");
                 //console.log(resOk);
@@ -163,7 +169,7 @@ export class SettingsComponent implements OnInit {
                 //this.totState = DeepCopyOfState(v);
                 this.signalsService.GetTotalState();
                 if (resOk.output_file) {
-                    this.router.navigate(['/experiment']);
+                    this.router.navigate(['/controls']);
                 }
             },
             resErr => { console.log("EditSettingsErr"); },

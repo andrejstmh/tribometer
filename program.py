@@ -26,8 +26,9 @@ class ProgrCol:
     SettFields = ["duration","load","RPM","Tmax","Fmax"]
 
 class Program:
-    def __init__(self, settings:exp_settings.ExperimentSettings):
+    def __init__(self, settings:exp_settings.ExperimentSettings,state:exp_settings.ExpState):
         self.Settings = settings
+        self.ExpState = state
         self.OneSecond = np.timedelta64(1, 's')
         self.programmStarted = False
         self.LoadAutoRegulation = False
@@ -38,11 +39,13 @@ class Program:
     def SetTargetLoad(self,load,AutoRegulation = True):
         self.Settings.target_load = load
         self.LoadAutoRegulation = AutoRegulation
+        self.ExpState.loadRegAuto = AutoRegulation
         self.programData[0,ProgrCol.load] = load
 
     def SetTargetRPM(self,RPM,AutoRegulation = True):
         self.Settings.target_rpm = RPM
         self.RPMAutoRegulation = AutoRegulation
+        self.ExpState.rpmRegAuto = AutoRegulation
         self.programData[0,ProgrCol.RPM] = RPM
 
     def SetThresholdTemp(self,temp):

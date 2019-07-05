@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { SignalsService } from './../../services/signals.service';
 import { CalibrationCurve, trTotalState, ObjHelper } from './../../models/message.model';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { SignalsService } from './../../services/signals.service';
 import { ChartService } from './../../services/chart.service';
 
 class CurveRow {
@@ -37,12 +37,11 @@ export class CalibrCurveComponent implements OnInit, OnDestroy {
     prevData: CurveRow[] = [];
     OnChDCh: Subscription = null;
     CcurvData: CalibrationCurve = null;
-    status$: BehaviorSubject<trTotalState> = null;
+
     constructor(
         private sygnalServ: SignalsService,
         private chartService: ChartService
     ) {
-        this.status$ = this.sygnalServ.totalstate$;
         this.selectedCurve = this.CCurves[0];
     }
     //CurveTable = [{ x: 1, y: 2, select: false }, { x: 2, y: 5, select: false }, { x: 3, y: 10 }, { x: 4, y: 20, select: false }]

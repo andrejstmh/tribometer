@@ -14,26 +14,98 @@ class ExpStatus:
     completed = 3
 
 class ExpState:
-    def __init__(self):
-        self.status = ExpStatus.invalid
-        #self.description = False
-        self.VFD_on=False
-        self.load_on = False
-        self.stopTime = False
-        self.stopTlim =False
-        self.stopFlim =False
-        self.rpmReg =False
-        self.loadReg =False
-        self.rpmRegTimedOut=False
-        self.loadRegTimedOut=False
+    def __init__(self,stString=None):
+        if stString is None:
+            self.stateList = ["0","0","0",  "0","0","0",  "0","0","0", "0","0","0"]
+        else:
+            self.FromStateString(stString)
+        #self.status = ExpStatus.invalid #0
+        #self.VFD_on=False               #1
+        #self.load_on = False            #2
+        #self.stopTime = False           #3
+        #self.stopTlim =False            #4
+        #self.stopFlim =False            #5
+        #self.rpmReg =False              #6
+        #self.loadReg =False             #7
+        #self.rpmRegTimedOut=False       #8
+        #self.loadRegTimedOut=False      #9
+        #self.rpmRegAuto=False          #10
+        #self.loadRegAuto=False         #11
+    def FromStateString(self, stString):
+        self.stateList = []
+        for ch in stString:
+            self.stateList.append(ch)
+
+    @property
+    def stateString(self): return "".join(self.stateList)
+
+    @property
+    def status(self):
+        return int(self.stateString[0])
+    @status.setter
+    def status(self, value):
+        self.stateList[0] = str(value)
+
+    @property
+    def VFD_on(self): return self.stateList[1]!="0"
+    @VFD_on.setter
+    def VFD_on(self, value): self.stateList[1] = "1" if value else "0"
+
+    @property
+    def load_on(self): return self.stateList[2]!="0"
+    @load_on.setter
+    def load_on(self, value): self.stateList[2] = "1" if value else "0"
+
+    @property
+    def stopTime(self): return self.stateList[3]!="0"
+    @stopTime.setter
+    def stopTime(self, value): self.stateList[3] = "1" if value else "0"
+
+    @property
+    def stopTlim(self): return self.stateList[4]!="0"
+    @stopTlim.setter
+    def stopTlim(self, value): self.stateList[4] = "1" if value else "0"
+
+    @property
+    def stopFlim(self): return self.stateList[5]!="0"
+    @stopFlim.setter
+    def stopFlim(self, value): self.stateList[5] = "1" if value else "0"
+
+    @property
+    def rpmReg(self): return self.stateList[6]!="0"
+    @rpmReg.setter
+    def rpmReg(self, value): self.stateList[6] = "1" if value else "0"
+
+    @property
+    def loadReg(self): return self.stateList[7]!="0"
+    @loadReg.setter
+    def loadReg(self, value): self.stateList[7] = "1" if value else "0"
+
+    @property
+    def rpmRegTimedOut(self): return self.stateList[8]!="0"
+    @rpmRegTimedOut.setter
+    def rpmRegTimedOut(self, value): self.stateList[8] = "1" if value else "0"
+
+    @property
+    def loadRegTimedOut(self): return self.stateList[9]!="0"
+    @loadRegTimedOut.setter
+    def loadRegTimedOut(self, value): self.stateList[9] = "1" if value else "0"
+
+    @property
+    def rpmRegAuto(self): return self.stateList[10]!="0"
+    @rpmRegAuto.setter
+    def rpmRegAuto(self, value): self.stateList[10] = "1" if value else "0"
+
+    @property
+    def loadRegAuto(self): return self.stateList[11]!="0"
+    @loadRegAuto.setter
+    def loadRegAuto(self, value): self.stateList[11] = "1" if value else "0"
 
     def isContentEqual(self, other):
-        return self.status==other.status and self.VFD_on==other.VFD_on and self.load_on==other.load_on and \
-            self.stopTime==other.stopTime and self.stopTlim==other.stopTlim and self.stopFlim==other.stopFlim and \
-            self.rpmReg==other.rpmReg and self.loadReg==other.loadReg and \
-            self.rpmRegTimedOut==other.rpmRegTimedOut and self.loadRegTimedOut==other.loadRegTimedOut
+        return self.stateString==other.stateString
+
     def getJson(self):
-        return json.dumps(dict(vars(self)))
+        return '"'+self.stateString+'"'
 
 class ExperimentSettings:
     resultsFolder = "ExperimentalData/"

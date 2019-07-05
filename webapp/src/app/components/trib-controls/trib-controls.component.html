@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row">
+    <div *ngIf="signalsService.settings$|async as sett" class="row">
         <div class="container rounded border bg-light m-1">
             <div class="row h5">
                 <div class="col-3">Rotations control</div>
@@ -9,38 +9,42 @@
             <div class="row border-top">
                 <div class="col-3"></div>
                 <div class="col-4">
-                    <input type="number" min="5" max="125" name="rpm_auto" #rpm_auto>
-                    <button type="button" class="btn btn-info m-1">Apply</button>
+                    <input type="number" min="5" max="125" name="rpm_auto" [value]="sett.rpm" #rpm_auto>
+                    <button type="button" class="btn btn-info m-1" (click)="setRPMAuto(rpm_auto.value)">Apply</button>
                 </div>
                 <div class="col-5">
-                    <input type="number" min="300" max="3000" [(ngModel)]="rpmVal" name="rpm_manual" #rpm_manual>
-                    <button type="button" class="btn btn-info m-1" (click)="rotation()">Apply {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>
+                    <button type="button" class="btn btn-info m-1" (click)="decreaseRPM(rpm_manual.value)">Decrease</button>
+                    <input type="number" min="1" max="100" [value]="10" name="rpm_manual" #rpm_manual>
+                    <button type="button" class="btn btn-info m-1" (click)="increaseRPM(rpm_manual.value)">Increase</button>
+                    <!--<button type="button" class="btn btn-info m-1" (click)="rotation()">Apply {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>-->
                     <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+
+    <div *ngIf="signalsService.settings$|async as sett" class="row">
         <div class="container rounded border bg-light m-1">
-           <div class="row h5">
-               <div class="col-3">Load control</div>
+            <div class="row h5">
+                <div class="col-3">Load control</div>
                 <div class="col-4">Auto</div>
                 <div class="col-5">Manual</div>
             </div>
             <div class="row border-top">
                 <div class="col-3"></div>
                 <div class="col-4">
-                    <input type="number" class="m-1" min="5" max="125" name="rpm_auto" #load_auto>
-                    <button type="button" class="btn btn-info m-1">Apply</button>
+                    <input type="number" class="m-1" min="1" max="1020" name="load_auto" [value]="sett.load" #load_auto>
+                    <button type="button" class="btn btn-info m-1" (click)="setLoadAuto(load_auto.value)">Apply</button>
                 </div>
                 <div class="col-5">
-                    <button type="button" class="btn btn-info m-1" (click)="loadPlus()">Increase load</button>
-                    <button type="button" class="btn btn-info m-1" (click)="loadMinus()">Decrease load</button>
+                    <button type="button" class="btn btn-info m-1" (click)="loadMinus(load_manual.value)">Decrease</button>
+                    <input type="number" [value]="10" min="1" max="100" name="load_manual" #load_manual>
+                    <button type="button" class="btn btn-info m-1" (click)="loadPlus(load_manual.value)">Increase</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div *ngIf="signalsService.settings$|async as sett" class="row">
         <div class="container rounded border bg-light m-1">
             <div class="row h5">
                 <div class="col">Thresholds</div>
@@ -48,9 +52,15 @@
                 <div class="col">T, °C</div>
             </div>
             <div class="row border-top">
-                <div class="col text-center mx-auto"><button type="button" class="btn btn-info m-1">Apply</button></div>
-                <div class="col text-center mx-auto"><input type="number" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold></div>
-                <div class="col text-center mx-auto"><input type="number" class="m-1" min="15" max="100" name="t_threshold" #t_threshold></div>
+                <div class="col text-center mx-auto">
+                <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
+                </div>
+                <div class="col text-center mx-auto">
+                    <input type="number" [value]="sett.friction_force_threshold" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
+                </div>
+                <div class="col text-center mx-auto">
+                    <input type="number" [value]="sett.temperature_threshold" class="m-1" min="15" max="100" name="t_threshold" #t_threshold>
+                </div>
             </div>
         </div>
     </div>

@@ -9,7 +9,6 @@ import { webSocket } from "rxjs/webSocket";
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { SensorsData, trResultFileData, trResultBase64FileData } from './../models/message.model';
-import { SocketService } from './socket.service';
 import { SignalsService } from './signals.service';
 
 import { forEach } from '@angular/router/src/utils/collection';
