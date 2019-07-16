@@ -115,6 +115,10 @@ class ExperimentSettings:
         self.avgBufferSize = 20 # 
         self.rpmRegCikleSize=30
         self.loadRegCikleSize=25
+        self.loadRegualtionDiffStart=50
+        self.loadRegualtionDiffStop=10
+        self.RPMRegualtionDiffStart=5
+        self.RPMRegualtionDiffStop=2
 
         self.settings = default_settings.DefaultSettings
         self.SettingsFileName=self.getFilePath(ExperimentSettings.resultsFolder+"settings.json")
@@ -202,7 +206,7 @@ class ExperimentSettings:
     listening_interval = property(get_listening_interval,set_listening_interval)
 
     def get_recording_cycle(self):return self.settings["recording_cycle"]
-    def set_recording_cycle(self, value):self.settings["recording_cycle"] = np.around(value*1000/self.listening_interval).astype(np.int)
+    def set_recording_cycle(self, value):self.settings["recording_cycle"] = self.listening_interval#np.around(value*1000/self.listening_interval).astype(np.int)
     recording_cycle = property(get_recording_cycle,set_recording_cycle)
 
     def get_visualisation_cycle(self):return self.settings["visualisation_cycle"]
@@ -239,9 +243,9 @@ class ExperimentSettings:
     def set_temperature_threshold(self, value):self.settings["temperature_threshold"] = value
     temperature_threshold = property(get_temperature_threshold,set_temperature_threshold)
 
-    def get_vibration_threshold(self):return self.settings["vibration_threshold"]
-    def set_vibration_threshold(self, value):self.settings["vibration_threshold"] = value
-    vibration_threshold = property(get_vibration_threshold,set_vibration_threshold)
+    #def get_vibration_threshold(self):return self.settings["vibration_threshold"]
+    #def set_vibration_threshold(self, value):self.settings["vibration_threshold"] = value
+    #vibration_threshold = property(get_vibration_threshold,set_vibration_threshold)
     
     def SaveSettings(self,fn=None):
         if fn is None:

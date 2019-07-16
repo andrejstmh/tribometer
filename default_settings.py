@@ -70,10 +70,10 @@ DefaultSettings={
     "friction_force_threshold":100,
     # C
     "temperature_threshold":100,
-    # [N]
-    "loadRegualtionAccuracy":2,
-    # rotation per minute
-    "RPMRegualtionAccuracy":2,
+    ## [N]
+    #"loadRegualtionAccuracy":2,
+    ## rotation per minute
+    #"RPMRegualtionAccuracy":2,
     # optional field
     "readme":"UNITS: intervals[second]; duration[minutes]; threshold,load[N]"
 }

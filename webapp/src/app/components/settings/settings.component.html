@@ -42,7 +42,7 @@
             <div class="form-group">
                 <label for="recording_cycle">Recording interval, s</label>
                 <input type="number" class="form-control" id="recording_cycle" placeholder=""
-                       required min="0" max="60"
+                       required min="1" max="600"
                        [(ngModel)]="lSettings.recording_cycle" name="recording_cycle" #recording_cycle="ngModel" />
                 <div [hidden]="recording_cycle.valid"
                      class="alert alert-danger">
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div *ngIf="lSettings.manual_mode" class="form-group">
+            <div *ngIf="!lSettings.manual_mode" class="form-group">
                 <label for="total_duration">Maximum experiment duration, minutes</label>
                 <input type="number" class="form-control" id="total_duration" placeholder="Example: 24"
                        required min="1" max="10000"
@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <div *ngIf="lSettings.manual_mode" class="form-group">
+            <div *ngIf="!lSettings.manual_mode" class="form-group">
                 <label for="load">Applied load, N</label>
                 <input type="number" class="form-control" id="load" placeholder="1<load<1000"
                        required min="1" max="1000"
@@ -72,7 +72,7 @@
                 </div>
             </div>
 
-            <div *ngIf="lSettings.manual_mode" class="form-group">
+            <div *ngIf="!lSettings.manual_mode" class="form-group">
                 <label for="rpm">Revolutions per minute(RPM)</label>
                 <input type="number" class="form-control" id="rpm" placeholder="300<load<3000"
                        required min="300" max="3000"
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div *ngIf="lSettings.manual_mode" class="form-group">
+            <div *ngIf="!lSettings.manual_mode" class="form-group">
                 <label for="friction_force_threshold">Friction force threshold, N</label>
                 <input type="number" class="form-control" id="friction_force_threshold" placeholder="Example: 2"
                        required min="10" max="1000"
@@ -94,7 +94,7 @@
                 </div>
             </div>
 
-            <div *ngIf="lSettings.manual_mode" class="form-group">
+            <div *ngIf="!lSettings.manual_mode" class="form-group">
                 <label for="temperature_threshold">Temperature threshold, °C</label>
                 <input type="number" class="form-control" id="temperature_threshold" placeholder="Example: 2"
                        required min="25" max="120"
@@ -106,11 +106,12 @@
             </div>
 
             <div class="form-group">
-                <label for="manual_mode">Freestyle experiment</label>
+                <!-- Freestyle experiment -->
+                <label for="manual_mode">Programmed experiment</label>
                 <input type="checkbox" class="form-control" id="manual_mode"
                        [(ngModel)]="lSettings.manual_mode" name="manual_mode" #manual_mode="ngModel" />
             </div>
-            <div *ngIf="!lSettings.manual_mode">
+            <div *ngIf="lSettings.manual_mode">
                 <div class="card-body bg-light border-top">
                     <div class="row">
                         <div class="col-12 col-sm-6 pr-sm-0 col-md-12 pr-md-3 col-xl-6 pr-xl-0">

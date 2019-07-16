@@ -69,15 +69,15 @@ class Tibometer:
             cls.Experiment.DataFile.StopRecording()
             cls.Experiment.status.status = ExpStatus.completed
 
-    @classmethod
-    def BeginProgram(cls):
-        if (cls.subscriptRead is not None) and (cls.Experiment.Program.programStartTime is None):
-            cls.Experiment.Program.BeginProgram()
+    #@classmethod
+    #def BeginProgram(cls):
+    #    if (cls.subscriptRead is not None) and (cls.Experiment.Program.programStartTime is None):
+    #        cls.Experiment.Program.BeginProgram()
     
-    @classmethod
-    def EndProgram(cls):
-        if cls.Experiment.Program.programStartTime is not None:
-            cls.Experiment.Program.EndProgram()
+    #@classmethod
+    #def EndProgram(cls):
+    #    if cls.Experiment.Program.programStartTime is not None:
+    #        cls.Experiment.Program.EndProgram()
 
 
 

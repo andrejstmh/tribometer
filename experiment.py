@@ -23,9 +23,118 @@ class RPMRegilator:
     def __init__(self):
         pass
 
+    def GetVFDFrequency(self,currentRPM,currentVFDHz,targetRPM):
+        #currentRPM = 60*currentVFDHz*coeff
+        coeff=1
+        if currentVFDHz>1 and currentRPM>60:
+            coeff=currentRPM /(60*currentVFDHz)
+            if coeff>2:
+                coeff=2
+        return targetRPM/(60*coeff)
+
 class LoadRegilator:
+    #5 rotations => 7 Bar => 1252 N
     def __init__(self):
-        pass
+        self.rotationRange=5
+        self.RegStepCount=5
+        self.maxLoad=1252 #N
+        self.SlipRatioIncCoeff=np.array([2,8/self.rotationRange],dtype = np.float)#2..10
+        self.SlipRatioDecCoeff=np.array([1,2/self.rotationRange],dtype = np.float)#1..3
+
+    def relLoad(self,loadN):
+        return loadN/self.maxLoad
+
+    def rotPosition(self,loadN):
+        return self.relLoad(loadN)*self.rotationRange
+
+    def SlipRatioIncreaseLoad(self,loadN):
+        return self.rotPosition(loadN)*self.SlipRatioIncCoeff[1]+self.SlipRatioIncCoeff[0]
+
+    def SlipRatioDecreaseLoad(self,loadN):
+        #1..3
+        return self.rotPosition(loadN)*self.SlipRatioDecCoeff[1]+self.SlipRatioDecCoeff[0]
+
+    def GetSlipRatio(self,loadN,deltaN=1):
+        if deltaN>0:
+            return self.SlipRatioIncreaseLoad(loadN)
+        else:
+            return self.SlipRatioDecreaseLoad(loadN)
+
+    def GetRotations(self,loadN,targetN):
+        #df'/df = SlipRatio
+        def I_SlipRatio_df(rot,coeffs):
+            return (coeffs[1]/2.0*rot+coeffs[0])*rot
+        f0 = self.rotPosition(loadN)
+        f1 = self.rotPosition(targetN)
+        if loadN<targetN:
+            i0 = I_SlipRatio_df(f0,self.SlipRatioIncCoeff)
+            i1 = I_SlipRatio_df(f1,self.SlipRatioIncCoeff)
+        else:
+            i0 = I_SlipRatio_df(f0,self.SlipRatioDecCoeff)
+            i1 = I_SlipRatio_df(f1,self.SlipRatioDecCoeff)
+        return (i1-i0)/self.RegStepCount
+
+class Automation:
+    def __init__(self,Experiment):
+        self.expr = Experiment
+        self.load_started = None
+        self.rpm_started = None
+        self.load_cikl_counter=0
+        self.rpm_cikl_counter=0
+        self.loadRegulator = LoadRegilator()
+        self.rpmRegulator = RPMRegilator()
+
+    def start_load_automation():
+        self.load_cikl_counter=0
+        self.expr.status.loadRegTimedOut = False
+        self.load_started = datetime.datetime.now()
+
+    def loadTargetChanged(self):
+        return self.expr.currentTargetData[0]!=self.expr.prevTargetData[0]
+
+    def loadValue_outOfRange(self):
+        return np.abs(self.expr.currentTargetData[1]-self.expr.currentAverageData[1])>self.expr.Settings.loadRegualtionDiffStart
+
+    def loadValue_inRange(self):
+        return np.abs(self.expr.currentTargetData[1]-self.expr.currentAverageData[1])<self.expr.Settings.loadRegualtionDiffStop
+
+    def loadReg_TimedOut(self,time_s):
+        return self.expr.Settings.loadMaxRegTime<time_s
+
+    def GO_loadReg_TimedOut(self):
+        self.expr.status.loadRegTimedOut = True
+        self.load_started = None
+
+    def GO_loadToTarget(self):
+        self.loadRegulator()
+
+    def GO_loadOk(self):
+        self.load_started = None
+        self.load_cikl_counter=0
+
+    def OnNewSensorData(self):
+        curT = datetime.datetime.now()
+        #load regulator ON
+        if self.expr.Program.LoadAutoRegulation:
+            if self.loadTargetChanged():
+                self.start_load_automation()
+            if self.load_started is None and self.loadValue_outOfRange():
+                    self.start_load_automation()
+            # regulation mode 
+            if self.load_started is not None:
+                dedtaT = (curT-self.load_started).seconds
+                if self.loadReg_TimedOut(dedtaT):
+                    self.GO_loadReg_TimedOut()
+                else:
+                    if self.load_cikl_counter%self.expr.Settings.loadRegCikleSize==0:
+                        if self.loadValue_outOfRange():
+                            self.GO_loadToTarget()
+                        if self.loadValue_inRange():
+                            self.GO_loadOk()
+                self.load_cikl_counter +=1
+            self.expr.status.loadReg = self.load_started is not None
+        else:
+            self.GO_loadOk()
 
 class Experiment:
     sensorDataVecLength = 5#time,load, friction, rpm, temperatura
@@ -35,7 +144,7 @@ class Experiment:
         self.Settings = exp_settings.ExperimentSettings()
         self.DataFile = exp_datafile.ExperimentDataFile(self.Settings)
         self.status = exp_settings.ExpState()
-        self.Program = program.Program(self.Settings,self.status)
+        self.Program = program.Program(self.Settings, self.status)
         self.Sensors = sensor_data.SensorData()
         self.WFD_freq = 0.0;
         self.prevStatus = copy.deepcopy(self.status);
@@ -78,10 +187,10 @@ class Experiment:
         if not np.isnan(fr):
             fr = cd.friction.getCalibratedValue(fr)
         self.SensorDataBuffer[self.DataBufferPointer,:] = np.array([time, load, fr, rpm, t], dtype=np.float);
-        #self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
-        #self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
-        self.currentAverageVoltage = np.nanpercentile(self.SensorVoltageBuffer, 50, axis=0)
-        self.currentAverageData = np.nanpercentile(self.SensorDataBuffer,50, axis=0)
+        self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
+        self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
+        #self.currentAverageVoltage = np.nanpercentile(self.SensorVoltageBuffer, 50, axis=0)
+        #self.currentAverageData = np.nanpercentile(self.SensorDataBuffer,50, axis=0)
         self.prevTargetData = self.currentTargetData
         self.currentTargetData = self.Program.getTargetValues(time);
         self.CheckTribometerState()
@@ -204,5 +313,46 @@ def test():
         print(sd)
     e.DataFile.StopRecording()
 
+def TestLoadRegulator():
+    lr = LoadRegilator()
+    N0,N1 = 0,lr.maxLoad
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+    
+    N0,N1 = lr.maxLoad/2,lr.maxLoad
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+
+    N0,N1 = 0,lr.maxLoad
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+    
+    N0,N1 = 0,lr.maxLoad/2
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+
+    N1,N0 = 0,lr.maxLoad
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+    
+    N1,N0 = lr.maxLoad/2,lr.maxLoad
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+
+    N1,N0 = 0,lr.maxLoad
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+    
+    N1,N0 = 0,lr.maxLoad/2
+    r = lr.GetRotations(N0,N1)
+    print("from {0} to {1}=>{2}".format(N0,N1,r))
+
+def TestRPMRegilator():
+    rpmr = RPMRegilator()
+    f = rpmr.GetVFDFrequency(300,5.5,600)
+    print(f)
+
 if __name__ == '__main__':
-    test()
+    #test()
+    #TestLoadRegulator()
+    TestRPMRegilator()

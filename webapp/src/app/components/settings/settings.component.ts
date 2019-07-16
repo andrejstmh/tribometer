@@ -51,6 +51,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     } else {
                         this.outputFileName$.next(resOk.output_file);
                     }
+                    resOk.recording_cycle = Math.round(resOk.recording_cycle * resOk.listening_interval / 1000.0);
+                    resOk.manual_mode = !resOk.manual_mode;
                     this.lSettings = ObjHelper.DeepCopyOfState(resOk);
                 } else {
                     this.lSettings = null;
@@ -159,7 +161,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        this.signalsService.EditSettings(this.lSettings).subscribe(
+        let ss = ObjHelper.DeepCopyOfState(this.lSettings);
+        ss.recording_cycle = Math.round(ss.recording_cycle * 1000 / ss.listening_interval);
+        ss.manual_mode = !ss.manual_mode;
+        this.signalsService.EditSettings(ss).subscribe(
             resOk => {
                 console.log("EditSettingsOk");
                 //console.log(resOk);
