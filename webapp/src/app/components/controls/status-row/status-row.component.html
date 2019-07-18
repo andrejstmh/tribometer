@@ -1,0 +1,50 @@
+<!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
+<div class="row">
+    <div *ngIf="{status:signalsService.lastState$|async,settings:signalsService.settings$ |async} as ts" class="container rounded border bg-light m-1">
+        <!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
+        <div *ngIf="ts.status && ts.settings" class="row">
+            <div class="col">
+                Experiment:
+                <span *ngIf="ts.status.status>0">{{ts.settings.output_file}}</span>
+                <i *ngIf="ts.status.status==0" class="fa fa-window-close"></i>
+                <i *ngIf="ts.status.status==1" class="fa fa-thumbs-up"></i>
+                <i *ngIf="ts.status.status==2" class="fa fa-edit"></i>
+                <i *ngIf="ts.status.status==3" class="fa fa-archive"></i>
+            </div>
+            <div class="col">
+                RPM
+                <i *ngIf="!ts.status.VFD_on" class="fa fa-power-off"></i>
+                <span *ngIf="ts.status.VFD_on">
+                    <i *ngIf="!ts.status.rpmRegAuto" class="fa fa-hand-paper"></i>
+                    <span *ngIf="ts.status.rpmRegAuto">
+                        <i *ngIf="ts.status.rpmRegTimedOut" class="fa fa-clock"></i>
+                        <i *ngIf="(!ts.status.rpmRegTimedOut) && ts.status.rpmReg" class="fa fa-cog fa-spin"></i>
+                        <i *ngIf="(!ts.status.rpmRegTimedOut) && (!ts.status.rpmReg)" class="fa fa-cog"></i>
+                    </span>
+                </span>
+            </div>
+            <div class="col">
+                Load
+                <i *ngIf="!ts.status.load_on" class="fa fa-power-off"></i>
+                <span *ngIf="ts.status.load_on">
+                    <i *ngIf="!ts.status.loadRegAuto" class="fa fa-hand-paper"></i>
+                    <span *ngIf="ts.status.loadRegAuto">
+                        <i *ngIf="ts.status.loadRegTimedOut" class="fa fa-clock"></i>
+                        <i *ngIf="(!ts.status.loadRegTimedOut) && ts.status.loadReg" class="fa fa-cog fa-spin"></i>
+                        <i *ngIf="(!ts.status.loadRegTimedOut) && (!ts.status.loadReg)" class="fa fa-cog"></i>
+                    </span>
+                </span>
+            </div>
+            <div class="col">
+                Friction
+                <i *ngIf="ts.status.stopFlim" class="fa fa-exclamation-triangle"></i>
+                <i *ngIf="!ts.status.stopFlim" class="fa fa-check-circle"></i>
+            </div>
+            <div class="col">
+                Temperature
+                <i *ngIf="ts.status.stopTlim" class="fa fa-exclamation-triangle"></i>
+                <i *ngIf="!ts.status.stopTlim" class="fa fa-check-circle"></i>
+            </div>
+        </div>
+    </div>
+</div>

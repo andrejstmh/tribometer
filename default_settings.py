@@ -11,9 +11,9 @@ def Pressure_2_Force(Presure_in_bar):
 
 DefaultCalibration_Pressure_2_Force=np.array([
 #Presure[bar], Force[N]
-[0,   0],
+[0.0,   0],
 [1.0,   100.0],
-[6,  1060],
+[6.0,   1060],
 ],dtype=np.float);
 
 
@@ -60,10 +60,10 @@ DefaultSettings={
     # minutes (manual mode, default 20 hours)
     "total_duration":20*60,
     "rpm":600,
-    "load":20.0,
+    "load":200.0,
     "manual_mode":True,
     "program":[
-        {"duration":10, "load":20.0,"RPM":600,"Tmax":100,"Fmax":10}],
+        {"duration":10, "load":200.0,"RPM":600,"Tmax":100,"Fmax":100}],
     #=================================================================
     #control parameters
     # [N]

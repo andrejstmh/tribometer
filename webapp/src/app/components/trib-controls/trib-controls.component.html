@@ -1,9 +1,10 @@
 <div class="container-fluid">
+    <app-status-row></app-status-row>
     <div *ngIf="signalsService.settings$|async as sett" class="row">
         <div class="container rounded border bg-light m-1">
             <div class="row h5">
-                <div class="col-3">Rotations control</div>
-                <div class="col-4">Auto</div>
+                <div class="col-3">RPM control</div>
+                <div class="col-4">Target</div>
                 <div class="col-5">Manual(VFD)</div>
             </div>
             <div class="row border-top">
@@ -27,7 +28,7 @@
         <div class="container rounded border bg-light m-1">
             <div class="row h5">
                 <div class="col-3">Load control</div>
-                <div class="col-4">Auto</div>
+                <div class="col-4">Target</div>
                 <div class="col-5">Manual</div>
             </div>
             <div class="row border-top">
@@ -47,11 +48,20 @@
     <div *ngIf="signalsService.settings$|async as sett" class="row">
         <div class="container rounded border bg-light m-1">
             <div class="row h5">
-                <div class="col">Thresholds</div>
-                <div class="col">Friction, N</div>
-                <div class="col">T, °C</div>
+                <div class="col-3">
+                    Thresholds
+                    <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
+                </div>
+                <div class="col-4">
+                    <input type="number" [value]="sett.friction_force_threshold" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
+                    Friction, N
+                </div>
+                <div class="col-5">
+                    <input type="number" [value]="sett.temperature_threshold" class="m-1" min="15" max="100" name="t_threshold" #t_threshold>
+                    T, °C
+                </div>
             </div>
-            <div class="row border-top">
+            <!--<div class="row border-top">
                 <div class="col text-center mx-auto">
                 <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
                 </div>
@@ -61,7 +71,7 @@
                 <div class="col text-center mx-auto">
                     <input type="number" [value]="sett.temperature_threshold" class="m-1" min="15" max="100" name="t_threshold" #t_threshold>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="row">
@@ -73,7 +83,7 @@
                 <div class="col">Load, N</div>
                 <div class="col">Friction, N</div>
                 <div class="col">T, °C</div>
-                <div class="col">μ,-</div>
+                <!--<div class="col">μ,-</div>-->
             </div>
             <div class="row border-top">
                 <div class="col">average</div>
@@ -81,7 +91,7 @@
                 <div class="col">{{currentData.adb[1]| number}}</div>
                 <div class="col">{{currentData.adb[2]| number}}</div>
                 <div class="col">{{currentData.adb[4]| number:'1.1-1'}}</div>
-                <div class="col">{{currentData.adb[2]/currentData.adb[1]| number}}</div>
+                <!--<div class="col">{{currentData.adb[2]/currentData.adb[1]| number}}</div>-->
             </div>
             <div class="row border-top font-weight-light">
                 <div class="col">actual</div>
@@ -89,7 +99,7 @@
                 <div class="col">{{currentData.db[1]| number}}</div>
                 <div class="col">{{currentData.db[2]| number}}</div>
                 <div class="col">{{currentData.db[4]| number:'1.1-1'}}</div>
-                <div class="col">{{currentData.db[2]/currentData.db[1]| number}}</div>
+                <!--<div class="col">{{currentData.db[2]/currentData.db[1]| number}}</div>-->
             </div>
         </div>
     </div>

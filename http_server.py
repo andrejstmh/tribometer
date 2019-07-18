@@ -31,7 +31,7 @@ def checkServer():
     res = False
     http_client = tornado.httpclient.HTTPClient()
     try:
-        response = http_client.fetch("http://localhost:8787/api/sett?case=state",method="GET")
+        response = http_client.fetch("http://localhost:8787/api/sett?case=state", method="GET")
         res = True
     except tornado.httpclient.HTTPError as e:
         # HTTPError is raised for non-200 responses; the response
@@ -230,9 +230,11 @@ class SettingsHandler(tornado.web.RequestHandler):
         elif st_case == "clbr_fr":
             #xy = json.loads(self.get_body_argument("message"))
             Tibometer.Experiment.Settings.calibrationData.friction.initJSON(self.request.body.decode("utf-8"))
+            Tibometer.Experiment.Settings.SaveCalibrationCurves()
             self.write(Tibometer.Experiment.Settings.calibrationData.friction.get_json_string())
         elif st_case == "clbr_load":
             Tibometer.Experiment.Settings.calibrationData.load.initJSON(self.request.body.decode("utf-8"))
+            Tibometer.Experiment.Settings.SaveCalibrationCurves()
             self.write(Tibometer.Experiment.Settings.calibrationData.load.get_json_string())
         #elif st_case=="clbr_rpm":
         #    Tibometer.Experiment.Settings.calibrationData.RPM.initJSON(self.request.body)

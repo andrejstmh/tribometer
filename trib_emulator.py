@@ -5,10 +5,10 @@ import numpy as np
 
 class TibometerEmulator:
     def __init__(self):
-        #0<Load_rot_pos<20*360
+        #0<Load_rot_pos<5*360
         self.WFD = 0 # Hz
         self.Load_volt = 0.615
-        self.Load_rot_pos = 0.5;#np.random.random() #0..1 = > 0 .. 40 * Pi
+        self.Load_rot_pos = 0.5;#np.random.random() #0..1 = > 0 .. 10 * Pi
         self.rot_delta = 0.0
         self.press_reduct = self.Load_rot_pos
         self.Frict_coeff = 0.06
@@ -32,9 +32,8 @@ class TibometerEmulator:
     def get_FrVolts(self):
         v=0.59+np.random.normal(0, 0.03)
         if (self.WFD>0):
-            force = self.Frict_coeff * default_settings.Pressure_2_Force(
-                            3.1341 * self.get_LoadVolts() - 1.4728) + np.random.normal(0, 2)
-            v =(force - 7.7186) / 20.738
+            force = self.Frict_coeff * 1250*(self.get_LoadVolts() - 0.66)/2.661125 + np.random.normal(0, 2)
+            v =(force ) / 20.738
         return v
 
     def setLoad(self,rotation_deg):

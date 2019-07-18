@@ -22,6 +22,7 @@ import { SettingsFormComponent } from './components/settings/settings-form/setti
 import { SignalsService } from './services/signals.service';
 import { ChartService } from './services/chart.service';
 import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
+import { StatusRowComponent } from './components/controls/status-row/status-row.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { TabulatorTableComponent } from './components/controls/tabulator-table/t
     ShowErrorsComponent,
     SettingsFormComponent,
     TabulatorTableComponent,
+    StatusRowComponent,
     TribControlsComponent
   ],
     imports: [

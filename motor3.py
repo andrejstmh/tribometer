@@ -5,7 +5,7 @@ pi = pigpio.pi()
 pi.set_mode(20, pigpio.OUTPUT)
 pi.set_mode(21, pigpio.OUTPUT)
 
-#(steps) number of steps (direction) dirrection (0 or 1) one step 1,8 degree
+#(steps) number of steps one step=>1.8 degree;(direction) dirrection (0 or 1)
 def P_motor(steps,direction):
     pi.write(19, 0)  #enable
     pi.write(20, direction)

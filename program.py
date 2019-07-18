@@ -36,16 +36,16 @@ class Program:
         self.programData = np.array([[0.0,0.0,0.0,0.0,0.0]])#t,load,rpm, maxFriction, maxTemp/5
         self.makeProgramArray()
 
-    def SetTargetLoad(self,load,AutoRegulation = True):
+    def SetTargetLoad(self,load):
         self.Settings.target_load = load
-        self.LoadAutoRegulation = AutoRegulation
-        self.ExpState.loadRegAuto = AutoRegulation
+        self.LoadAutoRegulation = True
+        self.ExpState.loadRegAuto = True
         self.programData[0,ProgrCol.load] = load
 
-    def SetTargetRPM(self,RPM,AutoRegulation = True):
+    def SetTargetRPM(self,RPM):
         self.Settings.target_rpm = RPM
-        self.RPMAutoRegulation = AutoRegulation
-        self.ExpState.rpmRegAuto = AutoRegulation
+        self.RPMAutoRegulation = True
+        self.ExpState.rpmRegAuto = True
         self.programData[0,ProgrCol.RPM] = RPM
 
     def SetThresholdTemp(self,temp):

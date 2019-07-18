@@ -5,6 +5,9 @@ import platform
 import base64
 import copy
 
+from rx import config,Observable
+from rx.subjects import Subject
+
 import exp_settings
 import exp_datafile
 import program
@@ -62,6 +65,11 @@ class LoadRegilator:
 
     def GetRotations(self,loadN,targetN):
         #df'/df = SlipRatio
+        maxLoad = 1250 # N !!!!!!!
+        if loadN+targetN<0:
+            targetN = 0-loadN
+        if loadN+targetN>maxLoad:
+            targetN = maxLoad-loadN
         def I_SlipRatio_df(rot,coeffs):
             return (coeffs[1]/2.0*rot+coeffs[0])*rot
         f0 = self.rotPosition(loadN)
@@ -72,7 +80,7 @@ class LoadRegilator:
         else:
             i0 = I_SlipRatio_df(f0,self.SlipRatioDecCoeff)
             i1 = I_SlipRatio_df(f1,self.SlipRatioDecCoeff)
-        return (i1-i0)/self.RegStepCount
+        return (i1-i0)#/self.RegStepCount
 
 class Automation:
     def __init__(self,Experiment):
@@ -83,35 +91,133 @@ class Automation:
         self.rpm_cikl_counter=0
         self.loadRegulator = LoadRegilator()
         self.rpmRegulator = RPMRegilator()
+        self.subscriptLoadReg = None
+    #-----------------------------------RPM---------------------------------------------
+    def CurrentAvgRPM(self):
+        return self.expr.currentAverageData[3]
 
-    def start_load_automation():
+    def CurrentTargetRPM(self):
+        return self.expr.currentTargetData[2]
+
+    def start_rpm_automation(self):
+        self.rpm_cikl_counter=0
+        self.expr.status.rpmRegTimedOut = False
+        self.expr.status.rpmRegAuto = True
+        self.rpm_started = datetime.datetime.now()
+
+    def rpmTargetChanged(self):
+        return self.expr.currentTargetData[2]!=self.expr.prevTargetData[2]
+
+    def rpmValue_outOfRange(self):
+        return np.abs(self.CurrentTargetRPM()-self.CurrentAvgRPM())>self.expr.Settings.RPMRegualtionDiffStart
+
+    def rpmValue_inRange(self):
+        return np.abs(self.CurrentTargetRPM()-self.CurrentAvgRPM())<self.expr.Settings.RPMRegualtionDiffStop
+
+    def rpmReg_TimedOut(self,time_s):
+        return self.expr.Settings.rpmMaxRegTime<time_s
+
+    def GO_rpmReg_TimedOut(self):
+        self.expr.status.rpmRegTimedOut = True
+        print("GO_rpmReg_TimedOut!")
+
+    def GO_rpmToTarget(self):
+        freq_Hz = self.rpmRegulator.GetVFDFrequency(self.CurrentAvgRPM(),self.expr.WFD_freq,self.CurrentTargetRPM())
+        self.setWFD_freq(freq_Hz)
+        print("TargetRPM:{0}".format(freq_Hz))
+
+    def GO_ManualRPM(self, deltaRPM):
+        newRPM = self.CurrentAvgRPM()+ deltaRPM
+        if newRPM<0:
+            newRPM=0
+        freq_Hz = self.rpmRegulator.GetVFDFrequency(self.CurrentAvgRPM(),self.expr.WFD_freq,newRPM)
+        print("ManualRPM:{0}".format(freq_Hz))
+        self.setWFD_freq(freq_Hz)
+        self.rpm_started = None
+        self.rpm_cikl_counter=0
+
+    def GO_rpmOk(self):
+        self.rpm_started = None
+        self.rpm_cikl_counter=0
+        print("GO_rpmOk!")
+
+    def setWFD_freq(self,freq):
+        if freq>0:
+            controls.set_speed(freq)
+            controls.start()
+        else:
+            freq = 0;
+            controls.stop()
+        self.expr.WFD_freq = freq;
+        return freq
+    #-----------------------------------LOAD--------------------------------------------
+    def CurrentAvgLoad(self):
+        return self.expr.currentAverageData[1]
+
+    def CurrentTargetLoad(self):
+        return self.expr.currentTargetData[1]
+
+    def start_load_automation(self):
         self.load_cikl_counter=0
         self.expr.status.loadRegTimedOut = False
+        self.expr.status.loadRegAuto = True
         self.load_started = datetime.datetime.now()
 
     def loadTargetChanged(self):
         return self.expr.currentTargetData[0]!=self.expr.prevTargetData[0]
 
     def loadValue_outOfRange(self):
-        return np.abs(self.expr.currentTargetData[1]-self.expr.currentAverageData[1])>self.expr.Settings.loadRegualtionDiffStart
+        return np.abs(self.CurrentTargetLoad()-self.CurrentAvgLoad())>self.expr.Settings.loadRegualtionDiffStart
 
     def loadValue_inRange(self):
-        return np.abs(self.expr.currentTargetData[1]-self.expr.currentAverageData[1])<self.expr.Settings.loadRegualtionDiffStop
+        return np.abs(self.CurrentTargetLoad()-self.CurrentAvgLoad())<self.expr.Settings.loadRegualtionDiffStop
 
     def loadReg_TimedOut(self,time_s):
         return self.expr.Settings.loadMaxRegTime<time_s
 
     def GO_loadReg_TimedOut(self):
+        print("loadReg_TimedOut")
         self.expr.status.loadRegTimedOut = True
-        self.load_started = None
+
+    def LoadRegMotor(self,steps,paskageNr=0):
+        if steps > 0:
+            #print("inc laod:{0}".format(steps))
+            controls.P_motor(np.abs(steps),0)
+        else:
+            #print("dec laod:{0}".format(steps))
+            controls.P_motor(np.abs(steps),1)
+
+    def MakeSubscriptionToLoadReg(self,rotations):
+        if self.subscriptLoadReg is not None:
+            self.subscriptLoadReg.dispose()
+            self.subscriptLoadReg=None
+        steps = int( 360/1.8*rotations/self.loadRegulator.RegStepCount)
+        time_interval_ms = int(1000/600*steps*2.0)
+        self.subscriptLoadReg = Observable.interval(time_interval_ms).take(self.loadRegulator.RegStepCount).subscribe(
+            lambda value: self.LoadRegMotor(steps,value)#,
+            #lambda error: print("Error: {} \t({} ms)".format(error, rotations)),
+            #lambda: print("Complete! \t({} ms)".format(rotations))
+        )
 
     def GO_loadToTarget(self):
-        self.loadRegulator()
+        rotations = self.loadRegulator.GetRotations(self.CurrentAvgLoad(),self.CurrentTargetLoad())
+        print("load2Target {0}".format(rotations))
+        self.MakeSubscriptionToLoadReg(rotations)
 
-    def GO_loadOk(self):
+    def GO_ManualLoad(self, deltaN):
+        rotations = self.loadRegulator.GetRotations(self.CurrentAvgLoad(),self.CurrentAvgLoad()+ deltaN)
+        print("GO_ManualLoad {0}".format(rotations))
+        self.MakeSubscriptionToLoadReg(rotations)
         self.load_started = None
         self.load_cikl_counter=0
 
+
+    def GO_loadOk(self):
+        print("GO_loadOk")
+        self.load_started = None
+        self.load_cikl_counter=0
+        self.subscriptLoadReg = None;
+    #----------------------------OnNewSensorData-------------------------------------------
     def OnNewSensorData(self):
         curT = datetime.datetime.now()
         #load regulator ON
@@ -127,14 +233,35 @@ class Automation:
                     self.GO_loadReg_TimedOut()
                 else:
                     if self.load_cikl_counter%self.expr.Settings.loadRegCikleSize==0:
-                        if self.loadValue_outOfRange():
-                            self.GO_loadToTarget()
                         if self.loadValue_inRange():
                             self.GO_loadOk()
+                        else:
+                            self.GO_loadToTarget()
                 self.load_cikl_counter +=1
             self.expr.status.loadReg = self.load_started is not None
         else:
             self.GO_loadOk()
+        #WFD regulator ON
+        if self.expr.Program.RPMAutoRegulation:
+            if self.rpmTargetChanged():
+                self.start_rpm_automation()
+            if self.rpm_started is None and self.rpmValue_outOfRange():
+                    self.start_rpm_automation()
+            # regulation mode 
+            if self.rpm_started is not None:
+                dedtaT = (curT-self.rpm_started).seconds
+                if self.rpmReg_TimedOut(dedtaT):
+                    self.GO_rpmReg_TimedOut()
+                else:
+                    if self.rpm_cikl_counter%self.expr.Settings.rpmRegCikleSize==0:
+                        if self.rpmValue_inRange():
+                            self.GO_rpmOk()
+                        else:
+                            self.GO_rpmToTarget()
+                self.rpm_cikl_counter +=1
+            self.expr.status.rpmReg = self.rpm_started is not None
+        else:
+            self.GO_rpmOk()
 
 class Experiment:
     sensorDataVecLength = 5#time,load, friction, rpm, temperatura
@@ -160,7 +287,8 @@ class Experiment:
         self.SensorDataBuffer = np.full(shape=(self.Settings.avgBufferSize,Experiment.sensorDataVecLength),
                                         fill_value=np.nan, dtype=np.float)
         self.SensorDataBuffer[:,0] = 0.0
-    
+        self.Automation = Automation(self)
+
     def get_currentSensorVoltage(self):
         return self.SensorVoltageBuffer[self.DataBufferPointer]
     currentRecordVoltage = property(get_currentSensorVoltage)
@@ -194,6 +322,7 @@ class Experiment:
         self.prevTargetData = self.currentTargetData
         self.currentTargetData = self.Program.getTargetValues(time);
         self.CheckTribometerState()
+        self.Automation.OnNewSensorData()
     
     def CheckTribometerState(self):
         #Data:time:0, load:1, fr:2, rpm:3, t:4
@@ -257,46 +386,29 @@ class Experiment:
     def controlDergeesFromForce(self,deltaForce):
         return 0;
 
-    def setWFD_freq(self,freq):
-        if freq>0:
-            controls.set_speed(freq)
-            controls.start()
-        else:
-            freq = 0;
-            controls.stop()
-        self.WFD_freq = freq;
-        return freq
-
-
     def SetRPM(self,RPM):
         self.Program.SetTargetRPM(RPM)
-        res = self.setWFD_freq(RPM / 60.0)
-        print("Set rotation:{0}".format(res*60.0))
         self.Program.RPMAutoRegulation = True
-        return 0
-
-    def SetLoad(self,LoadinN):
-        self.Program.SetTargetLoad(LoadinN)
+        self.Automation.start_rpm_automation()
         return 0
     
     def SetRPMManual(self,deltaRPM):
-        #self.Program.SetTargetRPM
-        res = self.setWFD_freq(self.WFD_freq + deltaRPM / 60.0)
-        self.Program.LoadAutoRegulation = False
-        self.status.loadRegAuto = False
-        return res*60.0
-
-    def SetLoadManual(self,deltaLoad):
-        deg = self.controlDergeesFromForce(deltaLoad)
-        steps = deg / 1.8
-        if steps > 0:
-            print("inc laod:{0}".format(deg))
-            controls.P_motor(steps,0)
-        else:
-            print("dec laod:{0}".format(deg))
-            controls.P_motor(steps,1)
         self.Program.RPMAutoRegulation = False
         self.status.rpmRegAuto = False
+        self.Automation.GO_ManualRPM(deltaRPM)
+        return 0
+    
+    
+    def SetLoad(self,LoadinN):
+        self.Program.SetTargetLoad(LoadinN)
+        self.Program.LoadAutoRegulation = True
+        self.Automation.start_load_automation()
+        return 0
+
+    def SetLoadManual(self,deltaLoad):
+        self.Program.LoadAutoRegulation = False
+        self.status.loadRegAuto = False
+        self.Automation.GO_ManualLoad(deltaLoad)
         return 0
 
 
