@@ -16,7 +16,8 @@ class Tibometer:
     @classmethod
     def getValues(cls,i):
         sd = cls.Experiment.GetSensorData()
-        #cls.Experiment.currentTargetData = cls.Experiment.Program.MoveToTarget(sd)
+        if cls.Experiment.StopCriteria():
+            cls.EndWriteing()
         return sd
 
 
@@ -57,6 +58,9 @@ class Tibometer:
             cls.Write_obs = cls.Read_obs.filter(lambda i: i%cls.Experiment.Settings.recording_cycle==0)
             cls.subscriptWrite = cls.Write_obs.subscribe(send_write, on_errorW)
             cls.Experiment.status.status = ExpStatus.started
+            if not cls.Experiment.Settings.manual_mode:
+                cls.Experiment.Program.LoadAutoRegulation=cls.Experiment.Program.RPMAutoRegulation=True
+                cls.Experiment.status.loadRegAuto = cls.Experiment.status.rpmRegAuto = True
         else:
             print("Writing error!")
 

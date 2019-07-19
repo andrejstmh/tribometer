@@ -40,6 +40,7 @@
             <!--status =  init = 0, started = 2, completed = 3 -->
             <div class="row">
                 <div class="container rounded border bg-light m-1">
+                    <!-- && totSTATE.state.VFD_on && totSTATE.state.load_on -->
                     <div *ngIf="totSTATE.state.status==1" class="row">
                         <button type="button" class="btn btn-danger m-1" (click)="startExperiment()">Start experiment</button>
                     </div>

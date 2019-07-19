@@ -35,6 +35,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
         //this.OnNewStatus = this.signalsService.lastState$.subscribe(
         //    resOk => { if (resOk) this.totState.state = ObjHelper.DeepCopyOfState(resOk); }
         //);
+        this.signalsService.GetOperators().subscribe(
+            resOk => { this.users$.next(resOk) }
+        );
 
         this.OnNewSetting = this.signalsService.settings$.subscribe(
             resOk => {
@@ -51,9 +54,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     } else {
                         this.outputFileName$.next(resOk.output_file);
                     }
-                    resOk.recording_cycle = Math.round(resOk.recording_cycle * resOk.listening_interval / 1000.0);
-                    resOk.manual_mode = !resOk.manual_mode;
                     this.lSettings = ObjHelper.DeepCopyOfState(resOk);
+                    this.lSettings.recording_cycle = Math.round(resOk.recording_cycle * resOk.listening_interval / 1000.0);
+                    this.lSettings.manual_mode = !resOk.manual_mode;
                 } else {
                     this.lSettings = null;
                 }

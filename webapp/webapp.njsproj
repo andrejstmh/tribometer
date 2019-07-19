@@ -39,8 +39,6 @@
     <Content Include="src\app\components\navbar\navbar.component.html" />
     <Content Include="src\app\components\not-found\not-found.component.css" />
     <Content Include="src\app\components\not-found\not-found.component.html" />
-    <Content Include="src\app\components\settings\settings-form\settings-form.component.css" />
-    <Content Include="src\app\components\settings\settings-form\settings-form.component.html" />
     <Content Include="src\app\components\settings\settings.component.css" />
     <Content Include="src\app\components\settings\settings.component.html" />
     <Content Include="src\app\components\trib-controls\trib-controls.component.css" />
@@ -65,7 +63,6 @@
     <TypeScriptCompile Include="src\app\components\experiment\experiment.component.ts" />
     <TypeScriptCompile Include="src\app\components\navbar\navbar.component.ts" />
     <TypeScriptCompile Include="src\app\components\not-found\not-found.component.ts" />
-    <TypeScriptCompile Include="src\app\components\settings\settings-form\settings-form.component.ts" />
     <TypeScriptCompile Include="src\app\components\settings\settings.component.ts" />
     <TypeScriptCompile Include="src\app\components\show-errors.component.ts" />
     <TypeScriptCompile Include="src\app\components\trib-controls\trib-controls.component.ts" />
@@ -104,7 +101,6 @@
     <Folder Include="src\app\components\navbar\" />
     <Folder Include="src\app\components\not-found\" />
     <Folder Include="src\app\components\settings\" />
-    <Folder Include="src\app\components\settings\settings-form\" />
     <Folder Include="src\app\components\trib-controls\" />
     <Folder Include="src\app\models\" />
     <Folder Include="src\app\services\" />

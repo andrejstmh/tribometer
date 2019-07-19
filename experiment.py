@@ -12,6 +12,7 @@ import exp_settings
 import exp_datafile
 import program
 import controls
+from exp_settings import ExpStatus
 
 if platform.system() != 'Windows':
     try:
@@ -133,6 +134,8 @@ class Automation:
         freq_Hz = self.rpmRegulator.GetVFDFrequency(self.CurrentAvgRPM(),self.expr.WFD_freq,newRPM)
         print("ManualRPM:{0}".format(freq_Hz))
         self.setWFD_freq(freq_Hz)
+        self.expr.Program.RPMAutoRegulation=False
+        self.expr.status.rpmRegTimedOut = False
         self.rpm_started = None
         self.rpm_cikl_counter=0
 
@@ -336,6 +339,24 @@ class Experiment:
 
     def UpdatePrevStatuis(self):
         self.prevStatus = copy.deepcopy(self.status)
+
+    def StopCriteria(self):
+        stopWFD=False
+        if self.status.stopTime or self.status.stopTlim or self.status.stopFlim:
+            if self.WFD_freq>0:
+                self.Automation.GO_ManualRPM(-100000)
+                self.Automation.GO_ManualLoad(0)
+            stopWFD = True
+        if not self.status.VFD_on:
+            stopWFD = True
+        if not self.status.load_on:
+            stopWFD = True
+        if stopWFD and self.WFD_freq>0 and (self.status.status == ExpStatus.started):
+            self.Automation.GO_ManualRPM(-100000)
+            self.Automation.GO_ManualLoad(0)
+            #self.Automation.setWFD_freq(-1)
+        return stopWFD
+
 
     def CheckStateAndSendComand(self):
         if not self.status.isContentEqual( self.prevStatus):
