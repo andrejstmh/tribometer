@@ -10,8 +10,9 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { SensorsData, trResultFileData, trResultBase64FileData } from './../models/message.model';
 import { SignalsService } from './signals.service';
+import { Number } from 'bokehjs/build/js/types/core/properties';
 
-import { forEach } from '@angular/router/src/utils/collection';
+//import { forEach } from '@angular/router/src/utils/collection';
 
 export class LineChartSettings {
     public lineChartData: ChartDataSets[] = [
@@ -34,6 +35,8 @@ export class LineChartSettings {
                     position: 'left',
                     ticks: {
                         fontColor: 'red',
+                        min:15,
+                        max:100,
                     },
                     scaleLabel: {
                         display: true,
@@ -49,6 +52,8 @@ export class LineChartSettings {
                     },
                     ticks: {
                         fontColor: 'rgba(77,83,96,1)',
+                        min: 0,
+                        max: 1200,
                     },
                     scaleLabel: {
                         display: true,
@@ -64,6 +69,8 @@ export class LineChartSettings {
                     },
                     ticks: {
                         fontColor: 'rgba(0,0,255,0.5)',
+                        min: 0,
+                        max: 1200,
                     },
                     scaleLabel: {
                         display: true,
@@ -79,6 +86,8 @@ export class LineChartSettings {
                     },
                     ticks: {
                         fontColor: 'green',
+                        min: 0,
+                        max: 120,
                     },
                     scaleLabel: {
                         display: true,
@@ -141,7 +150,8 @@ export class ChartService {
         let l: Label[] = [];  let d1: number[] = []; let d2: number[] = []; let d3: number[] = []; let d4: number[] = [];
         for (let i = 0; i <= chartDataLength; i++) {
             //l.push(String(i - chartDataLength));
-            l.push(String(i)); d1.push(0.0); d2.push(0.0); d3.push(0.0); d4.push(0.0);
+            l.push(String(chartDataLength-i)); //d1.push(0.0); d2.push(0.0); d3.push(0.0); d4.push(0.0); 
+            d1.push(NaN); d2.push(NaN); d3.push(NaN); d4.push(NaN);
         }
         this.ChartListen.lineChartData[0].data = d1;
         this.ChartListen.lineChartData[1].data = d2;
@@ -179,7 +189,7 @@ export class ChartService {
         for (let i = 0; i < this.ChartListen.lineChartData.length; i++) {
             //this.ChartListen.lineChartData[i].data.fill(0.0);
             for (let j = 0; j < this.ChartListen.lineChartData[i].data.length; j++) {
-                this.ChartListen.lineChartData[i].data[j] = 0;
+                this.ChartListen.lineChartData[i].data[j] = NaN;
             }
         }
     }
@@ -197,17 +207,17 @@ export class ChartService {
             //this.ChartListen.lineChartData[3].data.unshift(x.frictionforce)
             //this.ChartListen.lineChartData[3].data.pop();
             let jj = this.ChartListen.lineChartData[0].data.length - 1;
-            for (let j = jj; j >0; j--) {
-                this.ChartListen.lineChartData[0].data[j] = this.ChartListen.lineChartData[0].data[j - 1];
-                this.ChartListen.lineChartData[1].data[j] = this.ChartListen.lineChartData[1].data[j - 1];
-                this.ChartListen.lineChartData[2].data[j] = this.ChartListen.lineChartData[2].data[j - 1];
-                this.ChartListen.lineChartData[3].data[j] = this.ChartListen.lineChartData[3].data[j - 1];
+            for (let j = 1; j < jj+1; j++) {
+                this.ChartListen.lineChartData[0].data[j-1] = this.ChartListen.lineChartData[0].data[j];
+                this.ChartListen.lineChartData[1].data[j-1] = this.ChartListen.lineChartData[1].data[j];
+                this.ChartListen.lineChartData[2].data[j-1] = this.ChartListen.lineChartData[2].data[j];
+                this.ChartListen.lineChartData[3].data[j-1] = this.ChartListen.lineChartData[3].data[j];
             }
             //"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]
-            this.ChartListen.lineChartData[0].data[0] = x.db[4];//this.NanToNum(x.temperature);
-            this.ChartListen.lineChartData[1].data[0] = x.db[3];//this.NanToNum(x.rotationrate);
-            this.ChartListen.lineChartData[2].data[0] = x.db[1];//this.NanToNum(x.load);
-            this.ChartListen.lineChartData[3].data[0] = x.db[2];//this.NanToNum(x.frictionforce);
+            this.ChartListen.lineChartData[0].data[jj] = x.db[4];//this.NanToNum(x.temperature);
+            this.ChartListen.lineChartData[1].data[jj] = x.db[3];//this.NanToNum(x.rotationrate);
+            this.ChartListen.lineChartData[2].data[jj] = x.db[1];//this.NanToNum(x.load);
+            this.ChartListen.lineChartData[3].data[jj] = x.db[2];//this.NanToNum(x.frictionforce);
             this.onChartDataChanged$.next(x);
         }
     }

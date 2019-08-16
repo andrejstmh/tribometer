@@ -4,14 +4,14 @@
 rasberian 2018-11-26-rpd-x86-stretch
 ### Editors and repositories
 1. Visual studio code
-	1. wget https://packagecloud.io/headmelted/codebuilds/gpgkey -O - | sudo apt-key add -
-	1. curl -L https://code.headmelted.com/installers/apt.sh | sudo bash
+  1. wget https://packagecloud.io/headmelted/codebuilds/gpgkey -O - | sudo apt-key add -
+  1. curl -L https://code.headmelted.com/installers/apt.sh | sudo bash
 1. Git
-	1. git clone https://github.com/andrejstmh/tribometer
-	1. git pull origin master
-	1. git fetch https://github.com/andrejstmh/tribometer
-	1. git config --global user.name XXXX
-	1. git config --global user.email XXXX
+  1. git clone https://github.com/andrejstmh/tribometer
+  1. git pull origin master
+  1. git fetch https://github.com/andrejstmh/tribometer
+  1. git config --global user.name XXXX
+  1. git config --global user.email XXXX
 
 ### HDF5
 1. sudo apt-get update
@@ -47,7 +47,7 @@ Pressure applied
 Engine on
 
 Current project settings
-	T,Ffr,P,AE, sensor calibration constants
+  T,Ffr,P,AE, sensor calibration constants
 
 
 Commands/post

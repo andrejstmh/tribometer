@@ -1,7 +1,5 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 
-import { listener } from '@angular/core/src/render3';
-
 import { SensorsData, trSettings, trState, trTotalState } from './models/message.model';
 import { ChartService } from './services/chart.service';
 import { SignalsService } from './services/signals.service'

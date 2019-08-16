@@ -111,9 +111,9 @@ class ExperimentSettings:
     resultsFolder = "ExperimentalData/"
     def __init__(self):
         self.rpmMaxRegTime=2*60 # 2 minutes
-        self.loadMaxRegTime=3*60 # 3 minutes
-        self.avgBufferSize = 20 # 
-        self.rpmRegCikleSize=30
+        self.loadMaxRegTime=5*60 # 3 minutes
+        self.avgBufferSize = 10 # 
+        self.rpmRegCikleSize=40
         self.loadRegCikleSize=25
         self.loadRegualtionDiffStart=50
         self.loadRegualtionDiffStop=10

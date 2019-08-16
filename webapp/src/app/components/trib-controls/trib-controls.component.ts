@@ -11,20 +11,31 @@ import { ChartService, LineChartSettings } from './../../services/chart.service'
 
 @Component({
   selector: 'app-contols',
-	templateUrl: './trib-controls.component.html',
-	styleUrls: ['./trib-controls.component.css']
+  templateUrl: './trib-controls.component.html',
+  styleUrls: ['./trib-controls.component.css']
 })
 export class TribControlsComponent implements OnInit, OnDestroy {
     currentData: SensorsData = null;
+    rpmVal: number = 0;
+    public ChartListen: LineChartSettings = null;
     constructor(
-        private chartService:ChartService,
+        private chartService: ChartService,
         public signalsService: SignalsService) {
         this.ChartListen = this.chartService.ChartListen;
+        this.ChartListen.lineChartOptions["tooltips"] = { enabled: false };
+        //this.ChartListen.lineChartOptions["legend"] = { position: "left" };
+        //this.ChartListen.lineChartOptions["responsive"] = false;
+        //this.ChartListen.lineChartOptions.scales.xAxes[0] = {
+        //    ticks: {
+        //        callback: (dataLabel, index) => {
+        //            return (index % 5 === 0) ? dataLabel : "";
+        //        }
+        //    }
+        //}
     }
-    rpmVal: number = 0;
-    public ChartListen: LineChartSettings =null;
+
     
-    @ViewChild("listen", { read: BaseChartDirective }) chart: BaseChartDirective;
+    @ViewChild("listen", { read: BaseChartDirective, static: true }) chart: BaseChartDirective;
     
     OnChDCh: Subscription = null;
 

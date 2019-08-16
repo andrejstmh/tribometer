@@ -2,7 +2,7 @@ import numpy as np
 import trib_emulator
 class SensorData:
     #def __init__(self):
-    #	self
+    #  self
     def readRPM(self):
         res = np.nan if np.random.random()<0.02 else trib_emulator.tribometer_Emul.get_RPM()
         return res

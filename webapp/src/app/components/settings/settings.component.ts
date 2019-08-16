@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router"
 import { Observable, of, Subject, BehaviorSubject, forkJoin, Subscription } from 'rxjs';
-import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap, startWith } from 'rxjs/operators';
+
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { trTotalState, trState, trSettings, ObjHelper, trProgram } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
@@ -25,7 +27,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
         private router: Router
     ) { }
 
+    userControl = new FormControl('', [Validators.required]);
+    bearingDescrControl = new FormControl('', [Validators.required]);
+    outputFileNameControl = new FormControl('', [Validators.required]);
+    filteredOptions: Observable<string[]>;
+
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.users$.value.filter(option => option.toLowerCase().includes(filterValue));
+    }
+
     ngOnInit() {
+        this.userControl.setValue("");
+        this.filteredOptions = this.userControl.valueChanges
+            .pipe(
+                startWith(''),
+                map(value => this._filter(value))
+            );
+
         this.fileExists$ = this.outputFileName$.pipe(
             debounceTime(300),
             distinctUntilChanged(),
@@ -35,16 +54,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         //this.OnNewStatus = this.signalsService.lastState$.subscribe(
         //    resOk => { if (resOk) this.totState.state = ObjHelper.DeepCopyOfState(resOk); }
         //);
-        this.signalsService.GetOperators().subscribe(
-            resOk => { this.users$.next(resOk) }
-        );
-
+        
+        this.getOperators();
         this.OnNewSetting = this.signalsService.settings$.subscribe(
             resOk => {
                 if (resOk) {
-                    this.signalsService.GetOperators().subscribe(
-                        resOk => { this.users$.next(resOk) }
-                    );
+                    //this.signalsService.GetOperators().subscribe(
+                    //    resOk => { this.users$.next(resOk) }
+                    //);
+                    this.getOperators();
                     //console.log('request');
                     //console.log(resOk);
                     if (this.lSettings) {
@@ -57,6 +75,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     this.lSettings = ObjHelper.DeepCopyOfState(resOk);
                     this.lSettings.recording_cycle = Math.round(resOk.recording_cycle * resOk.listening_interval / 1000.0);
                     this.lSettings.manual_mode = !resOk.manual_mode;
+                    this.bearingDescrControl.setValue(this.lSettings.bearing)
+                    this.outputFileNameControl.setValue(this.lSettings.output_file)
                 } else {
                     this.lSettings = null;
                 }
@@ -68,6 +88,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.OnNewSetting) this.OnNewSetting.unsubscribe();
         if (this.OnNewStatus) this.OnNewStatus.unsubscribe();
+    }
+    getOperators() {
+        this.signalsService.GetOperators().subscribe(
+            resOk => {
+                this.users$.next(resOk);
+                if ((this.users$.value) && (this.users$.value.length > 0)) {
+                    this.userControl.setValue(this.users$.value[0]);
+                }
+            }
+        );
     }
     selectedRow: trProgram = null;
     CreateNewItem(Nr?: number) {

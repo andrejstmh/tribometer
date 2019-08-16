@@ -8,17 +8,17 @@ HOST = ('0.0.0.0', 8765)
 pattern = re.compile('.png|.jpg|.jpeg|.js|.css|.ico|.gif|.svg', re.IGNORECASE)
 
 class Handler(http.server.SimpleHTTPRequestHandler):
-	def do_GET(self):
-		url_parts = urllib.parse.urlparse(self.path)
-		request_file_path = Path(url_parts.path.strip("/"))
-		ext = request_file_path.suffix
-		if not request_file_path.is_file() and not pattern.match(ext):
-			self.path = '/webapp/dist/index.html'
-		return http.server.SimpleHTTPRequestHandler.do_GET(self)
+  def do_GET(self):
+    url_parts = urllib.parse.urlparse(self.path)
+    request_file_path = Path(url_parts.path.strip("/"))
+    ext = request_file_path.suffix
+    if not request_file_path.is_file() and not pattern.match(ext):
+      self.path = '/webapp/dist/index.html'
+    return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 if __name__ == '__main__':
-	httpd = socketserver.TCPServer(HOST, Handler)
-	httpd.serve_forever()
+  httpd = socketserver.TCPServer(HOST, Handler)
+  httpd.serve_forever()
 
 
 
@@ -38,18 +38,18 @@ if __name__ == '__main__':
 
 
 #class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
-#	def do_GET(self):
-#		urlparts = urlparse.urlparse(self.path)
-#		request_file_path = urlparts.path.strip('/')
-#		if not os.path.exists(request_file_path):
-#			self.path = 'index.html'
-#		return SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+#  def do_GET(self):
+#    urlparts = urlparse.urlparse(self.path)
+#    request_file_path = urlparts.path.strip('/')
+#    if not os.path.exists(request_file_path):
+#      self.path = 'index.html'
+#    return SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
 #host = '0.0.0.0'
 #try:
-#	port = int(sys.argv[1])
+#  port = int(sys.argv[1])
 #except IndexError:
-#	port = 8000
+#  port = 8000
 
 #httpd = BaseHTTPServer.HTTPServer((host, port), Handler)
 #print ('Serving HTTP on %s port %d ...' % (host, port))

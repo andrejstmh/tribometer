@@ -21,7 +21,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     OnGetFileData_Timer = interval(60000);
     OnFileData_TimerSubscription: Subscription = null;
     public ChartFile: LineChartSettings = new LineChartSettings();
-    @ViewChild("writing", { read: BaseChartDirective }) chartW: BaseChartDirective;
+    @ViewChild("writing", { read: BaseChartDirective, static: true }) chartW: BaseChartDirective;
 
     constructor(
         public signalsService: SignalsService,

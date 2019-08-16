@@ -1,19 +1,45 @@
 <div class="container">
     <div *ngIf="lSettings">
         <h1>Settings</h1>
-        <form (ngSubmit)="onSubmit()" #settingsForm="ngForm">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="user" placeholder="Name Surname"
-                       required
-                       [(ngModel)]="lSettings.user" name="user" #user="ngModel"/>
-                <div [hidden]="user.valid"
-                     class="alert alert-danger">
-                    Name is required
-                </div>
-            </div>
 
-            <div class="form-group">
+        <form (ngSubmit)="onSubmit()" #settingsForm="ngForm">
+            <mat-form-field class="control-full-width">
+                <input type="text" placeholder="Name Surname" aria-label="Number"
+                       name="user"
+                       matInput [formControl]="userControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="userControl.hasError('required')">
+                    Bearing description is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <!--<div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="user" placeholder="Name Surname"
+               required
+               [(ngModel)]="lSettings.user" name="user" #user="ngModel" />
+        <div [hidden]="user.valid"
+             class="alert alert-danger">
+            Name is required
+        </div>
+    </div>-->
+
+            <mat-form-field class="control-full-width">
+                <textarea matInput placeholder="Bearing description"
+                          [formControl]="bearingDescrControl"
+                          [value]="lSettings.bearing" name="bearing"></textarea>
+                <!-- [errorStateMatcher]="matcher" -->
+                <mat-error *ngIf="bearingDescrControl.hasError('required')">
+                    Bearing description is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+
+            <!--<div class="form-group">
                 <label for="bearing">Bearing description</label>
                 <textarea type="text" class="form-control" id="bearing" placeholder="Example: Thrust ball bearing 65 (2011) 245-248"
                           required
@@ -22,22 +48,33 @@
                      class="alert alert-danger">
                     Bearing description is required
                 </div>
-            </div>
+            </div>-->
+            
 
-            <div class="form-group">
+            <mat-form-field class="control-full-width">
+                <input type="text" placeholder="Output file name" aria-label="Number"
+                       name="output_file"
+                       [value]="lSettings.output_file"
+                       matInput [formControl]="outputFileNameControl">
+                <mat-error *ngIf="outputFileNameControl.hasError('required')">
+                    Output file name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <!--<div class="form-group">
                 <label for="output_file">Output file name</label>
                 <input type="text" class="form-control" id="output_file" placeholder="Example: result.h5"
                        required
-                       [(ngModel)]="lSettings.output_file" name="output_file" #output_file="ngModel" 
-                       (keyup)="ResFileExists($event.target.value)"/>
+                       [(ngModel)]="lSettings.output_file" name="output_file" #output_file="ngModel"
+                       (keyup)="ResFileExists($event.target.value)" />
                 <div [hidden]="output_file.valid"
                      class="alert alert-danger">
                     Output file name is required
                 </div>
                 <div *ngIf="fileExists$|async" class="alert alert-danger">
                     Output file already exists
-                </div> 
-            </div>
+                </div>
+            </div>-->
 
             <div class="form-group">
                 <label for="recording_cycle">Recording interval, s</label>
@@ -188,5 +225,5 @@
 
             <button type="submit" class="btn btn-success" [disabled]="!settingsForm.form.valid">Apply</button>
         </form>
-</div>
+    </div>
 </div>

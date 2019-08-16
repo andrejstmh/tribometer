@@ -42,8 +42,8 @@ class LoadRegilator:
         self.rotationRange=5
         self.RegStepCount=5
         self.maxLoad=1252 #N
-        self.SlipRatioIncCoeff=np.array([2,8/self.rotationRange],dtype = np.float)#2..10
-        self.SlipRatioDecCoeff=np.array([1,2/self.rotationRange],dtype = np.float)#1..3
+        self.SlipRatioIncCoeff=np.array([0.5,12/self.rotationRange],dtype = np.float)
+        self.SlipRatioDecCoeff=np.array([0.5,4/self.rotationRange],dtype = np.float)
 
     def relLoad(self,loadN):
         return loadN/self.maxLoad
@@ -105,6 +105,7 @@ class Automation:
         self.expr.status.rpmRegTimedOut = False
         self.expr.status.rpmRegAuto = True
         self.rpm_started = datetime.datetime.now()
+        self.GO_rpmToTarget()
 
     def rpmTargetChanged(self):
         return self.expr.currentTargetData[2]!=self.expr.prevTargetData[2]
@@ -228,7 +229,7 @@ class Automation:
             if self.loadTargetChanged():
                 self.start_load_automation()
             if self.load_started is None and self.loadValue_outOfRange():
-                    self.start_load_automation()
+                self.start_load_automation()
             # regulation mode 
             if self.load_started is not None:
                 dedtaT = (curT-self.load_started).seconds
@@ -249,7 +250,7 @@ class Automation:
             if self.rpmTargetChanged():
                 self.start_rpm_automation()
             if self.rpm_started is None and self.rpmValue_outOfRange():
-                    self.start_rpm_automation()
+                self.start_rpm_automation()
             # regulation mode 
             if self.rpm_started is not None:
                 dedtaT = (curT-self.rpm_started).seconds
@@ -311,6 +312,7 @@ class Experiment:
         rpm = self.Sensors.readRPM()
         t = self.Sensors.readTemperature()
         time = self.DataFile.RecordTimeInSeconds()
+        load, fr, rpm, t = self.sensorDataQalityControl(load, fr, rpm, t)
         self.SensorVoltageBuffer[self.DataBufferPointer,:] = np.array([load, fr], dtype=np.float);
         cd = self.Settings.calibrationData
         if not np.isnan(load):
@@ -326,7 +328,15 @@ class Experiment:
         self.currentTargetData = self.Program.getTargetValues(time);
         self.CheckTribometerState()
         self.Automation.OnNewSensorData()
-    
+        
+    def sensorDataQalityControl(self,load, fr, rpm, temperature):
+        load1 = np.nan if ((load<0.6)or(load>2.7)) else load
+        fr1 = np.nan if ((fr<0.59)or(fr>6.0)) else fr
+        rpm1 = np.nan if ((rpm<0)or(rpm>1500)) else rpm
+        temperature1 = np.nan if ((temperature<0)or(temperature>120)) else temperature
+        return load1, fr1, rpm1, temperature1
+
+
     def CheckTribometerState(self):
         #Data:time:0, load:1, fr:2, rpm:3, t:4
         #TargetData:"time:0", "load:1","RPM:2", "maxFfr:3","maxT:4"
@@ -383,7 +393,6 @@ class Experiment:
                 # restart RPM regulator
                 pass
 
-
     @classmethod
     def ConvertDataTob64String(sls,data):
         return '"'+base64.b64encode(data).decode("utf-8")+'"'
@@ -412,14 +421,13 @@ class Experiment:
         self.Program.RPMAutoRegulation = True
         self.Automation.start_rpm_automation()
         return 0
-    
+
     def SetRPMManual(self,deltaRPM):
         self.Program.RPMAutoRegulation = False
         self.status.rpmRegAuto = False
         self.Automation.GO_ManualRPM(deltaRPM)
         return 0
-    
-    
+
     def SetLoad(self,LoadinN):
         self.Program.SetTargetLoad(LoadinN)
         self.Program.LoadAutoRegulation = True

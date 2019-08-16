@@ -1,18 +1,18 @@
 li.selected {
-	/*background-color: #CFD8DC !important;*/
-	color: black;
-	font-weight: bold;
-	font-size: large;
+  /*background-color: #CFD8DC !important;*/
+  color: black;
+  font-weight: bold;
+  font-size: large;
 }
 
 .ccurves li:hover {
-	color: #607D8B;
-	cursor: pointer;
-	/*background-color: #DDD;*/
-	left: .1em;
+  color: #607D8B;
+  cursor: pointer;
+  /*background-color: #DDD;*/
+  left: .1em;
 }
 
 /*.card-header {
-	background-color: transparent;
+  background-color: transparent;
 }*/
 

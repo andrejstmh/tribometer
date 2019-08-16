@@ -14,7 +14,7 @@
 @import 'alertify.core.css';
 @import 'alertify.bootstrap.css';*/
 /*@import '~tabulator-tables/dist/css/tabulator.min.css';*/
-@import '~tabulator-tables/dist/css/bootstrap/tabulator_bootstrap4.min.css';
+/*@import '~tabulator-tables/dist/css/bootstrap/tabulator_bootstrap4.min.css';*/
 @import 'assets/forms.css';
 
-/*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";

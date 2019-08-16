@@ -4,9 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { ChartsModule } from 'ng2-charts';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-//import { MatButtonModule, MatCheckboxModule } from '@angular/material';
-//import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +42,8 @@ import { StatusRowComponent } from './components/controls/status-row/status-row.
     TribControlsComponent
   ],
     imports: [
-        //BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatAutocompleteModule,
+        BrowserAnimationsModule, MatInputModule, MatButtonModule, MatCheckboxModule, MatAutocompleteModule,
+        MatFormFieldModule,
         HttpClientModule, BrowserModule, ReactiveFormsModule, FormsModule, ChartsModule,
         AppRoutingModule
   ],
