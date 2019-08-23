@@ -188,8 +188,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         //} else {
         //    return new CurveRow(0, 0, Nr);
         //}
-        return new trProgram(1, this.lSettings.load, this.lSettings.rpm,
-            this.lSettings.temperature_threshold, this.lSettings.friction_force_threshold,1);
+        let bp = this.lSettings.program[0]
+        return new trProgram(2, bp.load, bp.RPM, bp.Tmax, bp.Fmax,1);
     }
 
     onSelectRow(r: any) {

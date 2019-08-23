@@ -216,7 +216,7 @@ class SettingsHandler(tornado.web.RequestHandler):
             Tibometer.Experiment.Settings.settings.update( json.loads(self.request.body.decode("utf-8")))
             Tibometer.Experiment.Settings.user=Tibometer.Experiment.Settings.user;
             if Tibometer.Experiment.Settings.outputFileExists():
-                Tibometer.Experiment.Settings.outputFileName=""
+                #Tibometer.Experiment.Settings.outputFileName=""
                 Tibometer.Experiment.status.status = ExpStatus.invalid
             else:
                 Tibometer.Experiment.status.status = ExpStatus.valid
@@ -239,15 +239,15 @@ class SettingsHandler(tornado.web.RequestHandler):
         #elif st_case=="clbr_rpm":
         #    Tibometer.Experiment.Settings.calibrationData.RPM.initJSON(self.request.body)
         #    self.write(Tibometer.Experiment.Settings.calibrationData.RPM.get_json_string());
-        #elif st_case == "freq":
-        #    if Tibometer.Experiment.Settings.settings.get("manual_mode"):
-        #        freq = self.get_body_argument("val")
-        #        Tibometer.Experiment.SetRotationFrequency(float(freq))
-        #        self.write(json.dumps(Tibometer.Experiment.Settings.settings))
-        #elif st_case == "load":
-        #    load = self.get_body_argument("load")
-        #    Tibometer.Experiment.SetLoad(float(freq))
-        #    self.write(json.dumps(Tibometer.Experiment.Settings.settings))
+        elif st_case == "freq":
+            #if Tibometer.Experiment.Settings.settings.get("manual_mode"):
+            freq = self.get_body_argument("val")
+            Tibometer.Experiment.SetRPM(float(freq))
+            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
+        elif st_case == "load":
+            load = self.get_body_argument("load")
+            Tibometer.Experiment.SetLoad(float(freq))
+            self.write(json.dumps(Tibometer.Experiment.Settings.settings))
         #elif st_case == "stop":
         #    #
         #    self.write("details")

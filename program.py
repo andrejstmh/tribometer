@@ -15,6 +15,7 @@ class ProgramItem:
         self.TargetRPM = TargetRPM
         self.ThresholdMaxFricdtionForce = ThresholdMaxFricdtionForce
         self.ThresholdMaxTemperature = ThresholdMaxTemperature
+
 class ProgrCol:
     time=0
     load=1
@@ -33,34 +34,41 @@ class Program:
         self.programmStarted = False
         self.LoadAutoRegulation = False
         self.RPMAutoRegulation = False
-        self.programData = np.array([[0.0,0.0,0.0,0.0,0.0]])#t,load,rpm, maxFriction, maxTemp/5
+        self.programData = np.array([[0.0,0.0,0.0,0.0,0.0]])#t,load,rpm, maxFriction, maxTemp #len=5
         self.makeProgramArray()
 
     def SetTargetLoad(self,load):
-        self.Settings.target_load = load
+        #self.Settings.target_load = load
+        self.Settings.program[0]["load"] = load
         self.LoadAutoRegulation = True
         self.ExpState.loadRegAuto = True
         self.programData[0,ProgrCol.load] = load
 
     def SetTargetRPM(self,RPM):
-        self.Settings.target_rpm = RPM
+        #self.Settings.target_rpm = RPM
+        self.Settings.program[0]["RPM"] = RPM
         self.RPMAutoRegulation = True
         self.ExpState.rpmRegAuto = True
         self.programData[0,ProgrCol.RPM] = RPM
 
     def SetThresholdTemp(self,temp):
-        self.Settings.temperature_threshold = temp
+        #self.Settings.temperature_threshold = temp
+        self.Settings.program[0]["Tmax"] = temp
         self.programData[0,ProgrCol.maxT] = temp
 
     def SetThresholdFriction(self,frict):
-        self.Settings.friction_force_threshold = frict
+        #self.Settings.friction_force_threshold = frict
+        self.Settings.program[0]["Fmax"] = frict
         self.programData[0,ProgrCol.maxFfr] = frict
 
     def MakeManualProgramm(self):
-        self.programData = np.array([[0,
-                            self.Settings.target_load,self.Settings.target_rpm,
-                            self.Settings.friction_force_threshold,self.Settings.temperature_threshold],
-                                    [self.Settings.total_duration*60,-1,-1,-1,-1]],dtype=np.float)
+        self.Settings.program=[self.Settings.program[0]];
+        self.MakeAtoProgramm();
+        #self.programData = np.array([[0,
+        #                    self.Settings.target_load,self.Settings.target_rpm,
+        #                    self.Settings.friction_force_threshold,self.Settings.temperature_threshold],
+        #                            [self.Settings.total_duration*60,-1,-1,-1,-1]],dtype=np.float)
+
     def MakeAtoProgramm(self):
         def getFieldValue(it:dict,name:str,defaulV:np.float=None)->np.float:
                 v = it.get(name)
@@ -72,10 +80,10 @@ class Program:
         startTime = 0.0;
         for i,it in enumerate(self.Settings.program):
             t = getFieldValue(it,ProgrCol.SettFields[ProgrCol.time])*60
-            load = getFieldValue(it,ProgrCol.SettFields[ProgrCol.load],self.Settings.target_load)
-            rpm = getFieldValue(it,ProgrCol.SettFields[ProgrCol.RPM],self.Settings.target_rpm)
-            F = getFieldValue(it,ProgrCol.SettFields[ProgrCol.maxFfr],self.Settings.friction_force_threshold)
-            T = getFieldValue(it,ProgrCol.SettFields[ProgrCol.maxT],self.Settings.temperature_threshold)
+            load = getFieldValue(it,ProgrCol.SettFields[ProgrCol.load],20)#self.Settings.target_load)
+            rpm = getFieldValue(it,ProgrCol.SettFields[ProgrCol.RPM],300)#self.Settings.target_rpm)
+            F = getFieldValue(it,ProgrCol.SettFields[ProgrCol.maxFfr],100)#self.Settings.friction_force_threshold)
+            T = getFieldValue(it,ProgrCol.SettFields[ProgrCol.maxT],100)#self.Settings.temperature_threshold)
             self.programData[i,:] = np.array([startTime,load,rpm,F,T])
             startTime+=t
         self.programData[len(self.Settings.program),:] = np.array([startTime,-1,-1,-1,-1]);

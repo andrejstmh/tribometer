@@ -10,7 +10,7 @@
             <div class="row border-top">
                 <div class="col-3"></div>
                 <div class="col-4">
-                    <input type="number" min="5" max="125" name="rpm_auto" [value]="sett.rpm" #rpm_auto>
+                    <input type="number" min="5" max="125" name="rpm_auto" [value]="sett.program[0].RPM" #rpm_auto>
                     <button type="button" class="btn btn-info m-1" (click)="setRPMAuto(rpm_auto.value)">Apply</button>
                 </div>
                 <div class="col-5">
@@ -34,7 +34,7 @@
             <div class="row border-top">
                 <div class="col-3"></div>
                 <div class="col-4">
-                    <input type="number" class="m-1" min="1" max="1020" name="load_auto" [value]="sett.load" #load_auto>
+                    <input type="number" class="m-1" min="1" max="1020" name="load_auto" [value]="sett.program[0].load" #load_auto>
                     <button type="button" class="btn btn-info m-1" (click)="setLoadAuto(load_auto.value)">Apply</button>
                 </div>
                 <div class="col-5">
@@ -53,11 +53,11 @@
                     <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
                 </div>
                 <div class="col-4">
-                    <input type="number" [value]="sett.friction_force_threshold" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
+                    <input type="number" [value]="sett.program[0].Fmax" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
                     Friction, N
                 </div>
                 <div class="col-5">
-                    <input type="number" [value]="sett.temperature_threshold" class="m-1" min="15" max="100" name="t_threshold" #t_threshold>
+                    <input type="number" [value]="sett.program[0].Tmax" class="m-1" min="15" max="120" name="t_threshold" #t_threshold>
                     T, °C
                 </div>
             </div>

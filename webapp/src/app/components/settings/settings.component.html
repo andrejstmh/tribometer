@@ -154,26 +154,26 @@
                         </div>
                         <div class="row">
                             <!-- "duration":0.25, "load":0.0,"RPM":1000,"Tmax":100,"Fmax":10 -->
-                            <div class="col-3">Duration, minutes</div>
+                            <div class="col-2">Duration, minutes</div>
                             <div class="col-2">Load, N</div>
-                            <div class="col-3">Revolutions per minute</div>
-                            <div class="col-2">Friction force threshold</div>
-                            <div class="col-2">Temperature threshold, °C</div>
+                            <div class="col-2">Revolutions per minute</div>
+                            <div class="col-3">Friction force threshold</div>
+                            <div class="col-3">Temperature threshold, °C</div>
                         </div>
                         <div *ngFor="let r of programmList" class="row" (click)="onSelectRow(r)">
                             <!-- "duration":0.25, "load":0.0,"RPM":1000,"Tmax":100,"Fmax":10 -->
                             <div *ngIf="r!=selectedRow" class="card-body bg-light border-top">
                                 <div class="row">
-                                    <div class="col-3">{{r.duration}}</div>
+                                    <div class="col-2">{{r.duration}}</div>
                                     <div class="col-2">{{r.load}}</div>
-                                    <div class="col-3">{{r.RPM}}</div>
-                                    <div class="col-2">{{r.Fmax}}</div>
-                                    <div class="col-2">{{r.Tmax}}</div>
+                                    <div class="col-2">{{r.RPM}}</div>
+                                    <div class="col-3">{{r.Fmax}}</div>
+                                    <div class="col-3">{{r.Tmax}}</div>
                                 </div>
                             </div>
                             <div *ngIf="r==selectedRow" class="card-body bg-light border-top">
                                 <div class="row">
-                                    <div class="col-3">
+                                    <div class="col-2">
                                         <mat-form-field class="control-full-width" appearance="outline">
                                             <input type="number" matInput
                                                    name="pr_du" [formControl]="durationControl"
@@ -197,7 +197,7 @@
                                             <!--<input type="number" required min="1" max="1000"
                                                    [(ngModel)]="selectedRow.load" class="form-control" name="pr_load" />-->
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-2">
                                         <mat-form-field class="control-full-width" appearance="outline">
                                             <input type="number" matInput
                                                    name="pr_rpm" [formControl]="RPMControl"
@@ -209,7 +209,7 @@
                                         <!--<input type="number" required min="300" max="3000"
                                                [(ngModel)]="selectedRow.RPM" class="form-control" name="pr_rpm" />-->
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <mat-form-field class="control-full-width" appearance="outline">
                                             <input type="number" matInput
                                                    name="pr_Fm" [formControl]="frictThreshControl"
@@ -221,7 +221,7 @@
                                         <!--<input type="number" required min="10" max="1000"
                                                [(ngModel)]="selectedRow.Fmax" class="form-control" name="pr_Fm" />-->
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <mat-form-field class="control-full-width" appearance="outline">
                                             <input type="number" matInput
                                                    name="pr_Tm" [formControl]="tempThreshControl"

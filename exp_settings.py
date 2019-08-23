@@ -213,17 +213,22 @@ class ExperimentSettings:
     def set_visualisation_cycle(self, value):self.settings["visualisation_cycle"] = value
     visualisation_cycle = property(get_visualisation_cycle,set_visualisation_cycle)
 
-    def get_total_duration(self):return self.settings["total_duration"]
-    def set_total_duration(self, value):self.settings["total_duration"] = value
-    total_duration = property(get_total_duration,set_total_duration)
+    def get_total_duration(self):
+        #return self.settings["total_duration"]
+        res = t
+        for it in self.settings["program"]:
+            t+=it["duration"]
+        return t;
+    #def set_total_duration(self, value):self.settings["total_duration"] = value
+    total_duration = property(get_total_duration)#,set_total_duration)
 
-    def get_target_load(self):return self.settings["load"]
-    def set_target_load(self, value):self.settings["load"] = value
-    target_load = property(get_target_load,set_target_load)
+    #def get_target_load(self):return self.settings["load"]
+    #def set_target_load(self, value):self.settings["load"] = value
+    #target_load = property(get_target_load,set_target_load)
 
-    def get_target_rpm(self):return self.settings["rpm"]
-    def set_target_rpm(self, value):self.settings["rpm"] = value
-    target_rpm= property(get_target_rpm,set_target_rpm)
+    #def get_target_rpm(self):return self.settings["rpm"]
+    #def set_target_rpm(self, value):self.settings["rpm"] = value
+    #target_rpm= property(get_target_rpm,set_target_rpm)
 
     def get_manual_mode(self):return self.settings["manual_mode"]
     def set_manual_mode(self, value):self.settings["manual_mode"] = value
@@ -231,17 +236,17 @@ class ExperimentSettings:
 
     def get_program(self):return self.settings["program"]
     def set_program(self, value):self.settings["program"] = value
-    program = property(get_program,set_program)    
+    program = property(get_program,set_program)
 
 
 
-    def get_friction_force_threshold(self):return self.settings["friction_force_threshold"]
-    def set_friction_force_threshold(self, value):self.settings["friction_force_threshold"] = value
-    friction_force_threshold = property(get_friction_force_threshold,set_friction_force_threshold)
+    #def get_friction_force_threshold(self):return self.settings["friction_force_threshold"]
+    #def set_friction_force_threshold(self, value):self.settings["friction_force_threshold"] = value
+    #friction_force_threshold = property(get_friction_force_threshold,set_friction_force_threshold)
     
-    def get_temperature_threshold(self):return self.settings["temperature_threshold"]
-    def set_temperature_threshold(self, value):self.settings["temperature_threshold"] = value
-    temperature_threshold = property(get_temperature_threshold,set_temperature_threshold)
+    #def get_temperature_threshold(self):return self.settings["temperature_threshold"]
+    #def set_temperature_threshold(self, value):self.settings["temperature_threshold"] = value
+    #temperature_threshold = property(get_temperature_threshold,set_temperature_threshold)
 
     #def get_vibration_threshold(self):return self.settings["vibration_threshold"]
     #def set_vibration_threshold(self, value):self.settings["vibration_threshold"] = value

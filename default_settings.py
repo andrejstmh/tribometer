@@ -58,18 +58,18 @@ DefaultSettings={
     # listening intervals count
     "visualisation_cycle":4,
     # minutes (manual mode, default 20 hours)
-    "total_duration":20*60,
-    "rpm":600,
-    "load":200.0,
+    #"total_duration":20*60,
+    #"rpm":600,
+    #"load":200.0,
     "manual_mode":True,
     "program":[
         {"duration":10, "load":200.0,"RPM":600,"Tmax":100,"Fmax":100}],
     #=================================================================
     #control parameters
     # [N]
-    "friction_force_threshold":100,
+    #"friction_force_threshold":100,
     # C
-    "temperature_threshold":100,
+    #"temperature_threshold":100,
     ## [N]
     #"loadRegualtionAccuracy":2,
     ## rotation per minute

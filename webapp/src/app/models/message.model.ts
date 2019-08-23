@@ -85,16 +85,16 @@ export class trSettings {
         public visualisation_cycle: number,
         // hours (manual mode)
         public total_duration: number,
-        public rpm: number,
-        public load: number,
+        //public rpm: number,
+        //public load: number,
         public manual_mode: boolean,
         public program: trProgram[],
         //=================================================================
         //control parameters
-        // [N]
-        public friction_force_threshold: number,
-        // C
-        public temperature_threshold: number,
+        //// [N]
+        //public friction_force_threshold: number,
+        //// C
+        //public temperature_threshold: number,
         // [N]
         public loadRegualtionAccuracy: number,
         // rotation per minute
@@ -123,11 +123,9 @@ export class trSettings {
             this.visualisation_cycle,
             // hours (manual mode)
             this.total_duration,
-            this.rpm,
-            this.load,
+            //this.rpm,this.load,
             this.manual_mode, pr,
-            this.friction_force_threshold,
-            this.temperature_threshold,
+            //this.friction_force_threshold, this.temperature_threshold,
             this.loadRegualtionAccuracy,
             this.RPMRegualtionAccuracy,
             this.readme
@@ -278,11 +276,9 @@ export class ObjHelper {
                 stateObj.visualisation_cycle,
                 // hours (manual mode)
                 stateObj.total_duration,
-                stateObj.rpm,
-                stateObj.load,
+                //stateObj.rpm,  stateObj.load,
                 stateObj.manual_mode, pr,
-                stateObj.friction_force_threshold,
-                stateObj.temperature_threshold,
+                //stateObj.friction_force_threshold,  stateObj.temperature_threshold,
                 stateObj.loadRegualtionAccuracy,
                 stateObj.RPMRegualtionAccuracy,
                 stateObj.readme
