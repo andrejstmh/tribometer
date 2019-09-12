@@ -3,11 +3,12 @@ import { Observable, Subscription, interval } from 'rxjs';
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SensorsData, ExperimentStatus, ObjHelper, trState, trTotalState, trResultFileData } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
-
+import { ChartSettingsDialogComponent } from './../controls/chart-settings-dialog/chart-settings-dialog.component';
 
 @Component({
     selector: 'app-experiment',
@@ -20,13 +21,16 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     subsArr: Subscription[] = [];
     OnGetFileData_Timer = interval(60000);
     OnFileData_TimerSubscription: Subscription = null;
-    public ChartFile: LineChartSettings = new LineChartSettings();
+    public ChartFile: LineChartSettings = null; 
     @ViewChild("writing", { read: BaseChartDirective, static: true }) chartW: BaseChartDirective;
 
     constructor(
         public signalsService: SignalsService,
-        private chartService: ChartService
-    ) {  }
+        private chartService: ChartService,
+        public dialog: MatDialog
+    ) {
+        this.ChartFile = new LineChartSettings(chartService.chartAxesSettings.ExpChatr);
+    }
     
     ngOnInit() {
         this.signalsService.GetTotalState();
@@ -54,6 +58,30 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subsArr.forEach(it => { if (it) { it.unsubscribe(); } });
     }
+
+    showChartSettingsDialog() {
+        console.log("START dialog!");
+        let ecs = this.chartService.chartAxesSettings.ExpChatr
+        const dialogRef = this.dialog.open(ChartSettingsDialogComponent, {
+            width: '750px',
+            data: {
+                t: ecs[0],
+                rpm: ecs[1],
+                load: ecs[2],
+                fr: ecs[3]
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('chart setting dialog: update settings!');
+            ecs[0] = result.t;
+            ecs[1] = result.rpm;
+            ecs[2] = result.load;
+            ecs[3] = result.fr;
+            this.ChartFile = new LineChartSettings(this.chartService.chartAxesSettings.ExpChatr);
+        });
+    }
+
     printNumVal(v: any) {
         return ObjHelper.printNumVal(v);
     }

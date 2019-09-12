@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,9 +24,9 @@ import { ShowErrorsComponent } from './components/show-errors.component';
 //import { SocketService } from './services/socket.service';
 import { SignalsService } from './services/signals.service';
 import { ChartService } from './services/chart.service';
-import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
+//import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
 import { StatusRowComponent } from './components/controls/status-row/status-row.component';
-
+import { ChartSettingsDialogComponent } from './components/controls/chart-settings-dialog/chart-settings-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,17 +38,19 @@ import { StatusRowComponent } from './components/controls/status-row/status-row.
     NotFoundComponent,
     ShowErrorsComponent,
     //SettingsFormComponent,
-    TabulatorTableComponent,
+    //TabulatorTableComponent,
+    ChartSettingsDialogComponent,
     StatusRowComponent,
     TribControlsComponent
   ],
     imports: [
         BrowserAnimationsModule, MatInputModule, MatButtonModule, MatCheckboxModule, MatAutocompleteModule,
-        MatFormFieldModule,
+        MatFormFieldModule, MatDialogModule,
         HttpClientModule, BrowserModule, ReactiveFormsModule, FormsModule, ChartsModule,
         AppRoutingModule
   ],
     providers: [SignalsService, ChartService],//SocketService,
+    entryComponents: [ChartSettingsDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

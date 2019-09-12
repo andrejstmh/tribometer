@@ -12,6 +12,7 @@ class ExpStatus:
     valid = 1
     started = 2
     completed = 3
+    stopped = 2
 
 class ExpState:
     def __init__(self,stString=None):
@@ -108,20 +109,9 @@ class ExpState:
         return '"'+self.stateString+'"'
 
 class ExperimentSettings:
-    resultsFolder = "ExperimentalData/"
     def __init__(self):
-        self.rpmMaxRegTime=2*60 # 2 minutes
-        self.loadMaxRegTime=5*60 # 3 minutes
-        self.avgBufferSize = 10 # 
-        self.rpmRegCikleSize=40
-        self.loadRegCikleSize=25
-        self.loadRegualtionDiffStart=50
-        self.loadRegualtionDiffStop=10
-        self.RPMRegualtionDiffStart=5
-        self.RPMRegualtionDiffStop=2
-
         self.settings = default_settings.DefaultSettings
-        self.SettingsFileName=self.getFilePath(ExperimentSettings.resultsFolder+"settings.json")
+        self.SettingsFileName=self.getFilePath(self.resultsFolder+"settings.json")
         self.calibrationData = None
         if os.path.exists(self.SettingsFileName):
             with open(self.SettingsFileName,"r") as f:
@@ -143,6 +133,39 @@ class ExperimentSettings:
         self.user = self.user
         self.SaveOperatorsToFile();
 
+    @property
+    def resultsFolder(self):
+        return self.settings["resultsFolder"]
+    @property
+    def export_result_to_csv(self):
+        return self.settings["export_result_to_csv"]
+    @property
+    def rpmMaxRegTime(self):
+        return self.settings["rpmMaxRegTime"]
+    @property
+    def loadMaxRegTime(self):
+        return self.settings["loadMaxRegTime"]
+    @property
+    def avgBufferSize(self):
+        return self.settings["avgBufferSize"]
+    @property
+    def rpmRegCikleSize(self):
+        return self.settings["rpmRegCikleSize"]
+    @property
+    def loadRegCikleSize(self):
+        return self.settings["loadRegCikleSize"]
+    @property
+    def loadRegualtionDiffStart(self):
+        return self.settings["loadRegualtionDiffStart"]
+    @property
+    def loadRegualtionDiffStop(self):
+        return self.settings["loadRegualtionDiffStop"]
+    @property
+    def RPMRegualtionDiffStart(self):
+        return self.settings["RPMRegualtionDiffStart"]
+    @property
+    def RPMRegualtionDiffStop(self):
+        return self.settings["RPMRegualtionDiffStop"]
 
     def MakeCalibrationData(self):
         self.calibrationData = calibration.CalibrationData(
@@ -169,12 +192,12 @@ class ExperimentSettings:
         self.settings["user"] = v
     user = property(get_user,set_user)
 
-    def get_operatorsFN(self): return self.getFilePath(ExperimentSettings.resultsFolder+self.settings["operatorsFileName"]);
+    def get_operatorsFN(self): return self.getFilePath(self.resultsFolder+self.settings["operatorsFileName"]);
     def set_operatorsFN(self, value): self.settings["operatorsFileName"] = value
     operatorsFileName = property(get_operatorsFN,set_operatorsFN)
 
     def MakeOutputFile(self,fileName):
-        return ExperimentSettings.resultsFolder+fileName+".h5"
+        return self.resultsFolder+fileName+".h5"
 
 
     def get_outputFileName(self): return self.getFilePath( self.MakeOutputFile(self.settings["output_file"]));
@@ -189,11 +212,11 @@ class ExperimentSettings:
             fn = self.outputFileName
         return os.path.exists(fn)
 
-    def get_frictionCalibrFileName(self): return self.getFilePath(ExperimentSettings.resultsFolder+self.settings["friction_force_calibration_curve_file"]);
+    def get_frictionCalibrFileName(self): return self.getFilePath(self.resultsFolder+self.settings["friction_force_calibration_curve_file"]);
     def set_frictionCalibrFileName(self, value): self.settings["friction_force_calibration_curve_file"] = value
     frictionCalibrFileName = property(get_frictionCalibrFileName,set_frictionCalibrFileName)
 
-    def get_loadCalibrFileName(self): return self.getFilePath(ExperimentSettings.resultsFolder+self.settings["load_calibration_curve_file"]);
+    def get_loadCalibrFileName(self): return self.getFilePath(self.resultsFolder+self.settings["load_calibration_curve_file"]);
     def set_loadCalibrFileName(self, value): self.settings["load_calibration_curve_file"] = value
     loadCalibrFileName = property(get_loadCalibrFileName,set_loadCalibrFileName)
 

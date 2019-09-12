@@ -17,20 +17,20 @@
                         <!--<div class="col">μ,-</div>-->
                     </div>
                     <div class="row border-top">
-                        <div class="col">average</div>
-                        <div class="col">{{crData.db[0]/60.0| number:'1.2-2'}}</div>
-                        <div class="col">{{crData.adb[3]| number:'1.1-1'}}</div>
-                        <div class="col">{{crData.adb[1]| number}}</div>
-                        <div class="col">{{crData.adb[2]| number}}</div>
-                        <div class="col">{{crData.adb[4]| number:'1.1-1'}}</div>
+                        <div class="col">average/target</div>
+                        <div class="col">{{crData.db[0]/60.0 | number:'1.2-2'}} /{{100*crData.db[0]/crData.tb[0]| number:'1.0-0'}}%</div>
+                        <div class="col">{{crData.adb[3]| number:'1.1-1'}}/{{crData.tb[2]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.adb[1]| number:'1.1-1'}}/{{crData.tb[1]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.adb[2]| number:'1.1-1'}}/{{crData.tb[3]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.adb[4]| number:'1.1-1'}}/{{crData.tb[4]| number:'1.1-1'}}</div>
                         <!--<div class="col">{{crData.adb[2]/crData.adb[1]| number}}</div>-->
                     </div>
                     <div class="row border-top font-weight-light">
                         <div class="col">actual</div>
                         <div class="col">{{crData.db[0]/60.0| number:'1.2-2'}}</div>
                         <div class="col">{{crData.db[3]| number:'1.1-1'}}</div>
-                        <div class="col">{{crData.db[1]| number}}</div>
-                        <div class="col">{{crData.db[2]| number}}</div>
+                        <div class="col">{{crData.db[1]| number:'1.1-1'}}</div>
+                        <div class="col">{{crData.db[2]| number:'1.1-1'}}</div>
                         <div class="col">{{crData.db[4]| number:'1.1-1'}}</div>
                         <!--<div class="col">{{crData.db[2]/crData.db[1]| number}}</div>-->
                     </div>
@@ -51,10 +51,10 @@
             </div>
 
             <div *ngIf="totSTATE.state.status==2 || totSTATE.state.status==3" class="row">
-                <div class="col-3">
+                <div class="col">
                     <button type="button" class="btn btn-info" (click)="resfreshChart()">Refresh chart</button>
                 </div>
-                <div *ngIf="totSTATE.state.status==2" class="col-9">
+                <div *ngIf="totSTATE.state.status==2" class="col">
                     <h6>Chart refresh period</h6>
                     <select id="refreshPeriodSelect" (change)="onChangerefreshPeriod($event.target.value)" [value]='1'>
                         <option value="0">off</option>
@@ -63,6 +63,9 @@
                         <option value="5">5 minutes</option>
                         <option value="10">10 minutes</option>
                     </select>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-info m-1" (click)="showChartSettingsDialog()">Chart series settings</button>
                 </div>
             </div>
         </div>

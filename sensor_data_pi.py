@@ -36,11 +36,11 @@ SAMPLE_TIME = 2.0
 step= 6.144/(2**15)
 
 class SensorData:
-    #def __init__(self):
-    #   self.
-    #p = read_RPM.RPM_reader(pigpio.pi(), RPM_GPIO,1,30)    
     def readRPM(self):
-        return rpm.RPM()
+        res=rpm.RPM()
+        if res<0 or res>2000:
+            res = np.nan
+        return res
 
     def readFriction(self):
         try:

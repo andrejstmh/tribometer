@@ -1,12 +1,27 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Inject } from '@angular/core';
 import { Observable, Subscription, interval ,of} from 'rxjs';
 
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SensorsData, ObjHelper } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
+import { ChartSettingsDialogComponent } from './../controls/chart-settings-dialog/chart-settings-dialog.component';
+
+export interface axesSetting {
+    min: number, max: number;
+    visible: boolean; auto: boolean;
+}
+
+export interface DialogData {
+    t: axesSetting;
+    rpm: axesSetting;
+    fr: axesSetting;
+    load: axesSetting;
+}
+
 
 
 @Component({
@@ -18,9 +33,12 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     currentData: SensorsData = null;
     rpmVal: number = 0;
     public ChartListen: LineChartSettings = null;
+    public ControlChatrSettings: any = null;
     constructor(
         private chartService: ChartService,
-        public signalsService: SignalsService) {
+        public signalsService: SignalsService,
+        public dialog: MatDialog) {
+        this.ControlChatrSettings = this.chartService.chartAxesSettings.ControlChatr;
         this.ChartListen = this.chartService.ChartListen;
         this.ChartListen.lineChartOptions["tooltips"] = { enabled: false };
         //this.ChartListen.lineChartOptions["legend"] = { position: "left" };
@@ -73,10 +91,30 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     //return `${ds} ${hs}:${ms}:${ss}`;
     //}
 
+    showChartSettingsDialog() {
+        console.log("START dialog!");
+        const dialogRef = this.dialog.open(ChartSettingsDialogComponent, {
+            width: '750px',
+            data: {
+                t: this.ControlChatrSettings[0],
+                rpm: this.ControlChatrSettings[1],
+                load: this.ControlChatrSettings[2],
+                fr: this.ControlChatrSettings[3]
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('chart setting dialog: update settings!');
+            this.chartService.updateChartListenSettings([result.t, result.rpm, result.load, result.fr])
+            this.ControlChatrSettings = this.chartService.chartAxesSettings.ControlChatr;
+            //this.ChartListen = this.chartService.ChartListen;
+            this.ChartListen.lineChartOptions["tooltips"] = { enabled: false };
+        });
+    }
 
     StopRotation() {
-        this.signalsService.SetRPM(0).subscribe(x => {
-            console.log("StopRotation "+x);
+        this.signalsService.StopRotationsManual().subscribe(x => {
+            console.log("StopRotation " + x);
         });
     }
 
@@ -122,3 +160,4 @@ export class TribControlsComponent implements OnInit, OnDestroy {
         );
     }
 }
+

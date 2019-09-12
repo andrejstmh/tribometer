@@ -43,12 +43,14 @@ DefaultCalibration_Friction=np.array([
 
 
 DefaultSettings={
-    "working_directory":"",
+    "working_directory":"/home/pi/tribometer/",
+    "resultsFolder":"ExperimentalData/",
     "user":"",
     "operatorsFileName":"operators.csv",
     "bearing":"",
     "output_file":"temp",
-    "log_file":"log.txt",
+    "export_result_to_csv":True,
+    #"log_file":"log.txt",
     "friction_force_calibration_curve_file":'calibration_friction.csv',
     "load_calibration_curve_file":'calibration_load.csv',
     # miliseconds
@@ -56,7 +58,7 @@ DefaultSettings={
     # listening intervals count
     "recording_cycle":2,
     # listening intervals count
-    "visualisation_cycle":4,
+    #"visualisation_cycle":4,
     # minutes (manual mode, default 20 hours)
     #"total_duration":20*60,
     #"rpm":600,
@@ -64,20 +66,20 @@ DefaultSettings={
     "manual_mode":True,
     "program":[
         {"duration":10, "load":200.0,"RPM":600,"Tmax":100,"Fmax":100}],
+    "rpmMaxRegTime":2*60, # 2 minutes
+    "loadMaxRegTime":3*60, # 3 minutes
+    "avgBufferSize": 10, # 
+    "rpmRegCikleSize":20,
+    "loadRegCikleSize":15,
+    "loadRegualtionDiffStart":50,
+    "loadRegualtionDiffStop":10,
+    "RPMRegualtionDiffStart":5,
+    "RPMRegualtionDiffStop":2,
     #=================================================================
-    #control parameters
-    # [N]
-    #"friction_force_threshold":100,
-    # C
-    #"temperature_threshold":100,
-    ## [N]
-    #"loadRegualtionAccuracy":2,
-    ## rotation per minute
-    #"RPMRegualtionAccuracy":2,
     # optional field
     "readme":"UNITS: intervals[second]; duration[minutes]; threshold,load[N]"
 }
 import platform
-if platform.system() != 'Windows':
-    DefaultSettings["working_directory"] = "/home/pi/tribometer/"
+if platform.system() == 'Windows':
+    DefaultSettings["working_directory"] = ""
 

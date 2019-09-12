@@ -158,7 +158,14 @@ export class SignalsService {
             catchError(this.handleError<any>("UpdateRPMManual"))
         );
     }
-
+    StopRotationsManual(): Observable<string> {
+        let url = base_url + `api/sett?case=manualstoprot`;
+        return this.http.get<string>(url).pipe(
+            tap(_ => console.log("StopRotationsManual")),
+            catchError(this.handleError<any>("StopRotationsManual"))
+        );
+    }
+    
     UpdateThresholds(frict: number, temp: number): Observable<trSettings> {
         let url = base_url + `api/sett?case=threshold&f=${frict}&t=${temp}`;
         return this.http.get<trSettings>(url).pipe(

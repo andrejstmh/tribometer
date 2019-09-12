@@ -73,7 +73,6 @@ export class trSettings {
         public user: string,
         public bearing: string,
         public output_file: string,
-        public log_file: string,
         public friction_force_calibration_curve_file: string,
         public load_calibration_curve_file: string,
         public rpm_calibration_curve_file: string,
@@ -87,18 +86,10 @@ export class trSettings {
         public total_duration: number,
         //public rpm: number,
         //public load: number,
+        public export_result_to_csv: boolean,
         public manual_mode: boolean,
         public program: trProgram[],
         //=================================================================
-        //control parameters
-        //// [N]
-        //public friction_force_threshold: number,
-        //// C
-        //public temperature_threshold: number,
-        // [N]
-        public loadRegualtionAccuracy: number,
-        // rotation per minute
-        public RPMRegualtionAccuracy: number,
         // optional field
         public readme: string) {
     }
@@ -111,7 +102,6 @@ export class trSettings {
             this.user,
             this.bearing,
             this.output_file,
-            this.log_file,
             this.friction_force_calibration_curve_file,
             this.load_calibration_curve_file,
             this.rpm_calibration_curve_file,
@@ -124,10 +114,9 @@ export class trSettings {
             // hours (manual mode)
             this.total_duration,
             //this.rpm,this.load,
+            this.export_result_to_csv,
             this.manual_mode, pr,
             //this.friction_force_threshold, this.temperature_threshold,
-            this.loadRegualtionAccuracy,
-            this.RPMRegualtionAccuracy,
             this.readme
         );
     }
@@ -264,7 +253,6 @@ export class ObjHelper {
                 stateObj.user,
                 stateObj.bearing,
                 stateObj.output_file,
-                stateObj.log_file,
                 stateObj.friction_force_calibration_curve_file,
                 stateObj.load_calibration_curve_file,
                 stateObj.rpm_calibration_curve_file,
@@ -277,10 +265,8 @@ export class ObjHelper {
                 // hours (manual mode)
                 stateObj.total_duration,
                 //stateObj.rpm,  stateObj.load,
+                stateObj.export_result_to_csv,
                 stateObj.manual_mode, pr,
-                //stateObj.friction_force_threshold,  stateObj.temperature_threshold,
-                stateObj.loadRegualtionAccuracy,
-                stateObj.RPMRegualtionAccuracy,
                 stateObj.readme
             );
         } else if (stateObj instanceof trState) {

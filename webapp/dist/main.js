@@ -308,6 +308,17 @@ module.exports = "\r\n<div class=\"container-fluid\">\r\n    <div class=\"row\">
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/index.js!./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.html":
+/*!**************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.html ***!
+  \**************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--<mat-form-field>\r\n        <input matInput [(ngModel)]=\"data.animal\">\r\n    </mat-form-field>-->\r\n<!-- style=\"width:6em !important;\" -->\r\n    <div mat-dialog-content>\r\n        <div class=\"row\">\r\n            <div class=\"col\">\r\n                <div class=\"row h5\">Temperature</div>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox name=\"tVisible\" [(ngModel)]=\"data.t.visible\">Visible</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox [disabled]=\"!data.t.visible\" name=\"tAuto\" [(ngModel)]=\"data.t.auto\" >Auto range</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"0\" max=\"120\" name=\"tV1\"\r\n                           [disabled]=\"(!data.t.visible) || data.t.auto\"\r\n                           [(ngModel)]=\"data.t.min\"/>\r\n                </mat-form-field>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"0\" max=\"120\" name=\"tV2\" \r\n                           [disabled]=\"(!data.t.visible) || data.t.auto\"\r\n                           [(ngModel)]=\"data.t.max\"/>\r\n                </mat-form-field>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col\">\r\n                <div class=\"row h5\">RPM</div>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox name=\"rpmVisible\" [(ngModel)]=\"data.rpm.visible\">Visible</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox [disabled]=\"!data.rpm.visible\" name=\"rpmAuto\" [(ngModel)]=\"data.rpm.auto\">Auto range</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"-10\" max=\"1500\" name=\"rpmV1\"\r\n                           [disabled]=\"(!data.rpm.visible) || data.rpm.auto\"\r\n                           [(ngModel)]=\"data.rpm.min\" />\r\n                </mat-form-field>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"-10\" max=\"1500\" name=\"rpmV2\"\r\n                           [disabled]=\"(!data.rpm.visible) || data.rpm.auto\"\r\n                           [(ngModel)]=\"data.rpm.max\" />\r\n                </mat-form-field>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col\">\r\n                <div class=\"row h5\">Load</div>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox name=\"loadVisible\" [(ngModel)]=\"data.load.visible\">Visible</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox [disabled]=\"!data.load.visible\" name=\"loadAuto\" [(ngModel)]=\"data.load.auto\">Auto range</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"-10\" max=\"1500\" name=\"loadV1\"\r\n                           [disabled]=\"(!data.load.visible) || data.load.auto\"\r\n                           [(ngModel)]=\"data.load.min\" />\r\n                </mat-form-field>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"-10\" max=\"1500\" name=\"loadV2\"\r\n                           [disabled]=\"(!data.load.visible) || data.load.auto\"\r\n                           [(ngModel)]=\"data.load.max\" />\r\n                </mat-form-field>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col\">\r\n                <div class=\"row h5\">Friction</div>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox name=\"frVisible\" [(ngModel)]=\"data.fr.visible\">Visible</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-checkbox [disabled]=\"!data.fr.visible\" name=\"frAuto\" [(ngModel)]=\"data.fr.auto\">Auto range</mat-checkbox>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"-10\" max=\"150\" name=\"frV1\"\r\n                           [disabled]=\"(!data.fr.visible) || data.fr.auto\"\r\n                           [(ngModel)]=\"data.fr.min\" />\r\n                </mat-form-field>\r\n            </div>\r\n            <div class=\"col\">\r\n                <mat-form-field appearance=\"outline\">\r\n                    <input matInput type=\"number\" min=\"-10\" max=\"150\" name=\"frV2\"\r\n                           [disabled]=\"(!data.fr.visible) || data.fr.auto\"\r\n                           [(ngModel)]=\"data.fr.max\" />\r\n                </mat-form-field>\r\n            </div>\r\n        </div>\r\n    </div>\r\n<div mat-dialog-actions>\r\n    <button mat-button (click)=\"onCancelClick()\">Cancel</button>\r\n    <button mat-button [mat-dialog-close]=\"data\" cdkFocusInitial>Ok</button>\r\n</div>\r\n"
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/index.js!./src/app/components/controls/status-row/status-row.component.html":
 /*!****************************************************************************************************!*\
   !*** ./node_modules/raw-loader!./src/app/components/controls/status-row/status-row.component.html ***!
@@ -319,17 +330,6 @@ module.exports = "<!--\"load\": sd[1], \"frictionforce\":sd[2], \"rotationrate\"
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./src/app/components/controls/tabulator-table/tabulator-table.component.html":
-/*!**************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader!./src/app/components/controls/tabulator-table/tabulator-table.component.html ***!
-  \**************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\r\n"
-
-/***/ }),
-
 /***/ "./node_modules/raw-loader/index.js!./src/app/components/experiment/experiment.component.html":
 /*!*******************************************************************************************!*\
   !*** ./node_modules/raw-loader!./src/app/components/experiment/experiment.component.html ***!
@@ -337,7 +337,7 @@ module.exports = "\r\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n    \r\n    <div *ngIf=\"{settings:signalsService.settings$|async,state:signalsService.lastState$|async} as totSTATE\" class=\"row\">\r\n        <div class=\"container rounded border bg-light\">\r\n            <!--\"load\": sd[1], \"frictionforce\":sd[2], \"rotationrate\": sd[3], \"temperature\": sd[4]-->\r\n            <app-status-row></app-status-row>\r\n            <div class=\"row\">\r\n                <div *ngIf=\"currentData|async as crData\" class=\"container rounded border bg-light m-1\">\r\n                    <!--\"load\": sd[1], \"frictionforce\":sd[2], \"rotationrate\": sd[3], \"temperature\": sd[4]-->\r\n                    <div class=\"row h5\">\r\n                        <div class=\"col\">Value</div>\r\n                        <div class=\"col\">Time, min</div>\r\n                        <div class=\"col\">RPM</div>\r\n                        <div class=\"col\">Load, N</div>\r\n                        <div class=\"col\">Friction, N</div>\r\n                        <div class=\"col\">T, °C</div>\r\n                        <!--<div class=\"col\">μ,-</div>-->\r\n                    </div>\r\n                    <div class=\"row border-top\">\r\n                        <div class=\"col\">average</div>\r\n                        <div class=\"col\">{{crData.db[0]/60.0| number:'1.2-2'}}</div>\r\n                        <div class=\"col\">{{crData.adb[3]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.adb[1]| number}}</div>\r\n                        <div class=\"col\">{{crData.adb[2]| number}}</div>\r\n                        <div class=\"col\">{{crData.adb[4]| number:'1.1-1'}}</div>\r\n                        <!--<div class=\"col\">{{crData.adb[2]/crData.adb[1]| number}}</div>-->\r\n                    </div>\r\n                    <div class=\"row border-top font-weight-light\">\r\n                        <div class=\"col\">actual</div>\r\n                        <div class=\"col\">{{crData.db[0]/60.0| number:'1.2-2'}}</div>\r\n                        <div class=\"col\">{{crData.db[3]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.db[1]| number}}</div>\r\n                        <div class=\"col\">{{crData.db[2]| number}}</div>\r\n                        <div class=\"col\">{{crData.db[4]| number:'1.1-1'}}</div>\r\n                        <!--<div class=\"col\">{{crData.db[2]/crData.db[1]| number}}</div>-->\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <!--status =  init = 0, started = 2, completed = 3 -->\r\n            <div class=\"row\">\r\n                <div class=\"container rounded border bg-light m-1\">\r\n                    <!-- && totSTATE.state.VFD_on && totSTATE.state.load_on -->\r\n                    <div *ngIf=\"totSTATE.state.status==1\" class=\"row\">\r\n                        <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"startExperiment()\">Start experiment</button>\r\n                    </div>\r\n                    <div *ngIf=\"totSTATE.state.status==2\" class=\"row\">\r\n                        <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"stopExperiment()\">Stop experiment</button>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div *ngIf=\"totSTATE.state.status==2 || totSTATE.state.status==3\" class=\"row\">\r\n                <div class=\"col-3\">\r\n                    <button type=\"button\" class=\"btn btn-info\" (click)=\"resfreshChart()\">Refresh chart</button>\r\n                </div>\r\n                <div *ngIf=\"totSTATE.state.status==2\" class=\"col-9\">\r\n                    <h6>Chart refresh period</h6>\r\n                    <select id=\"refreshPeriodSelect\" (change)=\"onChangerefreshPeriod($event.target.value)\" [value]='1'>\r\n                        <option value=\"0\">off</option>\r\n                        <option value=\"1\">1 minute</option>\r\n                        <option value=\"2\">2 minutes</option>\r\n                        <option value=\"5\">5 minutes</option>\r\n                        <option value=\"10\">10 minutes</option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"container rounded border bg-light\">\r\n            <canvas baseChart #writing height=\"400\"\r\n                    [datasets]=\"ChartFile.lineChartData\"\r\n                    [labels]=\"ChartFile.lineChartLabels\"\r\n                    [options]=\"ChartFile.lineChartOptions\"\r\n                    [colors]=\"ChartFile.lineChartColors\"\r\n                    [legend]=\"ChartFile.lineChartLegend\"\r\n                    [chartType]=\"ChartFile.lineChartType\"></canvas>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container-fluid\">\r\n    \r\n    <div *ngIf=\"{settings:signalsService.settings$|async,state:signalsService.lastState$|async} as totSTATE\" class=\"row\">\r\n        <div class=\"container rounded border bg-light\">\r\n            <!--\"load\": sd[1], \"frictionforce\":sd[2], \"rotationrate\": sd[3], \"temperature\": sd[4]-->\r\n            <app-status-row></app-status-row>\r\n            <div class=\"row\">\r\n                <div *ngIf=\"currentData|async as crData\" class=\"container rounded border bg-light m-1\">\r\n                    <!--\"load\": sd[1], \"frictionforce\":sd[2], \"rotationrate\": sd[3], \"temperature\": sd[4]-->\r\n                    <div class=\"row h5\">\r\n                        <div class=\"col\">Value</div>\r\n                        <div class=\"col\">Time, min</div>\r\n                        <div class=\"col\">RPM</div>\r\n                        <div class=\"col\">Load, N</div>\r\n                        <div class=\"col\">Friction, N</div>\r\n                        <div class=\"col\">T, °C</div>\r\n                        <!--<div class=\"col\">μ,-</div>-->\r\n                    </div>\r\n                    <div class=\"row border-top\">\r\n                        <div class=\"col\">average/target</div>\r\n                        <div class=\"col\">{{crData.db[0]/60.0 | number:'1.2-2'}} /{{100*crData.db[0]/crData.tb[0]| number:'1.0-0'}}%</div>\r\n                        <div class=\"col\">{{crData.adb[3]| number:'1.1-1'}}/{{crData.tb[2]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.adb[1]| number:'1.1-1'}}/{{crData.tb[1]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.adb[2]| number:'1.1-1'}}/{{crData.tb[3]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.adb[4]| number:'1.1-1'}}/{{crData.tb[4]| number:'1.1-1'}}</div>\r\n                        <!--<div class=\"col\">{{crData.adb[2]/crData.adb[1]| number}}</div>-->\r\n                    </div>\r\n                    <div class=\"row border-top font-weight-light\">\r\n                        <div class=\"col\">actual</div>\r\n                        <div class=\"col\">{{crData.db[0]/60.0| number:'1.2-2'}}</div>\r\n                        <div class=\"col\">{{crData.db[3]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.db[1]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.db[2]| number:'1.1-1'}}</div>\r\n                        <div class=\"col\">{{crData.db[4]| number:'1.1-1'}}</div>\r\n                        <!--<div class=\"col\">{{crData.db[2]/crData.db[1]| number}}</div>-->\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <!--status =  init = 0, started = 2, completed = 3 -->\r\n            <div class=\"row\">\r\n                <div class=\"container rounded border bg-light m-1\">\r\n                    <!-- && totSTATE.state.VFD_on && totSTATE.state.load_on -->\r\n                    <div *ngIf=\"totSTATE.state.status==1\" class=\"row\">\r\n                        <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"startExperiment()\">Start experiment</button>\r\n                    </div>\r\n                    <div *ngIf=\"totSTATE.state.status==2\" class=\"row\">\r\n                        <button type=\"button\" class=\"btn btn-danger m-1\" (click)=\"stopExperiment()\">Stop experiment</button>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div *ngIf=\"totSTATE.state.status==2 || totSTATE.state.status==3\" class=\"row\">\r\n                <div class=\"col\">\r\n                    <button type=\"button\" class=\"btn btn-info\" (click)=\"resfreshChart()\">Refresh chart</button>\r\n                </div>\r\n                <div *ngIf=\"totSTATE.state.status==2\" class=\"col\">\r\n                    <h6>Chart refresh period</h6>\r\n                    <select id=\"refreshPeriodSelect\" (change)=\"onChangerefreshPeriod($event.target.value)\" [value]='1'>\r\n                        <option value=\"0\">off</option>\r\n                        <option value=\"1\">1 minute</option>\r\n                        <option value=\"2\">2 minutes</option>\r\n                        <option value=\"5\">5 minutes</option>\r\n                        <option value=\"10\">10 minutes</option>\r\n                    </select>\r\n                </div>\r\n                <div class=\"col\">\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"showChartSettingsDialog()\">Chart series settings</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"container rounded border bg-light\">\r\n            <canvas baseChart #writing height=\"400\"\r\n                    [datasets]=\"ChartFile.lineChartData\"\r\n                    [labels]=\"ChartFile.lineChartLabels\"\r\n                    [options]=\"ChartFile.lineChartOptions\"\r\n                    [colors]=\"ChartFile.lineChartColors\"\r\n                    [legend]=\"ChartFile.lineChartLegend\"\r\n                    [chartType]=\"ChartFile.lineChartType\"></canvas>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -370,7 +370,7 @@ module.exports = "<div class=\"container\">\r\n    <header class=\"pageHeader\">
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div *ngIf=\"lSettings\">\r\n        <h1>Settings</h1>\r\n\r\n        <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"settingsForm\">\r\n            <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                <mat-label>Name Surname</mat-label>\r\n                <input type=\"text\" name=\"user\" matInput [formControl]=\"userControl\" [matAutocomplete]=\"auto\"\r\n                       [errorStateMatcher]=\"matcher\">\r\n                <mat-autocomplete #auto=\"matAutocomplete\">\r\n                    <mat-option *ngFor=\"let option of filteredOptions | async\" [value]=\"option\">\r\n                        {{option}}\r\n                    </mat-option>\r\n                </mat-autocomplete>\r\n                <mat-error *ngIf=\"userControl.hasError('required')\">\r\n                    Bearing description is <strong>required</strong>\r\n                </mat-error>\r\n            </mat-form-field>\r\n            <!-- [value]=\"lSettings.bearing\"\r\n         [value]=\"lSettings.output_file\"\r\n        -->\r\n            <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                <mat-label>Bearing description</mat-label>\r\n                <textarea matInput\r\n                          name=\"bearing\"\r\n                          [formControl]=\"bearingDescrControl\"\r\n                          [errorStateMatcher]=\"matcher\"></textarea>\r\n                <!-- [errorStateMatcher]=\"matcher\" -->\r\n                <mat-error *ngIf=\"bearingDescrControl.hasError('required')\">\r\n                    Bearing description is <strong>required</strong>\r\n                </mat-error>\r\n            </mat-form-field>\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-8\">\r\n                    <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                        <mat-label>Output file name</mat-label>\r\n                        <input type=\"text\" matInput\r\n                               name=\"output_file\"\r\n                               [formControl]=\"outputFileNameControl\"\r\n                               [errorStateMatcher]=\"matcher\">\r\n                        <mat-error *ngIf=\"outputFileNameControl.hasError('required')\">\r\n                            Output file name is <strong>required</strong>\r\n                        </mat-error>\r\n                        <mat-error *ngIf=\"outputFileNameControl.hasError('outputFileExists')\">\r\n                            Output file <strong>already exists</strong>\r\n                        </mat-error>\r\n                    </mat-form-field>\r\n                </div>\r\n                <div class=\"col\">\r\n                    <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                        <mat-label>Recording interval, s</mat-label>\r\n                        <input type=\"text\" matInput\r\n                               name=\"recording_cycle\"\r\n                               [formControl]=\"recIntervalControl\"\r\n                               [errorStateMatcher]=\"matcher\">\r\n                        <mat-error *ngIf=\"recIntervalControl.hasError('required')\">\r\n                            Recording interval is <strong>required</strong>\r\n                        </mat-error>\r\n                    </mat-form-field>\r\n                </div>\r\n            </div>\r\n\r\n                <!--<div *ngIf=\"!lSettings.manual_mode\" class=\"form-group\">\r\n        <label for=\"total_duration\">Maximum experiment duration, minutes</label>\r\n        <input type=\"number\" class=\"form-control\" id=\"total_duration\" placeholder=\"Example: 24\"\r\n               required min=\"1\" max=\"10000\"\r\n               [(ngModel)]=\"lSettings.total_duration\" name=\"total_duration\" #total_duration=\"ngModel\" />\r\n        <div [hidden]=\"total_duration.valid\"\r\n             class=\"alert alert-danger\">\r\n            Maximum experiment duration is required\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"!lSettings.manual_mode\" class=\"form-group\">\r\n        <label for=\"load\">Applied load, N</label>\r\n        <input type=\"number\" class=\"form-control\" id=\"load\" placeholder=\"1<load<1000\"\r\n               required min=\"1\" max=\"1000\"\r\n               [(ngModel)]=\"lSettings.load\" name=\"load\" #load=\"ngModel\" />\r\n        <div [hidden]=\"load.valid\"\r\n             class=\"alert alert-danger\">\r\n            Applied load is required\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"!lSettings.manual_mode\" class=\"form-group\">\r\n        <label for=\"rpm\">Revolutions per minute(RPM)</label>\r\n        <input type=\"number\" class=\"form-control\" id=\"rpm\" placeholder=\"300<load<3000\"\r\n               required min=\"300\" max=\"3000\"\r\n               [(ngModel)]=\"lSettings.rpm\" name=\"rpm\" #rpm=\"ngModel\" />\r\n        <div [hidden]=\"rpm.valid\"\r\n             class=\"alert alert-danger\">\r\n            Applied load is required\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"!lSettings.manual_mode\" class=\"form-group\">\r\n        <label for=\"friction_force_threshold\">Friction force threshold, N</label>\r\n        <input type=\"number\" class=\"form-control\" id=\"friction_force_threshold\" placeholder=\"Example: 2\"\r\n               required min=\"10\" max=\"1000\"\r\n               [(ngModel)]=\"lSettings.friction_force_threshold\" name=\"friction_force_threshold\" #friction_force_threshold=\"ngModel\" />\r\n        <div [hidden]=\"friction_force_threshold.valid\"\r\n             class=\"alert alert-danger\">\r\n            Friction force threshold is required\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"!lSettings.manual_mode\" class=\"form-group\">\r\n        <label for=\"temperature_threshold\">Temperature threshold, °C</label>\r\n        <input type=\"number\" class=\"form-control\" id=\"temperature_threshold\" placeholder=\"Example: 2\"\r\n               required min=\"25\" max=\"120\"\r\n               [(ngModel)]=\"lSettings.temperature_threshold\" name=\"temperature_threshold\" #temperature_threshold=\"ngModel\" />\r\n        <div [hidden]=\"temperature_threshold.valid\"\r\n             class=\"alert alert-danger\">\r\n            Temperature threshold is required\r\n        </div>\r\n    </div>-->\r\n\r\n                <mat-checkbox formControlName=\"manualModeControle\" name=\"manual_mode\">Programmed experiment</mat-checkbox>\r\n\r\n                <!--<div class=\"form-group\">\r\n        <label for=\"manual_mode\">Programmed experiment</label>\r\n        <input type=\"checkbox\" class=\"form-control\" id=\"manual_mode\"\r\n               [(ngModel)]=\"lSettings.manual_mode\" name=\"manual_mode\" #manual_mode=\"ngModel\" />\r\n    </div>-->\r\n\r\n                <div>\r\n                    <div class=\"card-body bg-light border-top\">\r\n                        <div *ngIf=\"lSettings.manual_mode\" class=\"row\">\r\n                            <div class=\"col-12 col-sm-6 pr-sm-0 col-md-12 pr-md-3 col-xl-6 pr-xl-0\">\r\n                                <div class=\"btn-group btn-block\">\r\n                                    <button class=\"btn btn-secondary\" type=\"button\"\r\n                                            (click)=\"InserRowBefore()\" title=\"Insert row above\">\r\n                                        <i class=\"fa fa-plus-circle\"></i><i class=\"fa fa-arrow-up\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\"\r\n                                            (click)=\"InserRowAfter()\" title=\"Insert row below\">\r\n                                        <i class=\"fa fa-plus-circle\"></i><i class=\"fa fa-arrow-down\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\" [disabled]=\"selectedRow==null\"\r\n                                            (click)=\"MoveUp()\" title=\"Move selected row up\">\r\n                                        <i class=\"fa fa-long-arrow-up\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\" [disabled]=\"selectedRow==null\"\r\n                                            (click)=\"MoveDown()\" title=\"Move selected row down\">\r\n                                        <i class=\"fa fa-long-arrow-down\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\" [disabled]=\"selectedRow==null\"\r\n                                            (click)=\"DeleteRow()\" title=\"Dete row\">\r\n                                        Delete\r\n                                    </button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row\">\r\n                            <!-- \"duration\":0.25, \"load\":0.0,\"RPM\":1000,\"Tmax\":100,\"Fmax\":10 -->\r\n                            <div class=\"col-2\">Duration, minutes</div>\r\n                            <div class=\"col-2\">Load, N</div>\r\n                            <div class=\"col-2\">Revolutions per minute</div>\r\n                            <div class=\"col-3\">Friction force threshold</div>\r\n                            <div class=\"col-3\">Temperature threshold, °C</div>\r\n                        </div>\r\n                        <div *ngFor=\"let r of programmList\" class=\"row\" (click)=\"onSelectRow(r)\">\r\n                            <!-- \"duration\":0.25, \"load\":0.0,\"RPM\":1000,\"Tmax\":100,\"Fmax\":10 -->\r\n                            <div *ngIf=\"r!=selectedRow\" class=\"card-body bg-light border-top\">\r\n                                <div class=\"row\">\r\n                                    <div class=\"col-2\">{{r.duration}}</div>\r\n                                    <div class=\"col-2\">{{r.load}}</div>\r\n                                    <div class=\"col-2\">{{r.RPM}}</div>\r\n                                    <div class=\"col-3\">{{r.Fmax}}</div>\r\n                                    <div class=\"col-3\">{{r.Tmax}}</div>\r\n                                </div>\r\n                            </div>\r\n                            <div *ngIf=\"r==selectedRow\" class=\"card-body bg-light border-top\">\r\n                                <div class=\"row\">\r\n                                    <div class=\"col-2\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_du\" [formControl]=\"durationControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                                   name=\"pr_du\" [formControl]=\"durationControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        <input type=\"number\" required min=\"1\" max=\"10000\"\r\n                                               [(ngModel)]=\"selectedRow.duration\" class=\"form-control\" name=\"pr_du\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-2\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_load\" [formControl]=\"loadControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                                   name=\"pr_load\" [formControl]=\"loadControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">-->\r\n                                            <!--<input type=\"number\" required min=\"1\" max=\"1000\"\r\n                                                   [(ngModel)]=\"selectedRow.load\" class=\"form-control\" name=\"pr_load\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-2\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_rpm\" [formControl]=\"RPMControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                                   name=\"pr_rpm\" [formControl]=\"RPMControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">-->\r\n                                        <!--<input type=\"number\" required min=\"300\" max=\"3000\"\r\n                                               [(ngModel)]=\"selectedRow.RPM\" class=\"form-control\" name=\"pr_rpm\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-3\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_Fm\" [formControl]=\"frictThreshControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                                   name=\"pr_Fm\" [formControl]=\"frictThreshControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">-->\r\n                                        <!--<input type=\"number\" required min=\"10\" max=\"1000\"\r\n                                               [(ngModel)]=\"selectedRow.Fmax\" class=\"form-control\" name=\"pr_Fm\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-3\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_Tm\" [formControl]=\"tempThreshControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                                   name=\"pr_Tm\" [formControl]=\"tempThreshControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">-->\r\n                                        <!--<input type=\"number\" required min=\"25\" max=\"120\"\r\n                                               [(ngModel)]=\"selectedRow.Tmax\" class=\"form-control\" name=\"pr_Tm\" />-->\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!settingsForm.valid\">Apply</button>\r\n</form>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container\">\r\n    <div *ngIf=\"lSettings\">\r\n        <h1>Settings</h1>\r\n\r\n        <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"settingsForm\">\r\n            <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                <mat-label>Name Surname</mat-label>\r\n                <input type=\"text\" name=\"user\" matInput [formControl]=\"userControl\" [matAutocomplete]=\"auto\"\r\n                       [errorStateMatcher]=\"matcher\">\r\n                <mat-autocomplete #auto=\"matAutocomplete\">\r\n                    <mat-option *ngFor=\"let option of filteredOptions | async\" [value]=\"option\">\r\n                        {{option}}\r\n                    </mat-option>\r\n                </mat-autocomplete>\r\n                <mat-error *ngIf=\"userControl.hasError('required')\">\r\n                    Bearing description is <strong>required</strong>\r\n                </mat-error>\r\n            </mat-form-field>\r\n            <!-- [value]=\"lSettings.bearing\"\r\n         [value]=\"lSettings.output_file\"\r\n        -->\r\n            <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                <mat-label>Bearing description</mat-label>\r\n                <textarea matInput\r\n                          name=\"bearing\"\r\n                          [formControl]=\"bearingDescrControl\"\r\n                          [errorStateMatcher]=\"matcher\"></textarea>\r\n                <!-- [errorStateMatcher]=\"matcher\" -->\r\n                <mat-error *ngIf=\"bearingDescrControl.hasError('required')\">\r\n                    Bearing description is <strong>required</strong>\r\n                </mat-error>\r\n            </mat-form-field>\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-8\">\r\n                    <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                        <mat-label>Output file name</mat-label>\r\n                        <input type=\"text\" matInput\r\n                               name=\"output_file\"\r\n                               [formControl]=\"outputFileNameControl\"\r\n                               [errorStateMatcher]=\"matcher\">\r\n                        <mat-error *ngIf=\"outputFileNameControl.hasError('required')\">\r\n                            Output file name is <strong>required</strong>\r\n                        </mat-error>\r\n                        <mat-error *ngIf=\"outputFileNameControl.hasError('outputFileExists')\">\r\n                            Output file <strong>already exists</strong>\r\n                        </mat-error>\r\n                    </mat-form-field>\r\n                </div>\r\n                <div class=\"col\">\r\n                    <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                        <mat-label>Recording interval, s</mat-label>\r\n                        <input type=\"text\" matInput\r\n                               name=\"recording_cycle\"\r\n                               [formControl]=\"recIntervalControl\"\r\n                               [errorStateMatcher]=\"matcher\">\r\n                        <mat-error *ngIf=\"recIntervalControl.hasError('required')\">\r\n                            Recording interval is <strong>required</strong>\r\n                        </mat-error>\r\n                    </mat-form-field>\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-8\">\r\n                    <mat-checkbox formControlName=\"manualModeControle\" name=\"manual_mode\">Programmed experiment</mat-checkbox>\r\n                </div>\r\n                <div class=\"col\">\r\n                    <mat-checkbox formControlName=\"exportToCSVControle\" name=\"export2CSV\">Export to csv</mat-checkbox>\r\n                </div>\r\n            </div>\r\n\r\n                <div>\r\n                    <div class=\"card-body bg-light border-top\">\r\n                        <div *ngIf=\"lSettings.manual_mode\" class=\"row\">\r\n                            <div class=\"col-12 col-sm-6 pr-sm-0 col-md-12 pr-md-3 col-xl-6 pr-xl-0\">\r\n                                <div class=\"btn-group btn-block\">\r\n                                    <button class=\"btn btn-secondary\" type=\"button\"\r\n                                            (click)=\"InserRowBefore()\" title=\"Insert row above\">\r\n                                        <i class=\"fa fa-plus-circle\"></i><i class=\"fa fa-arrow-up\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\"\r\n                                            (click)=\"InserRowAfter()\" title=\"Insert row below\">\r\n                                        <i class=\"fa fa-plus-circle\"></i><i class=\"fa fa-arrow-down\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\" [disabled]=\"selectedRow==null\"\r\n                                            (click)=\"MoveUp()\" title=\"Move selected row up\">\r\n                                        <i class=\"fa fa-long-arrow-up\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\" [disabled]=\"selectedRow==null\"\r\n                                            (click)=\"MoveDown()\" title=\"Move selected row down\">\r\n                                        <i class=\"fa fa-long-arrow-down\"></i>\r\n                                    </button>\r\n                                    <button class=\"btn btn-secondary\" type=\"button\" [disabled]=\"selectedRow==null\"\r\n                                            (click)=\"DeleteRow()\" title=\"Dete row\">\r\n                                        Delete\r\n                                    </button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row\">\r\n                            <!-- \"duration\":0.25, \"load\":0.0,\"RPM\":1000,\"Tmax\":100,\"Fmax\":10 -->\r\n                            <div class=\"col-2\">Duration, minutes</div>\r\n                            <div class=\"col-2\">Load, N</div>\r\n                            <div class=\"col-2\">Revolutions per minute</div>\r\n                            <div class=\"col-3\">Friction force threshold</div>\r\n                            <div class=\"col-3\">Temperature threshold, °C</div>\r\n                        </div>\r\n                        <div *ngFor=\"let r of programmList\" class=\"row\" (click)=\"onSelectRow(r)\">\r\n                            <!-- \"duration\":0.25, \"load\":0.0,\"RPM\":1000,\"Tmax\":100,\"Fmax\":10 -->\r\n                            <div *ngIf=\"r!=selectedRow\" class=\"card-body bg-light border-top\">\r\n                                <div class=\"row\">\r\n                                    <div class=\"col-2\">{{r.duration}}</div>\r\n                                    <div class=\"col-2\">{{r.load}}</div>\r\n                                    <div class=\"col-2\">{{r.RPM}}</div>\r\n                                    <div class=\"col-3\">{{r.Fmax}}</div>\r\n                                    <div class=\"col-3\">{{r.Tmax}}</div>\r\n                                </div>\r\n                            </div>\r\n                            <div *ngIf=\"r==selectedRow\" class=\"card-body bg-light border-top\">\r\n                                <div class=\"row\">\r\n                                    <div class=\"col-2\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_du\" [formControl]=\"durationControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                       name=\"pr_du\" [formControl]=\"durationControl\"\r\n                                       [errorStateMatcher]=\"matcher\">\r\n                            <input type=\"number\" required min=\"1\" max=\"10000\"\r\n                                   [(ngModel)]=\"selectedRow.duration\" class=\"form-control\" name=\"pr_du\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-2\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_load\" [formControl]=\"loadControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                       name=\"pr_load\" [formControl]=\"loadControl\"\r\n                                       [errorStateMatcher]=\"matcher\">-->\r\n                                        <!--<input type=\"number\" required min=\"1\" max=\"1000\"\r\n                                   [(ngModel)]=\"selectedRow.load\" class=\"form-control\" name=\"pr_load\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-2\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_rpm\" [formControl]=\"RPMControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                       name=\"pr_rpm\" [formControl]=\"RPMControl\"\r\n                                       [errorStateMatcher]=\"matcher\">-->\r\n                                        <!--<input type=\"number\" required min=\"300\" max=\"3000\"\r\n                                   [(ngModel)]=\"selectedRow.RPM\" class=\"form-control\" name=\"pr_rpm\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-3\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_Fm\" [formControl]=\"frictThreshControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                       name=\"pr_Fm\" [formControl]=\"frictThreshControl\"\r\n                                       [errorStateMatcher]=\"matcher\">-->\r\n                                        <!--<input type=\"number\" required min=\"10\" max=\"1000\"\r\n                                   [(ngModel)]=\"selectedRow.Fmax\" class=\"form-control\" name=\"pr_Fm\" />-->\r\n                                    </div>\r\n                                    <div class=\"col-3\">\r\n                                        <mat-form-field class=\"control-full-width\" appearance=\"outline\">\r\n                                            <input type=\"number\" matInput\r\n                                                   name=\"pr_Tm\" [formControl]=\"tempThreshControl\"\r\n                                                   [errorStateMatcher]=\"matcher\">\r\n                                        </mat-form-field>\r\n                                        <!--<input type=\"number\" matInput\r\n                                       name=\"pr_Tm\" [formControl]=\"tempThreshControl\"\r\n                                       [errorStateMatcher]=\"matcher\">-->\r\n                                        <!--<input type=\"number\" required min=\"25\" max=\"120\"\r\n                                   [(ngModel)]=\"selectedRow.Tmax\" class=\"form-control\" name=\"pr_Tm\" />-->\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!settingsForm.valid\">Apply</button>\r\n</form>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -381,7 +381,7 @@ module.exports = "<div class=\"container\">\r\n    <div *ngIf=\"lSettings\">\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n    <app-status-row></app-status-row>\r\n    <div *ngIf=\"signalsService.settings$|async as sett\" class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div class=\"row h5\">\r\n                <div class=\"col-3\">RPM control</div>\r\n                <div class=\"col-4\">Target</div>\r\n                <div class=\"col-5\">Manual(VFD)</div>\r\n            </div>\r\n            <div class=\"row border-top\">\r\n                <div class=\"col-3\"></div>\r\n                <div class=\"col-4\">\r\n                    <input type=\"number\" min=\"5\" max=\"125\" name=\"rpm_auto\" [value]=\"sett.program[0].RPM\" #rpm_auto>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setRPMAuto(rpm_auto.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"decreaseRPM(rpm_manual.value)\">Decrease</button>\r\n                    <input type=\"number\" min=\"1\" max=\"100\" [value]=\"10\" name=\"rpm_manual\" #rpm_manual>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"increaseRPM(rpm_manual.value)\">Increase</button>\r\n                    <!--<button type=\"button\" class=\"btn btn-info m-1\" (click)=\"rotation()\">Apply {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>-->\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"StopRotation()\">Stop</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"signalsService.settings$|async as sett\" class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div class=\"row h5\">\r\n                <div class=\"col-3\">Load control</div>\r\n                <div class=\"col-4\">Target</div>\r\n                <div class=\"col-5\">Manual</div>\r\n            </div>\r\n            <div class=\"row border-top\">\r\n                <div class=\"col-3\"></div>\r\n                <div class=\"col-4\">\r\n                    <input type=\"number\" class=\"m-1\" min=\"1\" max=\"1020\" name=\"load_auto\" [value]=\"sett.program[0].load\" #load_auto>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setLoadAuto(load_auto.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"loadMinus(load_manual.value)\">Decrease</button>\r\n                    <input type=\"number\" [value]=\"10\" min=\"1\" max=\"100\" name=\"load_manual\" #load_manual>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"loadPlus(load_manual.value)\">Increase</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div *ngIf=\"signalsService.settings$|async as sett\" class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div class=\"row h5\">\r\n                <div class=\"col-3\">\r\n                    Thresholds\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setThresholds(fr_threshold.value,t_threshold.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col-4\">\r\n                    <input type=\"number\" [value]=\"sett.program[0].Fmax\" class=\"m-1\" min=\"5\" max=\"125\" name=\"fr_threshold\" #fr_threshold>\r\n                    Friction, N\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <input type=\"number\" [value]=\"sett.program[0].Tmax\" class=\"m-1\" min=\"15\" max=\"120\" name=\"t_threshold\" #t_threshold>\r\n                    T, °C\r\n                </div>\r\n            </div>\r\n            <!--<div class=\"row border-top\">\r\n                <div class=\"col text-center mx-auto\">\r\n                <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setThresholds(fr_threshold.value,t_threshold.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col text-center mx-auto\">\r\n                    <input type=\"number\" [value]=\"sett.friction_force_threshold\" class=\"m-1\" min=\"5\" max=\"125\" name=\"fr_threshold\" #fr_threshold>\r\n                </div>\r\n                <div class=\"col text-center mx-auto\">\r\n                    <input type=\"number\" [value]=\"sett.temperature_threshold\" class=\"m-1\" min=\"15\" max=\"100\" name=\"t_threshold\" #t_threshold>\r\n                </div>\r\n            </div>-->\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div *ngIf=\"currentData\" class=\"container rounded border bg-light m-1\">\r\n            <!--\"load\": sd[1], \"frictionforce\":sd[2], \"rotationrate\": sd[3], \"temperature\": sd[4]-->\r\n            <div class=\"row h5\">\r\n                <div class=\"col\">Value</div>\r\n                <div class=\"col\">RPM</div>\r\n                <div class=\"col\">Load, N</div>\r\n                <div class=\"col\">Friction, N</div>\r\n                <div class=\"col\">T, °C</div>\r\n                <!--<div class=\"col\">μ,-</div>-->\r\n            </div>\r\n            <div class=\"row border-top\">\r\n                <div class=\"col\">average</div>\r\n                <div class=\"col\">{{currentData.adb[3]| number:'1.1-1'}}</div>\r\n                <div class=\"col\">{{currentData.adb[1]| number}}</div>\r\n                <div class=\"col\">{{currentData.adb[2]| number}}</div>\r\n                <div class=\"col\">{{currentData.adb[4]| number:'1.1-1'}}</div>\r\n                <!--<div class=\"col\">{{currentData.adb[2]/currentData.adb[1]| number}}</div>-->\r\n            </div>\r\n            <div class=\"row border-top font-weight-light\">\r\n                <div class=\"col\">actual</div>\r\n                <div class=\"col\">{{currentData.db[3]| number:'1.1-1'}}</div>\r\n                <div class=\"col\">{{currentData.db[1]| number}}</div>\r\n                <div class=\"col\">{{currentData.db[2]| number}}</div>\r\n                <div class=\"col\">{{currentData.db[4]| number:'1.1-1'}}</div>\r\n                <!--<div class=\"col\">{{currentData.db[2]/currentData.db[1]| number}}</div>-->\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col\">\r\n            <div class=\"container rounded border bg-light m-1\">\r\n                <canvas baseChart #listen height=\"400\"\r\n                        [datasets]=\"ChartListen.lineChartData\"\r\n                        [labels]=\"ChartListen.lineChartLabels\"\r\n                        [options]=\"ChartListen.lineChartOptions\"\r\n                        [colors]=\"ChartListen.lineChartColors\"\r\n                        [legend]=\"ChartListen.lineChartLegend\"\r\n                        [chartType]=\"ChartListen.lineChartType\"></canvas>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container-fluid\">\r\n    <app-status-row></app-status-row>\r\n    <div *ngIf=\"signalsService.settings$|async as sett\" class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div class=\"row h5\">\r\n                <div class=\"col-3\">RPM control</div>\r\n                <div class=\"col-4\">Target</div>\r\n                <div class=\"col-5\">Manual(VFD)</div>\r\n            </div>\r\n            <div class=\"row border-top\">\r\n                <div class=\"col-3\"></div>\r\n                <div class=\"col-4\">\r\n                    <input type=\"number\" min=\"5\" max=\"125\" name=\"rpm_auto\" [value]=\"sett.program[0].RPM\" #rpm_auto>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setRPMAuto(rpm_auto.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"decreaseRPM(rpm_manual.value)\">Decrease</button>\r\n                    <input type=\"number\" min=\"1\" max=\"100\" [value]=\"10\" name=\"rpm_manual\" #rpm_manual>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"increaseRPM(rpm_manual.value)\">Increase</button>\r\n                    <!--<button type=\"button\" class=\"btn btn-info m-1\" (click)=\"rotation()\">Apply {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>-->\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"StopRotation()\">Stop</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"signalsService.settings$|async as sett\" class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div class=\"row h5\">\r\n                <div class=\"col-3\">Load control</div>\r\n                <div class=\"col-4\">Target</div>\r\n                <div class=\"col-5\">Manual</div>\r\n            </div>\r\n            <div class=\"row border-top\">\r\n                <div class=\"col-3\"></div>\r\n                <div class=\"col-4\">\r\n                    <input type=\"number\" class=\"m-1\" min=\"1\" max=\"1020\" name=\"load_auto\" [value]=\"sett.program[0].load\" #load_auto>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setLoadAuto(load_auto.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"loadMinus(load_manual.value)\">Decrease</button>\r\n                    <input type=\"number\" [value]=\"10\" min=\"1\" max=\"100\" name=\"load_manual\" #load_manual>\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"loadPlus(load_manual.value)\">Increase</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div *ngIf=\"signalsService.settings$|async as sett\" class=\"row\">\r\n        <div class=\"container rounded border bg-light m-1\">\r\n            <div class=\"row h5\">\r\n                <div class=\"col-3\">\r\n                    Thresholds\r\n                    <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setThresholds(fr_threshold.value,t_threshold.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col-4\">\r\n                    <input type=\"number\" [value]=\"sett.program[0].Fmax\" class=\"m-1\" min=\"5\" max=\"125\" name=\"fr_threshold\" #fr_threshold>\r\n                    Friction, N\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <input type=\"number\" [value]=\"sett.program[0].Tmax\" class=\"m-1\" min=\"15\" max=\"120\" name=\"t_threshold\" #t_threshold>\r\n                    T, °C\r\n                </div>\r\n            </div>\r\n            <!--<div class=\"row border-top\">\r\n                <div class=\"col text-center mx-auto\">\r\n                <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"setThresholds(fr_threshold.value,t_threshold.value)\">Apply</button>\r\n                </div>\r\n                <div class=\"col text-center mx-auto\">\r\n                    <input type=\"number\" [value]=\"sett.friction_force_threshold\" class=\"m-1\" min=\"5\" max=\"125\" name=\"fr_threshold\" #fr_threshold>\r\n                </div>\r\n                <div class=\"col text-center mx-auto\">\r\n                    <input type=\"number\" [value]=\"sett.temperature_threshold\" class=\"m-1\" min=\"15\" max=\"100\" name=\"t_threshold\" #t_threshold>\r\n                </div>\r\n            </div>-->\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div *ngIf=\"currentData\" class=\"container rounded border bg-light m-1\">\r\n            <!--\"load\": sd[1], \"frictionforce\":sd[2], \"rotationrate\": sd[3], \"temperature\": sd[4]-->\r\n            <div class=\"row h5\">\r\n                <div class=\"col\">Value</div>\r\n                <div class=\"col\">RPM</div>\r\n                <div class=\"col\">Load, N</div>\r\n                <div class=\"col\">Friction, N</div>\r\n                <div class=\"col\">T, °C</div>\r\n                <!--<div class=\"col\">μ,-</div>-->\r\n            </div>\r\n            <div class=\"row border-top\">\r\n                <div class=\"col\">average/target</div>\r\n                <div class=\"col\">{{currentData.adb[3]| number:'1.1-1'}}/{{currentData.tb[2]| number:'1.1-1'}}</div>\r\n                <div class=\"col\">{{currentData.adb[1]| number:'1.1-1'}}/{{currentData.tb[1]| number:'1.1-1'}}</div>\r\n                <div class=\"col\">{{currentData.adb[2]| number:'1.1-1'}}/{{currentData.tb[3]| number:'1.1-1'}}</div>\r\n                <div class=\"col\">{{currentData.adb[4]| number:'1.1-1'}}/{{currentData.tb[4]| number:'1.1-1'}}</div>\r\n                <!--<div class=\"col\">{{currentData.adb[2]/currentData.adb[1]| number}}</div>-->\r\n            </div>\r\n            <div class=\"row border-top font-weight-light\">\r\n                <div class=\"col\">actual</div>\r\n                <div class=\"col\">{{currentData.db[3]| number:'1.1-1'}}</div>\r\n                <div class=\"col\">{{currentData.db[1]| number}}</div>\r\n                <div class=\"col\">{{currentData.db[2]| number}}</div>\r\n                <div class=\"col\">{{currentData.db[4]| number:'1.1-1'}}</div>\r\n                <!--<div class=\"col\">{{currentData.db[2]/currentData.db[1]| number}}</div>-->\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col\">\r\n            <button type=\"button\" class=\"btn btn-info m-1\" (click)=\"showChartSettingsDialog()\">Chart series</button>\r\n            <div class=\"container rounded border bg-light m-1\">\r\n                <canvas baseChart #listen height=\"400\"\r\n                        [datasets]=\"ChartListen.lineChartDataDraw\"\r\n                        [labels]=\"ChartListen.lineChartLabels\"\r\n                        [options]=\"ChartListen.lineChartOptions\"\r\n                        [colors]=\"ChartListen.lineChartColors\"\r\n                        [legend]=\"ChartListen.lineChartLegend\"\r\n                        [chartType]=\"ChartListen.lineChartType\"></canvas>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -572,19 +572,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _angular_material_autocomplete__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/autocomplete */ "./node_modules/@angular/material/esm5/autocomplete.es5.js");
 /* harmony import */ var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/form-field */ "./node_modules/@angular/material/esm5/form-field.es5.js");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _components_navbar_navbar_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/navbar/navbar.component */ "./src/app/components/navbar/navbar.component.ts");
-/* harmony import */ var _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/settings/settings.component */ "./src/app/components/settings/settings.component.ts");
-/* harmony import */ var _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/experiment/experiment.component */ "./src/app/components/experiment/experiment.component.ts");
-/* harmony import */ var _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/calibr-curve/calibr-curve.component */ "./src/app/components/calibr-curve/calibr-curve.component.ts");
-/* harmony import */ var _components_trib_controls_trib_controls_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/trib-controls/trib-controls.component */ "./src/app/components/trib-controls/trib-controls.component.ts");
-/* harmony import */ var _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/not-found/not-found.component */ "./src/app/components/not-found/not-found.component.ts");
-/* harmony import */ var _components_show_errors_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/show-errors.component */ "./src/app/components/show-errors.component.ts");
-/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./services/signals.service */ "./src/app/services/signals.service.ts");
-/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./services/chart.service */ "./src/app/services/chart.service.ts");
-/* harmony import */ var _components_controls_tabulator_table_tabulator_table_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/controls/tabulator-table/tabulator-table.component */ "./src/app/components/controls/tabulator-table/tabulator-table.component.ts");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _components_navbar_navbar_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/navbar/navbar.component */ "./src/app/components/navbar/navbar.component.ts");
+/* harmony import */ var _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/settings/settings.component */ "./src/app/components/settings/settings.component.ts");
+/* harmony import */ var _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/experiment/experiment.component */ "./src/app/components/experiment/experiment.component.ts");
+/* harmony import */ var _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/calibr-curve/calibr-curve.component */ "./src/app/components/calibr-curve/calibr-curve.component.ts");
+/* harmony import */ var _components_trib_controls_trib_controls_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/trib-controls/trib-controls.component */ "./src/app/components/trib-controls/trib-controls.component.ts");
+/* harmony import */ var _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/not-found/not-found.component */ "./src/app/components/not-found/not-found.component.ts");
+/* harmony import */ var _components_show_errors_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/show-errors.component */ "./src/app/components/show-errors.component.ts");
+/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./services/signals.service */ "./src/app/services/signals.service.ts");
+/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./services/chart.service */ "./src/app/services/chart.service.ts");
 /* harmony import */ var _components_controls_status_row_status_row_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/controls/status-row/status-row.component */ "./src/app/components/controls/status-row/status-row.component.ts");
+/* harmony import */ var _components_controls_chart_settings_dialog_chart_settings_dialog_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/controls/chart-settings-dialog/chart-settings-dialog.component */ "./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.ts");
+
 
 
 
@@ -608,6 +610,7 @@ __webpack_require__.r(__webpack_exports__);
 //import { SocketService } from './services/socket.service';
 
 
+//import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
 
 
 var AppModule = /** @class */ (function () {
@@ -616,26 +619,28 @@ var AppModule = /** @class */ (function () {
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"],
-                _components_navbar_navbar_component__WEBPACK_IMPORTED_MODULE_13__["NavbarComponent"],
-                _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_14__["SettingsComponent"],
-                _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_15__["ExperimentComponent"],
-                _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_16__["CalibrCurveComponent"],
-                _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_18__["NotFoundComponent"],
-                _components_show_errors_component__WEBPACK_IMPORTED_MODULE_19__["ShowErrorsComponent"],
+                _app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"],
+                _components_navbar_navbar_component__WEBPACK_IMPORTED_MODULE_14__["NavbarComponent"],
+                _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_15__["SettingsComponent"],
+                _components_experiment_experiment_component__WEBPACK_IMPORTED_MODULE_16__["ExperimentComponent"],
+                _components_calibr_curve_calibr_curve_component__WEBPACK_IMPORTED_MODULE_17__["CalibrCurveComponent"],
+                _components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_19__["NotFoundComponent"],
+                _components_show_errors_component__WEBPACK_IMPORTED_MODULE_20__["ShowErrorsComponent"],
                 //SettingsFormComponent,
-                _components_controls_tabulator_table_tabulator_table_component__WEBPACK_IMPORTED_MODULE_22__["TabulatorTableComponent"],
+                //TabulatorTableComponent,
+                _components_controls_chart_settings_dialog_chart_settings_dialog_component__WEBPACK_IMPORTED_MODULE_24__["ChartSettingsDialogComponent"],
                 _components_controls_status_row_status_row_component__WEBPACK_IMPORTED_MODULE_23__["StatusRowComponent"],
-                _components_trib_controls_trib_controls_component__WEBPACK_IMPORTED_MODULE_17__["TribControlsComponent"]
+                _components_trib_controls_trib_controls_component__WEBPACK_IMPORTED_MODULE_18__["TribControlsComponent"]
             ],
             imports: [
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["BrowserAnimationsModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_7__["MatInputModule"], _angular_material__WEBPACK_IMPORTED_MODULE_8__["MatButtonModule"], _angular_material__WEBPACK_IMPORTED_MODULE_8__["MatCheckboxModule"], _angular_material_autocomplete__WEBPACK_IMPORTED_MODULE_9__["MatAutocompleteModule"],
-                _angular_material_form_field__WEBPACK_IMPORTED_MODULE_10__["MatFormFieldModule"],
+                _angular_material_form_field__WEBPACK_IMPORTED_MODULE_10__["MatFormFieldModule"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_11__["MatDialogModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], ng2_charts__WEBPACK_IMPORTED_MODULE_5__["ChartsModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_11__["AppRoutingModule"]
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_12__["AppRoutingModule"]
             ],
-            providers: [_services_signals_service__WEBPACK_IMPORTED_MODULE_20__["SignalsService"], _services_chart_service__WEBPACK_IMPORTED_MODULE_21__["ChartService"]],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"]]
+            providers: [_services_signals_service__WEBPACK_IMPORTED_MODULE_21__["SignalsService"], _services_chart_service__WEBPACK_IMPORTED_MODULE_22__["ChartService"]],
+            entryComponents: [_components_controls_chart_settings_dialog_chart_settings_dialog_component__WEBPACK_IMPORTED_MODULE_24__["ChartSettingsDialogComponent"]],
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -935,6 +940,61 @@ var CalibrCurveComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.css":
+/*!***********************************************************************************************!*\
+  !*** ./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.css ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "mat-form-field {\r\n\twidth: 6em !important;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9jb250cm9scy9jaGFydC1zZXR0aW5ncy1kaWFsb2cvY2hhcnQtc2V0dGluZ3MtZGlhbG9nLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Q0FDQyxxQkFBcUI7QUFDdEIiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL2NvbnRyb2xzL2NoYXJ0LXNldHRpbmdzLWRpYWxvZy9jaGFydC1zZXR0aW5ncy1kaWFsb2cuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIm1hdC1mb3JtLWZpZWxkIHtcclxuXHR3aWR0aDogNmVtICFpbXBvcnRhbnQ7XHJcbn1cclxuIl19 */"
+
+/***/ }),
+
+/***/ "./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.ts":
+/*!**********************************************************************************************!*\
+  !*** ./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.ts ***!
+  \**********************************************************************************************/
+/*! exports provided: ChartSettingsDialogComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChartSettingsDialogComponent", function() { return ChartSettingsDialogComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
+
+
+
+var ChartSettingsDialogComponent = /** @class */ (function () {
+    function ChartSettingsDialogComponent(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    ChartSettingsDialogComponent.prototype.onCancelClick = function () {
+        this.dialogRef.close();
+    };
+    ChartSettingsDialogComponent.ctorParameters = function () { return [
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"],] }] }
+    ]; };
+    ChartSettingsDialogComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-chart-settings-dialog',
+            template: __webpack_require__(/*! raw-loader!./chart-settings-dialog.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.html"),
+            styles: [__webpack_require__(/*! ./chart-settings-dialog.component.css */ "./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"])),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"], Object])
+    ], ChartSettingsDialogComponent);
+    return ChartSettingsDialogComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/controls/status-row/status-row.component.css":
 /*!*************************************************************************!*\
   !*** ./src/app/components/controls/status-row/status-row.component.css ***!
@@ -998,165 +1058,6 @@ var StatusRowComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/components/controls/tabulator-table/tabulator-table.component.css":
-/*!***********************************************************************************!*\
-  !*** ./src/app/components/controls/tabulator-table/tabulator-table.component.css ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvY29udHJvbHMvdGFidWxhdG9yLXRhYmxlL3RhYnVsYXRvci10YWJsZS5jb21wb25lbnQuY3NzIn0= */"
-
-/***/ }),
-
-/***/ "./src/app/components/controls/tabulator-table/tabulator-table.component.ts":
-/*!**********************************************************************************!*\
-  !*** ./src/app/components/controls/tabulator-table/tabulator-table.component.ts ***!
-  \**********************************************************************************/
-/*! exports provided: TabulatorTableComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TabulatorTableComponent", function() { return TabulatorTableComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var tabulator_tables__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tabulator-tables */ "./node_modules/tabulator-tables/dist/js/tabulator.js");
-/* harmony import */ var tabulator_tables__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(tabulator_tables__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-var TabulatorTableComponent = /** @class */ (function () {
-    function TabulatorTableComponent(compRootEl, renderer) {
-        this.compRootEl = compRootEl;
-        this.renderer = renderer;
-        this.tableClass = "";
-        this.tableSettings = {};
-        this.tableData = [];
-        this.tableColumns = null;
-        // @Input() height: string = '311px';
-        this.layout = null;
-        this.rowFormatter = null;
-        this.rowClick = null;
-        this.Theme = null;
-        //@Input() movableColumns: any = true;
-        this.responsiveLayout = null;
-        this.responsiveLayoutCollapseStartOpen = null;
-        this.rowSelectionChanged = null;
-        this.tab = document.createElement('div');
-        this.tabulator = null;
-    }
-    TabulatorTableComponent.prototype.ngOnInit = function () {
-    };
-    TabulatorTableComponent.prototype.ngOnChanges = function (changes) {
-        this.drawTable();
-    };
-    TabulatorTableComponent.prototype.drawTable = function () {
-        //this.tabulator = new Tabulator(this.compRootEl.nativeElement, {
-        if (this.tableClass) {
-            this.tab.setAttribute("class", this.tableClass);
-        }
-        var settings = {};
-        if (this.tableSettings) {
-            settings = this.tableSettings;
-        }
-        if (this.tableData) {
-            settings["data"] = this.tableData;
-        }
-        if (this.tableColumns) {
-            settings["columns"] = this.tableColumns;
-        }
-        if (this.rowFormatter != null) {
-            settings["rowFormatter"] = this.rowFormatter;
-        }
-        if (this.rowClick != null) {
-            settings["rowClick"] = this.rowClick;
-        }
-        if (this.rowSelectionChanged != null) {
-            settings["rowSelectionChanged"] = this.rowSelectionChanged;
-        }
-        if (this.layout != null) {
-            settings["layout"] = this.layout;
-        }
-        //if (this.movableColumns) {
-        //  settings["movableColumns"] = this.movableColumns;
-        //}
-        if (this.responsiveLayout != null) {
-            settings["responsiveLayout"] = this.responsiveLayout;
-        }
-        if (this.responsiveLayoutCollapseStartOpen != null) {
-            settings["responsiveLayoutCollapseStartOpen"] = this.responsiveLayoutCollapseStartOpen;
-        }
-        this.tabulator = new tabulator_tables__WEBPACK_IMPORTED_MODULE_2___default.a(this.tab, settings);
-        //this.compRootEl.nativeElement
-        // this.compRootEl.nativeElement.appendChild(this.tab);
-        //this.renderer.removeChild(this.compRootEl.nativeElement,this.tab);
-        this.renderer.appendChild(this.compRootEl.nativeElement, this.tab);
-        //document.getElementById('app-tatulator-table').appendChild(this.tab);
-    };
-    TabulatorTableComponent.ctorParameters = function () { return [
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] },
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"] }
-    ]; };
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
-    ], TabulatorTableComponent.prototype, "tableClass", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
-    ], TabulatorTableComponent.prototype, "tableSettings", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Array)
-    ], TabulatorTableComponent.prototype, "tableData", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Array)
-    ], TabulatorTableComponent.prototype, "tableColumns", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
-    ], TabulatorTableComponent.prototype, "layout", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
-    ], TabulatorTableComponent.prototype, "rowFormatter", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
-    ], TabulatorTableComponent.prototype, "rowClick", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
-    ], TabulatorTableComponent.prototype, "Theme", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
-    ], TabulatorTableComponent.prototype, "responsiveLayout", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Boolean)
-    ], TabulatorTableComponent.prototype, "responsiveLayoutCollapseStartOpen", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
-    ], TabulatorTableComponent.prototype, "rowSelectionChanged", void 0);
-    TabulatorTableComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-tabulator-table',
-            template: __webpack_require__(/*! raw-loader!./tabulator-table.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/controls/tabulator-table/tabulator-table.component.html"),
-            styles: [__webpack_require__(/*! ./tabulator-table.component.css */ "./src/app/components/controls/tabulator-table/tabulator-table.component.css")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]])
-    ], TabulatorTableComponent);
-    return TabulatorTableComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/components/experiment/experiment.component.css":
 /*!****************************************************************!*\
   !*** ./src/app/components/experiment/experiment.component.css ***!
@@ -1182,9 +1083,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/fesm5/ng2-charts.js");
-/* harmony import */ var _models_message_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../../models/message.model */ "./src/app/models/message.model.ts");
-/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../services/signals.service */ "./src/app/services/signals.service.ts");
-/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../services/chart.service */ "./src/app/services/chart.service.ts");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var _models_message_model__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../models/message.model */ "./src/app/models/message.model.ts");
+/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../services/signals.service */ "./src/app/services/signals.service.ts");
+/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./../../services/chart.service */ "./src/app/services/chart.service.ts");
+/* harmony import */ var _controls_chart_settings_dialog_chart_settings_dialog_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../controls/chart-settings-dialog/chart-settings-dialog.component */ "./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.ts");
+
+
 
 
 
@@ -1193,15 +1098,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ExperimentComponent = /** @class */ (function () {
-    function ExperimentComponent(signalsService, chartService) {
+    function ExperimentComponent(signalsService, chartService, dialog) {
         this.signalsService = signalsService;
         this.chartService = chartService;
+        this.dialog = dialog;
         this.totState = null;
         this.currentData = null;
         this.subsArr = [];
         this.OnGetFileData_Timer = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(60000);
         this.OnFileData_TimerSubscription = null;
-        this.ChartFile = new _services_chart_service__WEBPACK_IMPORTED_MODULE_6__["LineChartSettings"]();
+        this.ChartFile = null;
+        this.ChartFile = new _services_chart_service__WEBPACK_IMPORTED_MODULE_7__["LineChartSettings"](chartService.chartAxesSettings.ExpChatr);
     }
     ExperimentComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1228,8 +1135,30 @@ var ExperimentComponent = /** @class */ (function () {
             it.unsubscribe();
         } });
     };
+    ExperimentComponent.prototype.showChartSettingsDialog = function () {
+        var _this = this;
+        console.log("START dialog!");
+        var ecs = this.chartService.chartAxesSettings.ExpChatr;
+        var dialogRef = this.dialog.open(_controls_chart_settings_dialog_chart_settings_dialog_component__WEBPACK_IMPORTED_MODULE_8__["ChartSettingsDialogComponent"], {
+            width: '750px',
+            data: {
+                t: ecs[0],
+                rpm: ecs[1],
+                load: ecs[2],
+                fr: ecs[3]
+            }
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            console.log('chart setting dialog: update settings!');
+            ecs[0] = result.t;
+            ecs[1] = result.rpm;
+            ecs[2] = result.load;
+            ecs[3] = result.fr;
+            _this.ChartFile = new _services_chart_service__WEBPACK_IMPORTED_MODULE_7__["LineChartSettings"](_this.chartService.chartAxesSettings.ExpChatr);
+        });
+    };
     ExperimentComponent.prototype.printNumVal = function (v) {
-        return _models_message_model__WEBPACK_IMPORTED_MODULE_4__["ObjHelper"].printNumVal(v);
+        return _models_message_model__WEBPACK_IMPORTED_MODULE_5__["ObjHelper"].printNumVal(v);
     };
     ExperimentComponent.prototype.secondsToSting = function (s) {
         var t = Math.floor(s / 86400);
@@ -1317,8 +1246,9 @@ var ExperimentComponent = /** @class */ (function () {
         this.updateWChartData();
     };
     ExperimentComponent.ctorParameters = function () { return [
-        { type: _services_signals_service__WEBPACK_IMPORTED_MODULE_5__["SignalsService"] },
-        { type: _services_chart_service__WEBPACK_IMPORTED_MODULE_6__["ChartService"] }
+        { type: _services_signals_service__WEBPACK_IMPORTED_MODULE_6__["SignalsService"] },
+        { type: _services_chart_service__WEBPACK_IMPORTED_MODULE_7__["ChartService"] },
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialog"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])("writing", { read: ng2_charts__WEBPACK_IMPORTED_MODULE_3__["BaseChartDirective"], static: true }),
@@ -1330,8 +1260,9 @@ var ExperimentComponent = /** @class */ (function () {
             template: __webpack_require__(/*! raw-loader!./experiment.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/experiment/experiment.component.html"),
             styles: [__webpack_require__(/*! ./experiment.component.css */ "./src/app/components/experiment/experiment.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_signals_service__WEBPACK_IMPORTED_MODULE_5__["SignalsService"],
-            _services_chart_service__WEBPACK_IMPORTED_MODULE_6__["ChartService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_signals_service__WEBPACK_IMPORTED_MODULE_6__["SignalsService"],
+            _services_chart_service__WEBPACK_IMPORTED_MODULE_7__["ChartService"],
+            _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialog"]])
     ], ExperimentComponent);
     return ExperimentComponent;
 }());
@@ -1513,6 +1444,7 @@ var SettingsComponent = /** @class */ (function () {
             outputFileNameControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required], [outputFileExistsValidator(this.signalsService)]),
             recIntervalControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](1, [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].max(600), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].min(1)]),
             manualModeControle: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](true, []),
+            exportToCSVControle: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](true, []),
             durationControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](10, [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].min(1), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].max(3000)]),
             loadControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](200, [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].min(20), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].max(1200)]),
             RPMControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](300, [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].min(100), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].max(1200)]),
@@ -1542,6 +1474,11 @@ var SettingsComponent = /** @class */ (function () {
     });
     Object.defineProperty(SettingsComponent.prototype, "manualModeControle", {
         get: function () { return this.settingsForm.get('manualModeControle'); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SettingsComponent.prototype, "exportToCSVControle", {
+        get: function () { return this.settingsForm.get('exportToCSVControle'); },
         enumerable: true,
         configurable: true
     });
@@ -1596,12 +1533,14 @@ var SettingsComponent = /** @class */ (function () {
         var _this = this;
         this.filteredOptions = this.userControl.valueChanges
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["startWith"])(''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (value) { return _this._filter(value); }));
+        this.userControl.valueChanges.subscribe(function (resOk) { _this.lSettings.user = resOk; });
         this.bearingDescrControl.valueChanges.subscribe(function (resOk) { _this.lSettings.bearing = resOk; });
         //GetOutputFileExists
         this.outputFileNameControl.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["debounceTime"])(100), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["distinctUntilChanged"])()).
             subscribe(function (resOk) { _this.lSettings.output_file = resOk; });
         this.recIntervalControl.valueChanges.subscribe(function (resOk) { _this.lSettings.recording_cycle = resOk; });
         this.manualModeControle.valueChanges.subscribe(function (resOk) { _this.lSettings.manual_mode = resOk; });
+        this.exportToCSVControle.valueChanges.subscribe(function (resOk) { _this.lSettings.export_result_to_csv = resOk; });
         this.durationControl.valueChanges.subscribe(function (resOk) { if (_this.selectedRow) {
             _this.selectedRow.duration = resOk;
         } });
@@ -1647,6 +1586,7 @@ var SettingsComponent = /** @class */ (function () {
                 _this.outputFileNameControl.setValue(_this.lSettings.output_file);
                 _this.recIntervalControl.setValue(_this.lSettings.recording_cycle);
                 _this.manualModeControle.setValue(_this.lSettings.manual_mode);
+                _this.exportToCSVControle.setValue(_this.lSettings.export_result_to_csv);
                 _this.durationControl.setValue(_this.lSettings.program[0].duration);
                 _this.loadControl.setValue(_this.lSettings.program[0].load);
                 _this.RPMControl.setValue(_this.lSettings.program[0].RPM);
@@ -1680,7 +1620,7 @@ var SettingsComponent = /** @class */ (function () {
         //    return new CurveRow(0, 0, Nr);
         //}
         var bp = this.lSettings.program[0];
-        return new _models_message_model__WEBPACK_IMPORTED_MODULE_6__["trProgram"](2, bp.load, bp.RPM, bp.Tmax, bp.Fmax, 1);
+        return new _models_message_model__WEBPACK_IMPORTED_MODULE_6__["trProgram"](bp.duration, bp.load, bp.RPM, bp.Tmax, bp.Fmax, 1);
     };
     SettingsComponent.prototype.onSelectRow = function (r) {
         this.selectedRow = r;
@@ -1890,9 +1830,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/fesm5/ng2-charts.js");
-/* harmony import */ var _models_message_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../../models/message.model */ "./src/app/models/message.model.ts");
-/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../../services/signals.service */ "./src/app/services/signals.service.ts");
-/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../services/chart.service */ "./src/app/services/chart.service.ts");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var _models_message_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../../models/message.model */ "./src/app/models/message.model.ts");
+/* harmony import */ var _services_signals_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../services/signals.service */ "./src/app/services/signals.service.ts");
+/* harmony import */ var _services_chart_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../services/chart.service */ "./src/app/services/chart.service.ts");
+/* harmony import */ var _controls_chart_settings_dialog_chart_settings_dialog_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./../controls/chart-settings-dialog/chart-settings-dialog.component */ "./src/app/components/controls/chart-settings-dialog/chart-settings-dialog.component.ts");
+
+
 
 
 
@@ -1900,13 +1844,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TribControlsComponent = /** @class */ (function () {
-    function TribControlsComponent(chartService, signalsService) {
+    function TribControlsComponent(chartService, signalsService, dialog) {
         this.chartService = chartService;
         this.signalsService = signalsService;
+        this.dialog = dialog;
         this.currentData = null;
         this.rpmVal = 0;
         this.ChartListen = null;
+        this.ControlChatrSettings = null;
         this.OnChDCh = null;
+        this.ControlChatrSettings = this.chartService.chartAxesSettings.ControlChatr;
         this.ChartListen = this.chartService.ChartListen;
         this.ChartListen.lineChartOptions["tooltips"] = { enabled: false };
         //this.ChartListen.lineChartOptions["legend"] = { position: "left" };
@@ -1935,7 +1882,7 @@ var TribControlsComponent = /** @class */ (function () {
         }
     };
     TribControlsComponent.prototype.printNumVal = function (v) {
-        return _models_message_model__WEBPACK_IMPORTED_MODULE_3__["ObjHelper"].printNumVal(v);
+        return _models_message_model__WEBPACK_IMPORTED_MODULE_4__["ObjHelper"].printNumVal(v);
     };
     //public secondsToSting(s: number) {
     //let t = Math.floor(s / 86400);
@@ -1950,8 +1897,28 @@ var TribControlsComponent = /** @class */ (function () {
     //let ss = t > 0 ? (t < 10 ? "0" + t.toFixed(1) : t.toFixed(1)) : "00.0";
     //return `${ds} ${hs}:${ms}:${ss}`;
     //}
+    TribControlsComponent.prototype.showChartSettingsDialog = function () {
+        var _this = this;
+        console.log("START dialog!");
+        var dialogRef = this.dialog.open(_controls_chart_settings_dialog_chart_settings_dialog_component__WEBPACK_IMPORTED_MODULE_7__["ChartSettingsDialogComponent"], {
+            width: '750px',
+            data: {
+                t: this.ControlChatrSettings[0],
+                rpm: this.ControlChatrSettings[1],
+                load: this.ControlChatrSettings[2],
+                fr: this.ControlChatrSettings[3]
+            }
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            console.log('chart setting dialog: update settings!');
+            _this.chartService.updateChartListenSettings([result.t, result.rpm, result.load, result.fr]);
+            _this.ControlChatrSettings = _this.chartService.chartAxesSettings.ControlChatr;
+            //this.ChartListen = this.chartService.ChartListen;
+            _this.ChartListen.lineChartOptions["tooltips"] = { enabled: false };
+        });
+    };
     TribControlsComponent.prototype.StopRotation = function () {
-        this.signalsService.SetRPM(0).subscribe(function (x) {
+        this.signalsService.StopRotationsManual().subscribe(function (x) {
             console.log("StopRotation " + x);
         });
     };
@@ -1988,8 +1955,9 @@ var TribControlsComponent = /** @class */ (function () {
         this.signalsService.UpdateThresholds(maxFr, maxTemp).subscribe(function (resOk) { _this.signalsService.settings$.next(resOk); });
     };
     TribControlsComponent.ctorParameters = function () { return [
-        { type: _services_chart_service__WEBPACK_IMPORTED_MODULE_5__["ChartService"] },
-        { type: _services_signals_service__WEBPACK_IMPORTED_MODULE_4__["SignalsService"] }
+        { type: _services_chart_service__WEBPACK_IMPORTED_MODULE_6__["ChartService"] },
+        { type: _services_signals_service__WEBPACK_IMPORTED_MODULE_5__["SignalsService"] },
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_3__["MatDialog"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])("listen", { read: ng2_charts__WEBPACK_IMPORTED_MODULE_2__["BaseChartDirective"], static: true }),
@@ -2001,8 +1969,9 @@ var TribControlsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! raw-loader!./trib-controls.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/trib-controls/trib-controls.component.html"),
             styles: [__webpack_require__(/*! ./trib-controls.component.css */ "./src/app/components/trib-controls/trib-controls.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_chart_service__WEBPACK_IMPORTED_MODULE_5__["ChartService"],
-            _services_signals_service__WEBPACK_IMPORTED_MODULE_4__["SignalsService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_chart_service__WEBPACK_IMPORTED_MODULE_6__["ChartService"],
+            _services_signals_service__WEBPACK_IMPORTED_MODULE_5__["SignalsService"],
+            _angular_material_dialog__WEBPACK_IMPORTED_MODULE_3__["MatDialog"]])
     ], TribControlsComponent);
     return TribControlsComponent;
 }());
@@ -2120,7 +2089,7 @@ var trProgram = /** @class */ (function () {
 }());
 
 var trSettings = /** @class */ (function () {
-    function trSettings(working_directory, user, bearing, output_file, log_file, friction_force_calibration_curve_file, load_calibration_curve_file, rpm_calibration_curve_file, 
+    function trSettings(working_directory, user, bearing, output_file, friction_force_calibration_curve_file, load_calibration_curve_file, rpm_calibration_curve_file, 
     // miliseconds
     listening_interval, 
     // listening intervals count
@@ -2131,24 +2100,14 @@ var trSettings = /** @class */ (function () {
     total_duration, 
     //public rpm: number,
     //public load: number,
-    manual_mode, program, 
+    export_result_to_csv, manual_mode, program, 
     //=================================================================
-    //control parameters
-    //// [N]
-    //public friction_force_threshold: number,
-    //// C
-    //public temperature_threshold: number,
-    // [N]
-    loadRegualtionAccuracy, 
-    // rotation per minute
-    RPMRegualtionAccuracy, 
     // optional field
     readme) {
         this.working_directory = working_directory;
         this.user = user;
         this.bearing = bearing;
         this.output_file = output_file;
-        this.log_file = log_file;
         this.friction_force_calibration_curve_file = friction_force_calibration_curve_file;
         this.load_calibration_curve_file = load_calibration_curve_file;
         this.rpm_calibration_curve_file = rpm_calibration_curve_file;
@@ -2156,16 +2115,15 @@ var trSettings = /** @class */ (function () {
         this.recording_cycle = recording_cycle;
         this.visualisation_cycle = visualisation_cycle;
         this.total_duration = total_duration;
+        this.export_result_to_csv = export_result_to_csv;
         this.manual_mode = manual_mode;
         this.program = program;
-        this.loadRegualtionAccuracy = loadRegualtionAccuracy;
-        this.RPMRegualtionAccuracy = RPMRegualtionAccuracy;
         this.readme = readme;
     }
     trSettings.prototype.copy = function () {
         var pr = [];
         this.program.forEach(function (it) { pr.push(it.copy()); });
-        return new trSettings(this.working_directory, this.user, this.bearing, this.output_file, this.log_file, this.friction_force_calibration_curve_file, this.load_calibration_curve_file, this.rpm_calibration_curve_file, 
+        return new trSettings(this.working_directory, this.user, this.bearing, this.output_file, this.friction_force_calibration_curve_file, this.load_calibration_curve_file, this.rpm_calibration_curve_file, 
         // miliseconds
         this.listening_interval, 
         // listening intervals count
@@ -2175,12 +2133,11 @@ var trSettings = /** @class */ (function () {
         // hours (manual mode)
         this.total_duration, 
         //this.rpm,this.load,
-        this.manual_mode, pr, 
+        this.export_result_to_csv, this.manual_mode, pr, 
         //this.friction_force_threshold, this.temperature_threshold,
-        this.loadRegualtionAccuracy, this.RPMRegualtionAccuracy, this.readme);
+        this.readme);
     };
     trSettings.ctorParameters = function () { return [
-        { type: String },
         { type: String },
         { type: String },
         { type: String },
@@ -2193,9 +2150,8 @@ var trSettings = /** @class */ (function () {
         { type: Number },
         { type: Number },
         { type: Boolean },
+        { type: Boolean },
         { type: Array },
-        { type: Number },
-        { type: Number },
         { type: String }
     ]; };
     return trSettings;
@@ -2367,7 +2323,7 @@ var ObjHelper = /** @class */ (function () {
         else if (stateObj instanceof trSettings) {
             var pr_1 = [];
             stateObj.program.forEach(function (it) { pr_1.push(ObjHelper.DeepCopyOfState(it)); });
-            return new trSettings(stateObj.working_directory, stateObj.user, stateObj.bearing, stateObj.output_file, stateObj.log_file, stateObj.friction_force_calibration_curve_file, stateObj.load_calibration_curve_file, stateObj.rpm_calibration_curve_file, 
+            return new trSettings(stateObj.working_directory, stateObj.user, stateObj.bearing, stateObj.output_file, stateObj.friction_force_calibration_curve_file, stateObj.load_calibration_curve_file, stateObj.rpm_calibration_curve_file, 
             // miliseconds
             stateObj.listening_interval, 
             // listening intervals count
@@ -2377,9 +2333,7 @@ var ObjHelper = /** @class */ (function () {
             // hours (manual mode)
             stateObj.total_duration, 
             //stateObj.rpm,  stateObj.load,
-            stateObj.manual_mode, pr_1, 
-            //stateObj.friction_force_threshold,  stateObj.temperature_threshold,
-            stateObj.loadRegualtionAccuracy, stateObj.RPMRegualtionAccuracy, stateObj.readme);
+            stateObj.export_result_to_csv, stateObj.manual_mode, pr_1, stateObj.readme);
         }
         else if (stateObj instanceof trState) {
             return new trState(stateObj.toStateString());
@@ -2411,12 +2365,13 @@ var ObjHelper = /** @class */ (function () {
 /*!*******************************************!*\
   !*** ./src/app/services/chart.service.ts ***!
   \*******************************************/
-/*! exports provided: LineChartSettings, chartDataLength, ChartService */
+/*! exports provided: LineChartSettings, ChartAxisSettings, chartDataLength, ChartService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LineChartSettings", function() { return LineChartSettings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChartAxisSettings", function() { return ChartAxisSettings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "chartDataLength", function() { return chartDataLength; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChartService", function() { return ChartService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
@@ -2433,7 +2388,8 @@ __webpack_require__.r(__webpack_exports__);
 
 //import { forEach } from '@angular/router/src/utils/collection';
 var LineChartSettings = /** @class */ (function () {
-    function LineChartSettings() {
+    function LineChartSettings(AxSett) {
+        this.lineChartDataDraw = [];
         this.lineChartData = [
             { data: [], label: 'Temperature', yAxisID: "y-axis-T", fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
             { data: [], label: 'RPM', yAxisID: "y-axis-RPM", fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
@@ -2449,95 +2405,217 @@ var LineChartSettings = /** @class */ (function () {
                 // We use this empty structure as a placeholder for dynamic theming.
                 xAxes: [{}],
                 yAxes: [
-                    {
-                        id: 'y-axis-T',
-                        position: 'left',
-                        ticks: {
-                            fontColor: 'red',
-                            min: 15,
-                            max: 100,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Temperature, °C'
-                        }
-                    },
-                    {
-                        id: 'y-axis-RPM',
-                        position: 'left',
-                        gridLines: {
-                            display: false
-                            //color: 'rgba(255,0,0,0.3)',
-                        },
-                        ticks: {
-                            fontColor: 'rgba(77,83,96,1)',
-                            min: 0,
-                            max: 1200,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'RPM'
-                        }
-                    },
-                    {
-                        id: 'y-axis-load',
-                        position: 'left',
-                        gridLines: {
-                            display: false
-                            //color: 'rgba(0,0,255,0.3)',
-                        },
-                        ticks: {
-                            fontColor: 'rgba(0,0,255,0.5)',
-                            min: 0,
-                            max: 1200,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Load, N'
-                        }
-                    },
-                    {
-                        id: 'y-axis-Fr',
-                        position: 'left',
-                        gridLines: {
-                            display: false
-                            //color: 'rgba(0,0,255,0.2)',
-                        },
-                        ticks: {
-                            fontColor: 'green',
-                            min: 0,
-                            max: 120,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Friction force, N'
-                        }
-                    }
+                //{
+                //    id: 'y-axis-T',
+                //    position: 'left',
+                //    ticks: {
+                //        fontColor: 'red',
+                //        min:15,
+                //        max:100,
+                //    },
+                //    scaleLabel: {
+                //        display: true,
+                //        labelString: 'Temperature, °C'
+                //    }
+                //},
+                //{
+                //    id: 'y-axis-RPM',
+                //    position: 'left',
+                //    gridLines: {
+                //        display: false
+                //        //color: 'rgba(255,0,0,0.3)',
+                //    },
+                //    ticks: {
+                //        fontColor: 'rgba(77,83,96,1)',
+                //        min: 0,
+                //        max: 1200,
+                //    },
+                //    scaleLabel: {
+                //        display: true,
+                //        labelString: 'RPM'
+                //    }
+                //},
+                //{
+                //    id: 'y-axis-load',
+                //    position: 'left',
+                //    gridLines: {
+                //        display: false
+                //        //color: 'rgba(0,0,255,0.3)',
+                //    },
+                //    ticks: {
+                //        fontColor: 'rgba(0,0,255,0.5)',
+                //        min: 0,
+                //        max: 1200,
+                //    },
+                //    scaleLabel: {
+                //        display: true,
+                //        labelString: 'Load, N'
+                //    }
+                //},
+                //{
+                //    id: 'y-axis-Fr',
+                //    position: 'left',
+                //    gridLines: {
+                //        display: false
+                //        //color: 'rgba(0,0,255,0.2)',
+                //    },
+                //    ticks: {
+                //        fontColor: 'green',
+                //        min: 0,
+                //        max: 120,
+                //    },
+                //    scaleLabel: {
+                //        display: true,
+                //        labelString: 'Friction force, N'
+                //    }
+                //}
                 ]
             }
         };
-        this.lineChartColors = [
-            {
-                //backgroundColor: 'rgba(148,159,177,0.2)',
-                borderColor: 'red',
-            },
-            {
-                //backgroundColor: 'rgba(77,83,96,0.2)',
-                borderColor: 'rgba(77,83,96,1)',
-            },
-            {
-                //backgroundColor: 'rgba(255,0,0,0.3)',
-                borderColor: 'rgba(0,0,255,0.5)',
-            },
-            {
-                //backgroundColor: 'rgba(0,0,255,0.3)',
-                borderColor: 'green',
-            }
-        ];
+        this.lineChartColors = null;
+        //[
+        //    { // grey
+        //        //backgroundColor: 'rgba(148,159,177,0.2)',
+        //        borderColor: 'red',
+        //        //pointBackgroundColor: 'rgba(148,159,177,1)',
+        //        //pointBorderColor: '#fff',
+        //        //pointHoverBackgroundColor: '#fff',
+        //        //pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+        //    },
+        //    { // dark grey
+        //        //backgroundColor: 'rgba(77,83,96,0.2)',
+        //        borderColor: 'rgba(77,83,96,1)',
+        //        //pointBackgroundColor: 'rgba(77,83,96,1)',
+        //        //pointBorderColor: '#fff',
+        //        //pointHoverBackgroundColor: '#fff',
+        //        //pointHoverBorderColor: 'rgba(77,83,96,1)'
+        //    },
+        //    { // blue
+        //        //backgroundColor: 'rgba(255,0,0,0.3)',
+        //        borderColor: 'rgba(0,0,255,0.5)',
+        //        //pointBackgroundColor: 'rgba(148,159,177,1)',
+        //        //pointBorderColor: '#fff',
+        //        //pointHoverBackgroundColor: '#fff',
+        //        //pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+        //    },
+        //    { // blue
+        //        //backgroundColor: 'rgba(0,0,255,0.3)',
+        //        borderColor: 'green',
+        //        //pointBackgroundColor: 'rgba(148,159,177,1)',
+        //        //pointBorderColor: '#fff',
+        //        //pointHoverBackgroundColor: '#fff',
+        //        //pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+        //    }
+        //];
         this.lineChartLegend = true;
         this.lineChartType = 'line';
+        this.UpdateSettings(AxSett);
     }
+    LineChartSettings.prototype.UpdateSettings = function (AxSett) {
+        var e_1, _a;
+        //id: 'y-axis-T', label: 'Temperature, °C', color: 'red', visible: true, auto: false, min: 15, max: 100
+        this.lineChartOptions = {
+            maintainAspectRatio: false,
+            animation: { duration: 0 },
+            scales: {
+                // We use this empty structure as a placeholder for dynamic theming.
+                xAxes: [{}],
+                yAxes: []
+            }
+        };
+        var gridNedToSet = true;
+        var ChartDataDraw = [];
+        var ChartColors = [];
+        var yaxes = [];
+        try {
+            for (var AxSett_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__values"](AxSett), AxSett_1_1 = AxSett_1.next(); !AxSett_1_1.done; AxSett_1_1 = AxSett_1.next()) {
+                var axs = AxSett_1_1.value;
+                if (!axs.visible) {
+                    continue;
+                }
+                yaxes.push(this.getyAxesSettObj(axs, gridNedToSet));
+                ChartDataDraw.push(this.lineChartData[axs.nr]);
+                ChartColors.push({
+                    //backgroundColor: 'rgba(148,159,177,0.2)',
+                    borderColor: axs.color
+                    //pointBackgroundColor: 'rgba(148,159,177,1)',
+                    //pointBorderColor: '#fff',
+                    //pointHoverBackgroundColor: '#fff',
+                    //pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                });
+                gridNedToSet = false;
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (AxSett_1_1 && !AxSett_1_1.done && (_a = AxSett_1.return)) _a.call(AxSett_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        this.lineChartOptions.scales.yAxes = yaxes;
+        this.lineChartDataDraw = ChartDataDraw;
+        this.lineChartColors = ChartColors;
+    };
+    LineChartSettings.prototype.getyAxesSettObj = function (yAxesSett, drawGridLines) {
+        if (drawGridLines === void 0) { drawGridLines = false; }
+        var res = null;
+        if (yAxesSett.visible) {
+            var ticksV = { fontColor: yAxesSett.color };
+            if (!yAxesSett.auto) {
+                ticksV = {
+                    fontColor: yAxesSett.color,
+                    min: yAxesSett.min,
+                    max: yAxesSett.max
+                };
+            }
+            var scaleLabelV = {
+                display: true,
+                labelString: yAxesSett.label
+            };
+            res = {
+                id: yAxesSett.id,
+                position: 'left',
+                gridLines: {
+                    display: drawGridLines
+                    //color: 'rgba(0,0,255,0.2)',
+                },
+                ticks: ticksV,
+                scaleLabel: scaleLabelV
+            };
+        }
+        return res;
+    };
+    LineChartSettings.ctorParameters = function () { return [
+        { type: Array }
+    ]; };
     return LineChartSettings;
+}());
+
+var ChartAxisSettings = /** @class */ (function () {
+    function ChartAxisSettings(nr, id, label, color, min, max, visible, auto) {
+        if (visible === void 0) { visible = true; }
+        if (auto === void 0) { auto = false; }
+        this.nr = nr;
+        this.id = id;
+        this.label = label;
+        this.color = color;
+        this.min = min;
+        this.max = max;
+        this.visible = visible;
+        this.auto = auto;
+    }
+    ChartAxisSettings.ctorParameters = function () { return [
+        { type: Number },
+        { type: String },
+        { type: String },
+        { type: String },
+        { type: Number },
+        { type: Number },
+        { type: Boolean },
+        { type: Boolean }
+    ]; };
+    return ChartAxisSettings;
 }());
 
 var chartDataLength = 100;
@@ -2547,8 +2625,22 @@ var ChartService = /** @class */ (function () {
         this.signalsService = signalsService;
         this.expFileDataRefreshPeriodMin = 1;
         this.onChartDataChanged$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        this.ChartListen = new LineChartSettings();
+        this.chartAxesSettings = {
+            ControlChatr: [
+                { nr: 0, id: 'y-axis-T', label: 'Temperature, °C', color: 'red', visible: true, auto: false, min: 15, max: 100 },
+                { nr: 1, id: 'y-axis-RPM', label: 'RPM', color: 'rgba(77,83,96,1)', visible: true, auto: false, min: 0, max: 1200 },
+                { nr: 2, id: 'y-axis-load', label: 'Load, N', color: 'rgba(0,0,255,0.5)', visible: true, auto: false, min: 0, max: 1200 },
+                { nr: 3, id: 'y-axis-Fr', label: 'Friction force, N', color: 'green', visible: true, auto: false, min: 0, max: 120 }
+            ],
+            ExpChatr: [{ nr: 0, id: 'y-axis-T', label: 'Temperature, °C', color: 'red', visible: true, auto: false, min: 15, max: 100 },
+                { nr: 1, id: 'y-axis-RPM', label: 'RPM', color: 'rgba(77,83,96,1)', visible: true, auto: false, min: 0, max: 1200 },
+                { nr: 2, id: 'y-axis-load', label: 'Load, N', color: 'rgba(0,0,255,0.5)', visible: true, auto: false, min: 0, max: 1200 },
+                { nr: 3, id: 'y-axis-Fr', label: 'Friction force, N', color: 'green', visible: true, auto: false, min: 0, max: 120 }
+            ]
+        };
+        this.ChartListen = null;
         this.expFileData$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](new _models_message_model__WEBPACK_IMPORTED_MODULE_4__["trResultFileData"](null));
+        this.ChartListen = new LineChartSettings(this.chartAxesSettings.ControlChatr);
         var l = [];
         var d1 = [];
         var d2 = [];
@@ -2581,6 +2673,10 @@ var ChartService = /** @class */ (function () {
         //}
         //this.onChartDataChanged$.next(new SensorsData(-1, -1, -1, -1, -1));
     }
+    ChartService.prototype.updateChartListenSettings = function (clAxesSettings) {
+        this.chartAxesSettings.ControlChatr = clAxesSettings;
+        this.ChartListen.UpdateSettings(this.chartAxesSettings.ControlChatr);
+    };
     ChartService.prototype.getDataFromFile = function () {
         var _this = this;
         this.signalsService.GetDataFromResultFile().subscribe(function (x) {
@@ -2775,6 +2871,10 @@ var SignalsService = /** @class */ (function () {
     SignalsService.prototype.UpdateRPMManual = function (delta) {
         var url = _models_message_model__WEBPACK_IMPORTED_MODULE_6__["base_url"] + ("api/sett?case=manualrpm&val=" + delta);
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) { return console.log("UpdateRPMManual"); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("UpdateRPMManual")));
+    };
+    SignalsService.prototype.StopRotationsManual = function () {
+        var url = _models_message_model__WEBPACK_IMPORTED_MODULE_6__["base_url"] + "api/sett?case=manualstoprot";
+        return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) { return console.log("StopRotationsManual"); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("StopRotationsManual")));
     };
     SignalsService.prototype.UpdateThresholds = function (frict, temp) {
         var url = _models_message_model__WEBPACK_IMPORTED_MODULE_6__["base_url"] + ("api/sett?case=threshold&f=" + frict + "&t=" + temp);

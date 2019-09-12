@@ -42,8 +42,8 @@ class LoadRegilator:
         self.rotationRange=5
         self.RegStepCount=5
         self.maxLoad=1252 #N
-        self.SlipRatioIncCoeff=np.array([0.5,12/self.rotationRange],dtype = np.float)
-        self.SlipRatioDecCoeff=np.array([0.5,4/self.rotationRange],dtype = np.float)
+        self.SlipRatioIncCoeff=np.array([0.5,10/self.rotationRange],dtype = np.float)
+        self.SlipRatioDecCoeff=np.array([0.5,3/self.rotationRange],dtype = np.float)
 
     def relLoad(self,loadN):
         return loadN/self.maxLoad
@@ -55,7 +55,6 @@ class LoadRegilator:
         return self.rotPosition(loadN)*self.SlipRatioIncCoeff[1]+self.SlipRatioIncCoeff[0]
 
     def SlipRatioDecreaseLoad(self,loadN):
-        #1..3
         return self.rotPosition(loadN)*self.SlipRatioDecCoeff[1]+self.SlipRatioDecCoeff[0]
 
     def GetSlipRatio(self,loadN,deltaN=1):
@@ -108,7 +107,7 @@ class Automation:
         self.GO_rpmToTarget()
 
     def rpmTargetChanged(self):
-        return self.expr.currentTargetData[2]!=self.expr.prevTargetData[2]
+        return np.abs(self.expr.currentTargetData[2]-self.expr.prevTargetData[2])>0.1
 
     def rpmValue_outOfRange(self):
         return np.abs(self.CurrentTargetRPM()-self.CurrentAvgRPM())>self.expr.Settings.RPMRegualtionDiffStart
@@ -140,6 +139,14 @@ class Automation:
         self.rpm_started = None
         self.rpm_cikl_counter=0
 
+    def GO_ManualStopRotations(self):
+        print("Stop rotations")
+        self.setWFD_freq(0)
+        self.expr.Program.RPMAutoRegulation=False
+        self.expr.status.rpmRegTimedOut = False
+        self.rpm_started = None
+        self.rpm_cikl_counter=0
+
     def GO_rpmOk(self):
         self.rpm_started = None
         self.rpm_cikl_counter=0
@@ -147,6 +154,8 @@ class Automation:
 
     def setWFD_freq(self,freq):
         if freq>0:
+            if freq>60:
+                freq=60
             controls.set_speed(freq)
             controls.start()
         else:
@@ -223,7 +232,7 @@ class Automation:
         self.subscriptLoadReg = None;
     #----------------------------OnNewSensorData-------------------------------------------
     def OnNewSensorData(self):
-        curT = datetime.datetime.now()
+        #curT = datetime.datetime.now()
         #load regulator ON
         if self.expr.Program.LoadAutoRegulation:
             if self.loadTargetChanged():
@@ -232,7 +241,7 @@ class Automation:
                 self.start_load_automation()
             # regulation mode 
             if self.load_started is not None:
-                dedtaT = (curT-self.load_started).seconds
+                dedtaT = self.load_cikl_counter*self.expr.Settings.listening_interval/1000
                 if self.loadReg_TimedOut(dedtaT):
                     self.GO_loadReg_TimedOut()
                 else:
@@ -253,7 +262,7 @@ class Automation:
                 self.start_rpm_automation()
             # regulation mode 
             if self.rpm_started is not None:
-                dedtaT = (curT-self.rpm_started).seconds
+                dedtaT = self.rpm_cikl_counter*self.expr.Settings.listening_interval/1000
                 if self.rpmReg_TimedOut(dedtaT):
                     self.GO_rpmReg_TimedOut()
                 else:
@@ -279,7 +288,6 @@ class Experiment:
         self.Sensors = sensor_data.SensorData()
         self.WFD_freq = 0.0;
         self.prevStatus = copy.deepcopy(self.status);
-        self.StopReasonStatus = None
         self.currentAverageData = np.full(shape=(Experiment.sensorDataVecLength), fill_value=np.nan, dtype=np.float)
         self.currentAverageVoltage = np.full(shape=(Experiment.sensorVoltageVecLength), fill_value=np.nan, dtype=np.float)
         self.currentTargetData = np.full(shape=(Experiment.targetVecLength), fill_value=np.nan, dtype=np.float)
@@ -300,6 +308,10 @@ class Experiment:
     def get_currentRecordData(self):
         return self.SensorDataBuffer[self.DataBufferPointer]
     currentRecordData = property(get_currentRecordData)
+
+    def UpdateSettings(self,data_dict):
+        self.Settings.settings.update(data_dict)
+        self.Program.makeProgramArray()
 
     #time[s], load[N], FrictionForce[N], RPM[rotation per minute],temperature,
     #Acoustic[??]
@@ -340,58 +352,64 @@ class Experiment:
     def CheckTribometerState(self):
         #Data:time:0, load:1, fr:2, rpm:3, t:4
         #TargetData:"time:0", "load:1","RPM:2", "maxFfr:3","maxT:4"
-        self.status.load_on = (self.currentAverageData[2]>0.1)and(self.currentAverageData[1]>0.1)
-        self.status.VFD_on=self.currentAverageData[3]>0.1
-        time = self.currentRecordData[0]
-        self.status.stopTime = time>self.currentTargetData[0]
-        self.status.stopTlim = self.currentAverageData[4]>self.currentTargetData[4]
-        self.status.stopFlim = self.currentAverageData[2]>self.currentTargetData[3]
+        time,aload, afr,arpm, aT =self.currentRecordData[0],self.currentAverageData[1],self.currentAverageData[2],self.currentAverageData[3],self.currentAverageData[4]
+        timeTot, tmaxFfr,tmaxT = self.currentTargetData[0],self.currentTargetData[3],self.currentTargetData[4]
+        self.status.VFD_on=arpm>0.1
+        self.status.load_on = (arpm>0.1)and(aload>0.1)
+        self.status.stopTime = time>timeTot
+        self.status.stopTlim = aT>tmaxT
+        self.status.stopFlim = afr>tmaxFfr
 
     def UpdatePrevStatuis(self):
         self.prevStatus = copy.deepcopy(self.status)
 
     def StopCriteria(self):
-        stopWFD=False
-        if self.status.stopTime or self.status.stopTlim or self.status.stopFlim:
-            if self.WFD_freq>0:
-                self.Automation.GO_ManualRPM(-100000)
-                self.Automation.GO_ManualLoad(0)
-            stopWFD = True
-        if not self.status.VFD_on:
-            stopWFD = True
-        if not self.status.load_on:
-            stopWFD = True
-        if stopWFD and self.WFD_freq>0 and (self.status.status == ExpStatus.started):
-            self.Automation.GO_ManualRPM(-100000)
+        stop_reason=None
+        if self.status.stopTime:
+            stop_reason = "Successfully finished"
+        if self.status.stopTlim:
+            stop_reason = "Temperature exceed allowed limit"
+        if self.status.stopFlim:
+            stop_reason = "Friction force exceed allowed limit"
+        if stop_reason is not None:
+            self.Automation.GO_ManualStopRotations()
             self.Automation.GO_ManualLoad(0)
-            #self.Automation.setWFD_freq(-1)
-        return stopWFD
+        #if not self.status.VFD_on:
+        #    stopWFD = True
+        #if not self.status.load_on:
+        #    stopWFD = True
+
+        #if stopWFD and self.WFD_freq>0 and (self.status.status == ExpStatus.started):
+        #    self.Automation.GO_ManualRPM(-100000)
+        #    self.Automation.GO_ManualLoad(0)
+        #    #self.Automation.setWFD_freq(-1)
+        return stop_reason
 
 
-    def CheckStateAndSendComand(self):
-        if not self.status.isContentEqual( self.prevStatus):
-            # send state message 
-            pass
+    #def CheckStateAndSendComand(self):
+    #    if not self.status.isContentEqual( self.prevStatus):
+    #        # send state message 
+    #        pass
 
-        if self.Program.programmStarted:
-            if self.status.stopTime or self.status.stopTlim or self.status.stopTime or (not self.status.load_on) or (not self.status.VFD_on):
-                # stop programm
-                pass
+    #    if self.Program.programmStarted:
+    #        if self.status.stopTime or self.status.stopTlim or self.status.stopTime or (not self.status.load_on) or (not self.status.VFD_on):
+    #            # stop programm
+    #            pass
 
-        if not self.Program.LoadAutoRegulation:
-            # stop load regulator
-            pass
-        else:
-            if self.currentTargetData[1]!=self.prevTargetData[1]:
-                # restart load regulator
-                pass
-        if not self.Program.RPMAutoRegulation:
-            # stop RPM regulator
-            pass
-        else:
-            if self.currentTargetData[2]!=self.prevTargetData[2]:
-                # restart RPM regulator
-                pass
+    #    if not self.Program.LoadAutoRegulation:
+    #        # stop load regulator
+    #        pass
+    #    else:
+    #        if self.currentTargetData[1]!=self.prevTargetData[1]:
+    #            # restart load regulator
+    #            pass
+    #    if not self.Program.RPMAutoRegulation:
+    #        # stop RPM regulator
+    #        pass
+    #    else:
+    #        if self.currentTargetData[2]!=self.prevTargetData[2]:
+    #            # restart RPM regulator
+    #            pass
 
     @classmethod
     def ConvertDataTob64String(sls,data):
@@ -438,6 +456,12 @@ class Experiment:
         self.Program.LoadAutoRegulation = False
         self.status.loadRegAuto = False
         self.Automation.GO_ManualLoad(deltaLoad)
+        return 0
+
+    def SetStopRotationsManual(self):
+        self.Program.RPMAutoRegulation = False
+        self.status.rpmRegAuto = False
+        self.Automation.GO_ManualStopRotations()
         return 0
 
 

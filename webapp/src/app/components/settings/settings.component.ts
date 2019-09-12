@@ -60,6 +60,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             outputFileNameControl: new FormControl('', [Validators.required], [outputFileExistsValidator(this.signalsService)]),
             recIntervalControl: new FormControl(1, [Validators.required, Validators.max(600), Validators.min(1)]),
             manualModeControle: new FormControl(true, []),
+            exportToCSVControle: new FormControl(true, []),
             durationControl: new FormControl(10, [Validators.required, Validators.min(1), Validators.max(3000)]),
             loadControl: new FormControl(200, [Validators.required, Validators.min(20), Validators.max(1200)]),
             RPMControl: new FormControl(300, [Validators.required, Validators.min(100), Validators.max(1200)]),
@@ -73,7 +74,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     get outputFileNameControl() { return this.settingsForm.get('outputFileNameControl'); }
     get recIntervalControl() { return this.settingsForm.get('recIntervalControl'); }
     get manualModeControle() { return this.settingsForm.get('manualModeControle'); }
-
+    get exportToCSVControle() { return this.settingsForm.get('exportToCSVControle'); }
+    
     get durationControl() { return this.settingsForm.get('durationControl'); }
     get loadControl() { return this.settingsForm.get('loadControl'); }
     get RPMControl() { return this.settingsForm.get('RPMControl'); }
@@ -101,14 +103,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
             .pipe(
                 startWith(''),
                 map(value => this._filter(value))
-            );
-
+        );
+        this.userControl.valueChanges.subscribe(resOk => { this.lSettings.user = resOk });
         this.bearingDescrControl.valueChanges.subscribe(resOk => { this.lSettings.bearing = resOk });
         //GetOutputFileExists
         this.outputFileNameControl.valueChanges.pipe(debounceTime(100), distinctUntilChanged()).
             subscribe(resOk => { this.lSettings.output_file = resOk });
         this.recIntervalControl.valueChanges.subscribe(resOk => { this.lSettings.recording_cycle = resOk });
         this.manualModeControle.valueChanges.subscribe(resOk => { this.lSettings.manual_mode = resOk });
+        this.exportToCSVControle.valueChanges.subscribe(resOk => { this.lSettings.export_result_to_csv = resOk });
 
         this.durationControl.valueChanges.subscribe(resOk => { if (this.selectedRow) { this.selectedRow.duration = resOk; } });
         this.loadControl.valueChanges.subscribe(resOk => { if (this.selectedRow) { this.selectedRow.load = resOk; } });
@@ -152,6 +155,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     this.outputFileNameControl.setValue(this.lSettings.output_file);
                     this.recIntervalControl.setValue(this.lSettings.recording_cycle);
                     this.manualModeControle.setValue(this.lSettings.manual_mode);
+                    this.exportToCSVControle.setValue(this.lSettings.export_result_to_csv);
 
                     this.durationControl.setValue(this.lSettings.program[0].duration);
                     this.loadControl.setValue(this.lSettings.program[0].load);
@@ -189,7 +193,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         //    return new CurveRow(0, 0, Nr);
         //}
         let bp = this.lSettings.program[0]
-        return new trProgram(2, bp.load, bp.RPM, bp.Tmax, bp.Fmax,1);
+        return new trProgram(bp.duration, bp.load, bp.RPM, bp.Tmax, bp.Fmax, 1);
     }
 
     onSelectRow(r: any) {

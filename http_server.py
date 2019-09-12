@@ -191,6 +191,10 @@ class SettingsHandler(tornado.web.RequestHandler):
             delta = float(self.get_argument("val"))
             Tibometer.Experiment.SetRPMManual(delta)
             self.write('1')
+        elif st_case == "manualstoprot":
+            delta = float(self.get_argument("val"))
+            Tibometer.Experiment.SetStopRotationsManual()
+            self.write('1')
         elif st_case == "threshold":
             t = float(self.get_argument("t"))
             fr = float(self.get_argument("f"))
@@ -213,7 +217,8 @@ class SettingsHandler(tornado.web.RequestHandler):
         #sett?case=base
         if st_case == "base":
             #self.get_body_argument("message")
-            Tibometer.Experiment.Settings.settings.update( json.loads(self.request.body.decode("utf-8")))
+            #Tibometer.Experiment.Settings.settings.update( json.loads(self.request.body.decode("utf-8")))
+            Tibometer.Experiment.UpdateSettings(json.loads(self.request.body.decode("utf-8")))
             Tibometer.Experiment.Settings.user=Tibometer.Experiment.Settings.user;
             if Tibometer.Experiment.Settings.outputFileExists():
                 #Tibometer.Experiment.Settings.outputFileName=""
@@ -283,7 +288,7 @@ class BeginReadingHandler(tornado.web.RequestHandler):
 
 class EndWriteingHandler(tornado.web.RequestHandler):
     def get(self):
-        Tibometer.EndWriteing()
+        Tibometer.EndWriteing("User iterrupt")
         #DataSocketHandler.send_state_message_to_client(Tibometer.Experiment.status);
 
 class BeginWritingHandler(tornado.web.RequestHandler):

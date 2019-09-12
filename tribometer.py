@@ -16,8 +16,10 @@ class Tibometer:
     @classmethod
     def getValues(cls,i):
         sd = cls.Experiment.GetSensorData()
-        if cls.Experiment.StopCriteria():
-            cls.EndWriteing()
+        stop_reason = cls.Experiment.StopCriteria()
+        if stop_reason is not None:
+            if cls.Experiment.status.status == ExpStatus.started:
+                cls.EndWriteing(stop_reason)
         return sd
 
 
@@ -58,20 +60,23 @@ class Tibometer:
             cls.Write_obs = cls.Read_obs.filter(lambda i: i%cls.Experiment.Settings.recording_cycle==0)
             cls.subscriptWrite = cls.Write_obs.subscribe(send_write, on_errorW)
             cls.Experiment.status.status = ExpStatus.started
-            if not cls.Experiment.Settings.manual_mode:
-                cls.Experiment.Program.LoadAutoRegulation=cls.Experiment.Program.RPMAutoRegulation=True
-                cls.Experiment.status.loadRegAuto = cls.Experiment.status.rpmRegAuto = True
+            autoMode = not cls.Experiment.Settings.manual_mode
+            cls.Experiment.Program.LoadAutoRegulation=cls.Experiment.Program.RPMAutoRegulation=autoMode
+            cls.Experiment.status.loadRegAuto = cls.Experiment.status.rpmRegAuto = autoMode
         else:
             print("Writing error!")
 
     @classmethod
-    def EndWriteing(cls):
+    def EndWriteing(cls, stop_reason):
         if cls.subscriptWrite is not None:
             cls.subscriptWrite.dispose()
             cls.subscriptWrite = None
             cls.Write_obs = None
-            cls.Experiment.DataFile.StopRecording()
+            cls.Experiment.DataFile.StopRecording(stop_reason)
             cls.Experiment.status.status = ExpStatus.completed
+            cls.Experiment.Program.LoadAutoRegulation=cls.Experiment.Program.RPMAutoRegulation=False
+            cls.Experiment.SetStopRotationsManual()
+            cls.Experiment.status.loadRegAuto = cls.Experiment.status.rpmRegAuto = False
 
     #@classmethod
     #def BeginProgram(cls):

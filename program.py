@@ -92,6 +92,7 @@ class Program:
     def getTargetValues(self, exp_time):
         idx = np.searchsorted(self.programData[:,0], exp_time, side='right')-1
         if (idx<0):idx=0
+        print(f"target programm:{idx}")
         res = np.array(self.programData[idx],copy=True);
         if not self.LoadAutoRegulation:res[ProgrCol.load]=np.nan
         if not self.RPMAutoRegulation:res[ProgrCol.RPM]=np.nan
@@ -101,13 +102,10 @@ class Program:
     def makeProgramArray(self):
         if self.Settings.manual_mode or len(self.Settings.program)<1:
             self.Settings.manual_mode = True
-        if self.programmStarted:
-            if self.Settings.manual_mode:
-                self.MakeManualProgramm()
-            else:
-                self.MakeAtoProgramm()
-        else:
+        if self.Settings.manual_mode:
             self.MakeManualProgramm()
+        else:
+            self.MakeAtoProgramm()
 
     @property
     def ProgramTotalDuration(self):

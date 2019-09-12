@@ -33,7 +33,7 @@ class CalibrationCurve:
         self.x, self.y = self.curve1d[:,0], self.curve1d[:,1]
 
     def getCalibratedValue(self,sensorData):
-        return np.interp(sensorData, self.x, self.y)
+        return np.interp(sensorData, self.x, self.y, right=np.nan)#left=None,
     
     def getSensorValue(self,value):
         return np.interp(value, self.y, self.x)

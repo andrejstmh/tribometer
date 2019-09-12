@@ -12,6 +12,7 @@ class ExperimentDataFile:
     ColumnsDescription="time[s], Load[N], FrictionForce[N], RPM[rotation per minute], temperature[°C]"#, Acoustic[??]"
     def __init__(self, expSettings:exp_settings.ExperimentSettings):
         self.settings = expSettings
+        self.StopReason = ""
         self.hdf5f = None
         self.readers = set();
         self.dataset = None
@@ -21,6 +22,7 @@ class ExperimentDataFile:
         self.ChunkRecord = ExperimentDataFile.ChunkSize
         self.Recording = False
         self.LastRecord = None
+        self.CSVResultFile= None
 
     def __del__(self):
         for r in self.readers:
@@ -54,7 +56,14 @@ class ExperimentDataFile:
             self.dataset.attrs['bearing'] = bytes(self.settings.settings["bearing"],'utf-8')
             #self.dataset.attrs['allsettings'] = bytes( json.dumps(self.settings.settings),'utf-8')
             self.dataset.attrs['columns'] = bytes(ExperimentDataFile.ColumnsDescription,'utf-8')
-    
+        if self.settings.export_result_to_csv:
+            resfn = self.settings.outputFileName
+            fn0, ext = os.path.splitext(resfn)
+            resfntxt = fn0+".main.txt"
+            self.CSVResultFile = open(resfntxt,"wt")
+            self.CSVResultFile.write("time[s]\tLoad[N]\tFrictionForce[N]\tRPM[rotation per minute]\ttemperature[°C]\n")
+            self.CSVResultFile.flush()
+
     def OpenRead(self):
         res= h5py.File(self.settings.outputFileName, 'r', libver='latest', swmr=True)
         self.readers.add(res)
@@ -89,15 +98,37 @@ class ExperimentDataFile:
         if data is not None:
             self.write(data)
 
-    def StopRecording(self):
+    def StopRecording(self, stop_reason="unknown"):
         if self.Recording:
             self.Recording = False;
+            self.StartTime = None;
             self.dataset.resize( (self.CurrentRecord, ExperimentDataFile.RecordSize) )
+            self.dataset.attrs['stop_reason'] = bytes(stop_reason,'utf-8')
             self.dataset.flush()
             self.CloseReaders()
             self.hdf5f.close()
             self.hdf5f = None
+        if self.CSVResultFile is not None:
+            self.CSVResultFile.close()
+            self.ExportResult2CSV(stop_reason)
+            self.CSVResultFile = None
     
+    def ExportResult2CSV(self,stop_reason="unknown"):
+        resfn = self.settings.outputFileName
+        if os.path.exists(resfn):
+            fn0, ext = os.path.splitext(resfn)
+            settfntxt = fn0+".settings.txt"
+            frictfntxt = fn0+".calibr.frict.txt"
+            loadfntxt = fn0+".calibr.load.txt"
+            stopfntxt = fn0+".stop.txt"
+            pnd.DataFrame(data=self.settings.calibrationData.friction.curve1d.astype(np.float32),
+                          columns=["U,volts","F, N"]).to_csv(frictfntxt,sep="\t",index=False)
+            pnd.DataFrame(data=self.settings.calibrationData.load.curve1d.astype(np.float32),
+                          columns=["U,volts","F, N"]).to_csv(loadfntxt,sep="\t",index=False)
+            self.settings.SaveSettings(settfntxt)
+            with open(stopfntxt,"wt") as fn:
+                fn.write("stop reason:"+stop_reason+"\n")
+
     def write(self,data:np.ndarray)->np.ndarray:
         self.LastRecord = np.array(data).astype(np.float32)
         if self.Recording:
@@ -108,4 +139,10 @@ class ExperimentDataFile:
             self.dataset[self.CurrentRecord,:] = self.LastRecord;
             self.dataset.flush()
             self.CurrentRecord += 1
+            if self.CSVResultFile is not None:
+                self.CSVResultFile.write("\t".join(["{0:.1f}".format(i) for i in self.LastRecord]))
+                self.CSVResultFile.write("\n")
+                self.CSVResultFile.flush()
         return self.LastRecord
+
+

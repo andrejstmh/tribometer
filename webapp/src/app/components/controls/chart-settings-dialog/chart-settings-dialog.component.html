@@ -1,0 +1,113 @@
+<!--<mat-form-field>
+        <input matInput [(ngModel)]="data.animal">
+    </mat-form-field>-->
+<!-- style="width:6em !important;" -->
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col">
+                <div class="row h5">Temperature</div>
+            </div>
+            <div class="col">
+                <mat-checkbox name="tVisible" [(ngModel)]="data.t.visible">Visible</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-checkbox [disabled]="!data.t.visible" name="tAuto" [(ngModel)]="data.t.auto" >Auto range</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="0" max="120" name="tV1"
+                           [disabled]="(!data.t.visible) || data.t.auto"
+                           [(ngModel)]="data.t.min"/>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="0" max="120" name="tV2" 
+                           [disabled]="(!data.t.visible) || data.t.auto"
+                           [(ngModel)]="data.t.max"/>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="row h5">RPM</div>
+            </div>
+            <div class="col">
+                <mat-checkbox name="rpmVisible" [(ngModel)]="data.rpm.visible">Visible</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-checkbox [disabled]="!data.rpm.visible" name="rpmAuto" [(ngModel)]="data.rpm.auto">Auto range</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="-10" max="1500" name="rpmV1"
+                           [disabled]="(!data.rpm.visible) || data.rpm.auto"
+                           [(ngModel)]="data.rpm.min" />
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="-10" max="1500" name="rpmV2"
+                           [disabled]="(!data.rpm.visible) || data.rpm.auto"
+                           [(ngModel)]="data.rpm.max" />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="row h5">Load</div>
+            </div>
+            <div class="col">
+                <mat-checkbox name="loadVisible" [(ngModel)]="data.load.visible">Visible</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-checkbox [disabled]="!data.load.visible" name="loadAuto" [(ngModel)]="data.load.auto">Auto range</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="-10" max="1500" name="loadV1"
+                           [disabled]="(!data.load.visible) || data.load.auto"
+                           [(ngModel)]="data.load.min" />
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="-10" max="1500" name="loadV2"
+                           [disabled]="(!data.load.visible) || data.load.auto"
+                           [(ngModel)]="data.load.max" />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="row h5">Friction</div>
+            </div>
+            <div class="col">
+                <mat-checkbox name="frVisible" [(ngModel)]="data.fr.visible">Visible</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-checkbox [disabled]="!data.fr.visible" name="frAuto" [(ngModel)]="data.fr.auto">Auto range</mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="-10" max="150" name="frV1"
+                           [disabled]="(!data.fr.visible) || data.fr.auto"
+                           [(ngModel)]="data.fr.min" />
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" min="-10" max="150" name="frV2"
+                           [disabled]="(!data.fr.visible) || data.fr.auto"
+                           [(ngModel)]="data.fr.max" />
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

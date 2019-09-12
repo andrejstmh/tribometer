@@ -60,69 +60,14 @@
                     </mat-form-field>
                 </div>
             </div>
-
-                <!--<div *ngIf="!lSettings.manual_mode" class="form-group">
-        <label for="total_duration">Maximum experiment duration, minutes</label>
-        <input type="number" class="form-control" id="total_duration" placeholder="Example: 24"
-               required min="1" max="10000"
-               [(ngModel)]="lSettings.total_duration" name="total_duration" #total_duration="ngModel" />
-        <div [hidden]="total_duration.valid"
-             class="alert alert-danger">
-            Maximum experiment duration is required
-        </div>
-    </div>
-
-    <div *ngIf="!lSettings.manual_mode" class="form-group">
-        <label for="load">Applied load, N</label>
-        <input type="number" class="form-control" id="load" placeholder="1<load<1000"
-               required min="1" max="1000"
-               [(ngModel)]="lSettings.load" name="load" #load="ngModel" />
-        <div [hidden]="load.valid"
-             class="alert alert-danger">
-            Applied load is required
-        </div>
-    </div>
-
-    <div *ngIf="!lSettings.manual_mode" class="form-group">
-        <label for="rpm">Revolutions per minute(RPM)</label>
-        <input type="number" class="form-control" id="rpm" placeholder="300<load<3000"
-               required min="300" max="3000"
-               [(ngModel)]="lSettings.rpm" name="rpm" #rpm="ngModel" />
-        <div [hidden]="rpm.valid"
-             class="alert alert-danger">
-            Applied load is required
-        </div>
-    </div>
-
-    <div *ngIf="!lSettings.manual_mode" class="form-group">
-        <label for="friction_force_threshold">Friction force threshold, N</label>
-        <input type="number" class="form-control" id="friction_force_threshold" placeholder="Example: 2"
-               required min="10" max="1000"
-               [(ngModel)]="lSettings.friction_force_threshold" name="friction_force_threshold" #friction_force_threshold="ngModel" />
-        <div [hidden]="friction_force_threshold.valid"
-             class="alert alert-danger">
-            Friction force threshold is required
-        </div>
-    </div>
-
-    <div *ngIf="!lSettings.manual_mode" class="form-group">
-        <label for="temperature_threshold">Temperature threshold, °C</label>
-        <input type="number" class="form-control" id="temperature_threshold" placeholder="Example: 2"
-               required min="25" max="120"
-               [(ngModel)]="lSettings.temperature_threshold" name="temperature_threshold" #temperature_threshold="ngModel" />
-        <div [hidden]="temperature_threshold.valid"
-             class="alert alert-danger">
-            Temperature threshold is required
-        </div>
-    </div>-->
-
-                <mat-checkbox formControlName="manualModeControle" name="manual_mode">Programmed experiment</mat-checkbox>
-
-                <!--<div class="form-group">
-        <label for="manual_mode">Programmed experiment</label>
-        <input type="checkbox" class="form-control" id="manual_mode"
-               [(ngModel)]="lSettings.manual_mode" name="manual_mode" #manual_mode="ngModel" />
-    </div>-->
+            <div class="row">
+                <div class="col-8">
+                    <mat-checkbox formControlName="manualModeControle" name="manual_mode">Programmed experiment</mat-checkbox>
+                </div>
+                <div class="col">
+                    <mat-checkbox formControlName="exportToCSVControle" name="export2CSV">Export to csv</mat-checkbox>
+                </div>
+            </div>
 
                 <div>
                     <div class="card-body bg-light border-top">
@@ -180,10 +125,10 @@
                                                    [errorStateMatcher]="matcher">
                                         </mat-form-field>
                                         <!--<input type="number" matInput
-                                                   name="pr_du" [formControl]="durationControl"
-                                                   [errorStateMatcher]="matcher">
-                                        <input type="number" required min="1" max="10000"
-                                               [(ngModel)]="selectedRow.duration" class="form-control" name="pr_du" />-->
+                                       name="pr_du" [formControl]="durationControl"
+                                       [errorStateMatcher]="matcher">
+                            <input type="number" required min="1" max="10000"
+                                   [(ngModel)]="selectedRow.duration" class="form-control" name="pr_du" />-->
                                     </div>
                                     <div class="col-2">
                                         <mat-form-field class="control-full-width" appearance="outline">
@@ -192,10 +137,10 @@
                                                    [errorStateMatcher]="matcher">
                                         </mat-form-field>
                                         <!--<input type="number" matInput
-                                                   name="pr_load" [formControl]="loadControl"
-                                                   [errorStateMatcher]="matcher">-->
-                                            <!--<input type="number" required min="1" max="1000"
-                                                   [(ngModel)]="selectedRow.load" class="form-control" name="pr_load" />-->
+                                       name="pr_load" [formControl]="loadControl"
+                                       [errorStateMatcher]="matcher">-->
+                                        <!--<input type="number" required min="1" max="1000"
+                                   [(ngModel)]="selectedRow.load" class="form-control" name="pr_load" />-->
                                     </div>
                                     <div class="col-2">
                                         <mat-form-field class="control-full-width" appearance="outline">
@@ -204,10 +149,10 @@
                                                    [errorStateMatcher]="matcher">
                                         </mat-form-field>
                                         <!--<input type="number" matInput
-                                                   name="pr_rpm" [formControl]="RPMControl"
-                                                   [errorStateMatcher]="matcher">-->
+                                       name="pr_rpm" [formControl]="RPMControl"
+                                       [errorStateMatcher]="matcher">-->
                                         <!--<input type="number" required min="300" max="3000"
-                                               [(ngModel)]="selectedRow.RPM" class="form-control" name="pr_rpm" />-->
+                                   [(ngModel)]="selectedRow.RPM" class="form-control" name="pr_rpm" />-->
                                     </div>
                                     <div class="col-3">
                                         <mat-form-field class="control-full-width" appearance="outline">
@@ -216,10 +161,10 @@
                                                    [errorStateMatcher]="matcher">
                                         </mat-form-field>
                                         <!--<input type="number" matInput
-                                                   name="pr_Fm" [formControl]="frictThreshControl"
-                                                   [errorStateMatcher]="matcher">-->
+                                       name="pr_Fm" [formControl]="frictThreshControl"
+                                       [errorStateMatcher]="matcher">-->
                                         <!--<input type="number" required min="10" max="1000"
-                                               [(ngModel)]="selectedRow.Fmax" class="form-control" name="pr_Fm" />-->
+                                   [(ngModel)]="selectedRow.Fmax" class="form-control" name="pr_Fm" />-->
                                     </div>
                                     <div class="col-3">
                                         <mat-form-field class="control-full-width" appearance="outline">
@@ -228,10 +173,10 @@
                                                    [errorStateMatcher]="matcher">
                                         </mat-form-field>
                                         <!--<input type="number" matInput
-                                                   name="pr_Tm" [formControl]="tempThreshControl"
-                                                   [errorStateMatcher]="matcher">-->
+                                       name="pr_Tm" [formControl]="tempThreshControl"
+                                       [errorStateMatcher]="matcher">-->
                                         <!--<input type="number" required min="25" max="120"
-                                               [(ngModel)]="selectedRow.Tmax" class="form-control" name="pr_Tm" />-->
+                                   [(ngModel)]="selectedRow.Tmax" class="form-control" name="pr_Tm" />-->
                                     </div>
                                 </div>
                             </div>
