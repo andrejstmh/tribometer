@@ -151,6 +151,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     this.lSettings.recording_cycle = Math.round(resOk.recording_cycle * resOk.listening_interval / 1000.0);
                     this.lSettings.manual_mode = !resOk.manual_mode;
 
+                    this.userControl.setValue(this.lSettings.user);
                     this.bearingDescrControl.setValue(this.lSettings.bearing);
                     this.outputFileNameControl.setValue(this.lSettings.output_file);
                     this.recIntervalControl.setValue(this.lSettings.recording_cycle);
@@ -180,7 +181,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
             resOk => {
                 this.users$.next(resOk);
                 if ((this.users$.value) && (this.users$.value.length > 0)) {
-                    this.settingsForm.get("userControl").setValue(this.users$.value[0]);
+                    if (!this.lSettings.user) {
+                        this.userControl.setValue(this.users$.value[0]);
+                    }
+                    
                 }
             }
         );

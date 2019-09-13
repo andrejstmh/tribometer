@@ -34,6 +34,8 @@ class RPMRegilator:
             coeff=currentRPM /(60*currentVFDHz)
             if coeff>2.0:
                 coeff=2.0
+            if coeff<0.5:
+                coeff=0.5
         res = targetRPM/(60*coeff)
         return res
 
@@ -67,10 +69,10 @@ class LoadRegilator:
     def GetRotations(self,loadN,targetN):
         #df'/df = SlipRatio
         maxLoad = 1250 # N !!!!!!!
-        if loadN+targetN<0:
-            targetN = 0-loadN
-        if loadN+targetN>maxLoad:
-            targetN = maxLoad-loadN
+        if targetN<0:
+            targetN = 0
+        if targetN>maxLoad:
+            targetN = maxLoad
         def I_SlipRatio_df(rot,coeffs):
             return (coeffs[1]/2.0*rot+coeffs[0])*rot
         f0 = self.rotPosition(loadN)
@@ -105,7 +107,7 @@ class Automation:
         self.expr.status.rpmRegTimedOut = False
         self.expr.status.rpmRegAuto = True
         self.rpm_started = datetime.datetime.now()
-        self.GO_rpmToTarget()
+
 
     def rpmTargetChanged(self):
         return np.abs(self.expr.currentTargetData[2]-self.expr.prevTargetData[2])>0.1

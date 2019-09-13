@@ -92,7 +92,7 @@ class Program:
     def getTargetValues(self, exp_time):
         idx = np.searchsorted(self.programData[:,0], exp_time, side='right')-1
         if (idx<0):idx=0
-        print(f"target programm:{idx}")
+        print("target programm:{0}".format(idx))
         res = np.array(self.programData[idx],copy=True);
         if not self.LoadAutoRegulation:res[ProgrCol.load]=np.nan
         if not self.RPMAutoRegulation:res[ProgrCol.RPM]=np.nan

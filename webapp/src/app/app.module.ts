@@ -10,6 +10,12 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,7 +52,8 @@ import { AttensionDialogComponent } from './components/controls/attension-dialog
   ],
     imports: [
         BrowserAnimationsModule, MatInputModule, MatButtonModule, MatCheckboxModule, MatAutocompleteModule,
-        MatFormFieldModule, MatDialogModule,
+        MatFormFieldModule, MatDialogModule, MatMenuModule, MatIconModule, MatToolbarModule, MatTooltipModule,
+        MatButtonToggleModule, MatListModule,
         HttpClientModule, BrowserModule, ReactiveFormsModule, FormsModule, ChartsModule,
         AppRoutingModule
   ],
