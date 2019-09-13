@@ -1,5 +1,4 @@
 <div class="container-fluid">
-    
     <div *ngIf="{settings:signalsService.settings$|async,state:signalsService.lastState$|async} as totSTATE" class="row">
         <div class="container rounded border bg-light">
             <!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
@@ -51,10 +50,10 @@
             </div>
 
             <div *ngIf="totSTATE.state.status==2 || totSTATE.state.status==3" class="row">
-                <div class="col">
+                <div class="col-3">
                     <button type="button" class="btn btn-info" (click)="resfreshChart()">Refresh chart</button>
                 </div>
-                <div *ngIf="totSTATE.state.status==2" class="col">
+                <div *ngIf="totSTATE.state.status==2" class="col-9">
                     <h6>Chart refresh period</h6>
                     <select id="refreshPeriodSelect" (change)="onChangerefreshPeriod($event.target.value)" [value]='1'>
                         <option value="0">off</option>
@@ -64,22 +63,28 @@
                         <option value="10">10 minutes</option>
                     </select>
                 </div>
-                <div class="col">
-                    <button type="button" class="btn btn-info m-1" (click)="showChartSettingsDialog()">Chart series settings</button>
-                </div>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="container rounded border bg-light">
-            <canvas baseChart #writing height="400"
-                    [datasets]="ChartFile.lineChartData"
-                    [labels]="ChartFile.lineChartLabels"
-                    [options]="ChartFile.lineChartOptions"
-                    [colors]="ChartFile.lineChartColors"
-                    [legend]="ChartFile.lineChartLegend"
-                    [chartType]="ChartFile.lineChartType"></canvas>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-info m-1"
+                            style="position: absolute;left: 15px;"
+                            (click)="showChartSettingsDialog()">
+                        Axes
+                    </button>
+                    <canvas baseChart #writing height="400"
+                            [datasets]="ChartFile.lineChartDataDraw"
+                            [labels]="ChartFile.lineChartLabels"
+                            [options]="ChartFile.lineChartOptions"
+                            [colors]="ChartFile.lineChartColors"
+                            [legend]="ChartFile.lineChartLegend"
+                            [chartType]="ChartFile.lineChartType"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>

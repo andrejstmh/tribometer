@@ -210,6 +210,9 @@ export class ChartAxisSettings{
         public label: string, public color: string,
         public min: number, public max: number,
         public visible: boolean = true, public auto: boolean = false) { }
+    copy() {
+        return new ChartAxisSettings(this.nr, this.id, this.label, this.color, this.min, this.max, this.visible, this.auto);
+    }
 }
 export const chartDataLength: number = 100;
 
@@ -219,15 +222,19 @@ export class ChartService {
     public onChartDataChanged$: BehaviorSubject<SensorsData> = new BehaviorSubject<SensorsData>(null);
     public chartAxesSettings:any= {
         ControlChatr: [
-            { nr:0, id: 'y-axis-T', label: 'Temperature, °C', color: 'red', visible: true, auto: false, min: 15, max: 100 },
-            { nr: 1, id: 'y-axis-RPM', label: 'RPM', color: 'rgba(77,83,96,1)', visible: true, auto: false, min: 0, max: 1200 },
-            { nr: 2, id: 'y-axis-load', label: 'Load, N', color: 'rgba(0,0,255,0.5)', visible: true, auto: false, min: 0, max: 1200 },
-            { nr: 3, id: 'y-axis-Fr', label: 'Friction force, N', color: 'green', visible: true, auto: false, min: 0, max: 120 }
+            new ChartAxisSettings(0, 'y-axis-T', 'Temperature, °C', 'red', 15, 100),
+            new ChartAxisSettings(1, 'y-axis-RPM', 'RPM', 'rgba(77,83,96,1)', 0, 1200),
+            new ChartAxisSettings(2, 'y-axis-load', 'Load, N', 'rgba(0,0,255,0.5)', 0, 1200),
+            new ChartAxisSettings(3, 'y-axis-Fr', 'Friction force, N', 'green', 0, 120)
+            //{ nr:0, id: 'y-axis-T', label: 'Temperature, °C', color: 'red', visible: true, auto: false, min: 15, max: 100 },
+            //{ nr: 1, id: 'y-axis-RPM', label: 'RPM', color: 'rgba(77,83,96,1)', visible: true, auto: false, min: 0, max: 1200 },
+            //{ nr: 2, id: 'y-axis-load', label: 'Load, N', color: 'rgba(0,0,255,0.5)', visible: true, auto: false, min: 0, max: 1200 },
+            //{ nr: 3, id: 'y-axis-Fr', label: 'Friction force, N', color: 'green', visible: true, auto: false, min: 0, max: 120 }
         ],
-        ExpChatr: [{ nr: 0, id: 'y-axis-T', label: 'Temperature, °C', color: 'red', visible: true, auto: false, min: 15, max: 100 },
-            { nr: 1, id: 'y-axis-RPM', label: 'RPM', color: 'rgba(77,83,96,1)', visible: true, auto: false, min: 0, max: 1200 },
-            { nr: 2, id: 'y-axis-load', label: 'Load, N', color: 'rgba(0,0,255,0.5)', visible: true, auto: false, min: 0, max: 1200 },
-            { nr: 3, id: 'y-axis-Fr', label: 'Friction force, N', color: 'green', visible: true, auto: false, min: 0, max: 120 }
+        ExpChatr: [new ChartAxisSettings(0, 'y-axis-T', 'Temperature, °C', 'red', 15, 100),
+            new ChartAxisSettings(1, 'y-axis-RPM', 'RPM', 'rgba(77,83,96,1)', 0, 1200),
+            new ChartAxisSettings(2, 'y-axis-load', 'Load, N', 'rgba(0,0,255,0.5)', 0, 1200),
+            new ChartAxisSettings(3, 'y-axis-Fr', 'Friction force, N', 'green', 0, 120)
         ]
     }
     public ChartListen: LineChartSettings = null;
@@ -262,7 +269,7 @@ export class ChartService {
         //this.onChartDataChanged$.next(new SensorsData(-1, -1, -1, -1, -1));
     }
 
-    updateChartListenSettings(clAxesSettings) {
+    updateChartListenSettings(clAxesSettings: ChartAxisSettings[]) {
         this.chartAxesSettings.ControlChatr = clAxesSettings
         this.ChartListen.UpdateSettings(this.chartAxesSettings.ControlChatr);
     }

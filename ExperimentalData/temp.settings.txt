@@ -1,0 +1,33 @@
+{
+    "working_directory": "",
+    "resultsFolder": "ExperimentalData/",
+    "user": "Pavels Nazarovs",
+    "operatorsFileName": "operators.csv",
+    "bearing": "dfgd",
+    "output_file": "temp",
+    "export_result_to_csv": true,
+    "friction_force_calibration_curve_file": "calibration_friction.csv",
+    "load_calibration_curve_file": "calibration_load.csv",
+    "listening_interval": 500,
+    "recording_cycle": 2,
+    "manual_mode": true,
+    "program": [
+        {
+            "duration": 10,
+            "load": 200,
+            "RPM": 600,
+            "Tmax": 100,
+            "Fmax": 100
+        }
+    ],
+    "rpmMaxRegTime": 120,
+    "loadMaxRegTime": 180,
+    "avgBufferSize": 10,
+    "rpmRegCikleSize": 20,
+    "loadRegCikleSize": 15,
+    "loadRegualtionDiffStart": 50,
+    "loadRegualtionDiffStop": 10,
+    "RPMRegualtionDiffStart": 5,
+    "RPMRegualtionDiffStop": 2,
+    "readme": "UNITS: intervals[second]; duration[minutes]; threshold,load[N]"
+}

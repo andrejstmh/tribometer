@@ -7,18 +7,22 @@
                 <div class="col-4">Target</div>
                 <div class="col-5">Manual(VFD)</div>
             </div>
-            <div class="row border-top">
+            <!-- status.rpmRegAuto -->
+            <div class="row border-top" *ngIf="signalsService.lastState$|async as status">
                 <div class="col-3"></div>
                 <div class="col-4">
-                    <input type="number" min="5" max="125" name="rpm_auto" [value]="sett.program[0].RPM" #rpm_auto>
-                    <button type="button" class="btn btn-info m-1" (click)="setRPMAuto(rpm_auto.value)">Apply</button>
+                    <div [className]="!status.rpmRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <input type="number" min="5" max="125" name="rpm_auto" [value]="sett.program[0].RPM" #rpm_auto>
+                        <button type="button" class="btn btn-info m-1" (click)="setRPMAuto(rpm_auto.value)">Apply</button>
+                    </div>
                 </div>
                 <div class="col-5">
-                    <button type="button" class="btn btn-info m-1" (click)="decreaseRPM(rpm_manual.value)">Decrease</button>
-                    <input type="number" min="1" max="100" [value]="10" name="rpm_manual" #rpm_manual>
-                    <button type="button" class="btn btn-info m-1" (click)="increaseRPM(rpm_manual.value)">Increase</button>
-                    <!--<button type="button" class="btn btn-info m-1" (click)="rotation()">Apply {{rpmVal| number:'1.1-1'}}[RPM]/{{rpmVal/60.0| number:'1.1-1'}}[Hz]</button>-->
-                    <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
+                    <div [className]="status.rpmRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <button type="button" class="btn btn-info m-1" (click)="decreaseRPM(rpm_manual.value)">Decrease</button>
+                        <input type="number" min="1" max="100" [value]="10" name="rpm_manual" #rpm_manual>
+                        <button type="button" class="btn btn-info m-1" (click)="increaseRPM(rpm_manual.value)">Increase</button>
+                        <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,18 +35,22 @@
                 <div class="col-4">Target</div>
                 <div class="col-5">Manual</div>
             </div>
-            <div class="row border-top">
+            <div class="row border-top" *ngIf="signalsService.lastState$|async as status">
                 <div class="col-3"></div>
                 <div class="col-4">
-                    <input type="number" class="m-1" min="1" max="1020" name="load_auto" [value]="sett.program[0].load" #load_auto>
-                    <button type="button" class="btn btn-info m-1" (click)="setLoadAuto(load_auto.value)">Apply</button>
+                    <div [className]="!status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <input type="number" class="m-1" min="1" max="1020" name="load_auto" [value]="sett.program[0].load" #load_auto>
+                        <button type="button" class="btn btn-info m-1" (click)="setLoadAuto(load_auto.value)">Apply</button>
+                    </div>
                 </div>
-                <div class="col-5">
-                    <button type="button" class="btn btn-info m-1" (click)="loadMinus(load_manual.value)">Decrease</button>
-                    <input type="number" [value]="10" min="1" max="100" name="load_manual" #load_manual>
-                    <button type="button" class="btn btn-info m-1" (click)="loadPlus(load_manual.value)">Increase</button>
+                    <div class="col-5">
+                        <div [className]="status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                            <button type="button" class="btn btn-info m-1" (click)="loadMinus(load_manual.value)">Decrease</button>
+                            <input type="number" [value]="10" min="1" max="100" name="load_manual" #load_manual>
+                            <button type="button" class="btn btn-info m-1" (click)="loadPlus(load_manual.value)">Increase</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
     <div *ngIf="signalsService.settings$|async as sett" class="row">
@@ -104,16 +112,22 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <button type="button" class="btn btn-info m-1" (click)="showChartSettingsDialog()">Chart series</button>
-            <div class="container rounded border bg-light m-1">
-                <canvas baseChart #listen height="400"
-                        [datasets]="ChartListen.lineChartDataDraw"
-                        [labels]="ChartListen.lineChartLabels"
-                        [options]="ChartListen.lineChartOptions"
-                        [colors]="ChartListen.lineChartColors"
-                        [legend]="ChartListen.lineChartLegend"
-                        [chartType]="ChartListen.lineChartType"></canvas>
+        <div class="container rounded border bg-light m-1">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-info m-1"
+                            style="position: absolute;left: 15px;"
+                            (click)="showChartSettingsDialog()">
+                        Axes
+                    </button>
+                    <canvas baseChart #listen height="400"
+                            [datasets]="ChartListen.lineChartDataDraw"
+                            [labels]="ChartListen.lineChartLabels"
+                            [options]="ChartListen.lineChartOptions"
+                            [colors]="ChartListen.lineChartColors"
+                            [legend]="ChartListen.lineChartLegend"
+                            [chartType]="ChartListen.lineChartType"></canvas>
+                </div>
             </div>
         </div>
     </div>

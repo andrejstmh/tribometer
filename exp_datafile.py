@@ -16,6 +16,7 @@ class ExperimentDataFile:
         self.hdf5f = None
         self.readers = set();
         self.dataset = None
+        self.stop_reason = None
         self.StartTime= None #np.datetime64(datetime.datetime.utcnow())
         self.OneSecond=np.timedelta64(1, 's')
         self.CurrentRecord = 0
@@ -42,7 +43,9 @@ class ExperimentDataFile:
             #--- calibration curve
             #d = self.hdf5f.create_dataset("calibrRPM",data=self.settings.calibrationData.RPM.curve1d.astype(np.float32))
             #d.attrs['calibration'] = b"RPM calibration curve [Hz]=>[RPM]"
-
+            #d = self.hdf5f.create_dataset("setting", (1,), dtype=np.string_,
+            #                              data=[np.string_( json.dumps(self.settings.settings))])
+            self.stop_reason = self.hdf5f.create_dataset("stop_reason", (1,), dtype="S256")
             #--- data table
             self.dataset = self.hdf5f.create_dataset("data", (ExperimentDataFile.ChunkSize,ExperimentDataFile.RecordSize),
                                                         chunks=(60, ExperimentDataFile.RecordSize), 
@@ -54,7 +57,7 @@ class ExperimentDataFile:
             #self.dataset.dims[1].attach_scale(self.hdf5f['variables'])
             self.dataset.attrs["user"] = bytes(self.settings.settings["user"],'utf-8')
             self.dataset.attrs['bearing'] = bytes(self.settings.settings["bearing"],'utf-8')
-            #self.dataset.attrs['allsettings'] = bytes( json.dumps(self.settings.settings),'utf-8')
+            self.dataset.attrs['allsettings'] = bytes( json.dumps(self.settings.settings),'utf-8')
             self.dataset.attrs['columns'] = bytes(ExperimentDataFile.ColumnsDescription,'utf-8')
         if self.settings.export_result_to_csv:
             resfn = self.settings.outputFileName
@@ -103,7 +106,8 @@ class ExperimentDataFile:
             self.Recording = False;
             self.StartTime = None;
             self.dataset.resize( (self.CurrentRecord, ExperimentDataFile.RecordSize) )
-            self.dataset.attrs['stop_reason'] = bytes(stop_reason,'utf-8')
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            self.stop_reason[0] = np.string_( stop_reason)
             self.dataset.flush()
             self.CloseReaders()
             self.hdf5f.close()

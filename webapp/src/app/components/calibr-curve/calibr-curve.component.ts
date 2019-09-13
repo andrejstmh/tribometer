@@ -28,7 +28,7 @@ export class CalibrCurveComponent implements OnInit, OnDestroy {
     selectedCurve: CurveInfo = null;
     CCurves = [
         new CurveInfo("Friction force calibration curve", "clbr_fr", ["Voltage, V", "Force, N"]),
-        new CurveInfo("Load calibration curve", "clbr_load", ["Voltage, V", "Force, N"])
+        new CurveInfo("Load calibration curve", "clbr_load", ["Voltage, V", "Load, N"])
     ]
     currentData: CurrentData = new CurrentData(NaN, NaN, NaN, NaN);
     data$: BehaviorSubject<CurveRow[]> = new BehaviorSubject<CurveRow[]>([]);

@@ -7,7 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 import { SensorsData, ObjHelper } from './../../models/message.model';
 import { SignalsService } from './../../services/signals.service';
-import { ChartService, LineChartSettings } from './../../services/chart.service';
+import { ChartService, LineChartSettings, ChartAxisSettings } from './../../services/chart.service';
 import { ChartSettingsDialogComponent } from './../controls/chart-settings-dialog/chart-settings-dialog.component';
 
 export interface axesSetting {
@@ -96,10 +96,10 @@ export class TribControlsComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(ChartSettingsDialogComponent, {
             width: '750px',
             data: {
-                t: this.ControlChatrSettings[0],
-                rpm: this.ControlChatrSettings[1],
-                load: this.ControlChatrSettings[2],
-                fr: this.ControlChatrSettings[3]
+                t: this.ControlChatrSettings[0].copy(),
+                rpm: this.ControlChatrSettings[1].copy(),
+                load: this.ControlChatrSettings[2].copy(),
+                fr: this.ControlChatrSettings[3].copy()
             }
         });
 

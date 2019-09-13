@@ -298,7 +298,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 //this.totState = DeepCopyOfState(v);
                 this.signalsService.GetTotalState();
                 if (resOk.output_file) {
-                    this.router.navigate(['/controls']);
+                    if (ss.manual_mode) {
+                        this.router.navigate(['/controls']);
+                    } else {
+                        this.router.navigate(['/experiment']);
+                    }
                 }
             },
             resErr => { console.log("EditSettingsErr"); },

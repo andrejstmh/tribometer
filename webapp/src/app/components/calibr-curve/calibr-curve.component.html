@@ -33,8 +33,8 @@
                         <div *ngIf="currentData" class="container rounded border bg-light m-1">
                             <div class="row h5">
                                 <div class="col">Value</div>
-                                <div class="col">Voltage, V</div>
-                                <div class="col">Force, N</div>
+                                <div class="col">{{selectedCurve.title[0]}}</div>
+                                <div class="col">{{selectedCurve.title[1]}}</div>
                             </div>
                             <div class="row border-top">
                                 <div class="col">average</div>
@@ -92,8 +92,8 @@
                     <table *ngIf="data$|async as data" class="table mt-4">
                         <thead>
                             <tr>
-                                <th scope="col">Voltage, V</th>
-                                <th scope="col">Force, N</th>
+                                <th scope="col">{{selectedCurve.title[0]}}</th>
+                                <th scope="col">{{selectedCurve.title[1]}}</th>
                                 <th *ngIf="editCurve" scope="col"></th>
                             </tr>
                         </thead>

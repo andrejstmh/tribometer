@@ -32,9 +32,10 @@ class RPMRegilator:
         coeff=1
         if currentVFDHz>1 and currentRPM>60:
             coeff=currentRPM /(60*currentVFDHz)
-            if coeff>2:
-                coeff=2
-        return targetRPM/(60*coeff)
+            if coeff>2.0:
+                coeff=2.0
+        res = targetRPM/(60*coeff)
+        return res
 
 class LoadRegilator:
     #5 rotations => 7 Bar => 1252 N
@@ -355,7 +356,7 @@ class Experiment:
         time,aload, afr,arpm, aT =self.currentRecordData[0],self.currentAverageData[1],self.currentAverageData[2],self.currentAverageData[3],self.currentAverageData[4]
         timeTot, tmaxFfr,tmaxT = self.currentTargetData[0],self.currentTargetData[3],self.currentTargetData[4]
         self.status.VFD_on=arpm>0.1
-        self.status.load_on = (arpm>0.1)and(aload>0.1)
+        self.status.load_on = (aload>0.1)
         self.status.stopTime = time>timeTot
         self.status.stopTlim = aT>tmaxT
         self.status.stopFlim = afr>tmaxFfr

@@ -9,6 +9,7 @@ import { SensorsData, ExperimentStatus, ObjHelper, trState, trTotalState, trResu
 import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
 import { ChartSettingsDialogComponent } from './../controls/chart-settings-dialog/chart-settings-dialog.component';
+import { AttensionDialogComponent } from './../controls/attension-dialog/attension-dialog.component';
 
 @Component({
     selector: 'app-experiment',
@@ -65,10 +66,10 @@ export class ExperimentComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(ChartSettingsDialogComponent, {
             width: '750px',
             data: {
-                t: ecs[0],
-                rpm: ecs[1],
-                load: ecs[2],
-                fr: ecs[3]
+                t: ecs[0].copy(),
+                rpm: ecs[1].copy(),
+                load: ecs[2].copy(),
+                fr: ecs[3].copy()
             }
         });
 
@@ -79,6 +80,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
             ecs[2] = result.load;
             ecs[3] = result.fr;
             this.ChartFile = new LineChartSettings(this.chartService.chartAxesSettings.ExpChatr);
+            this.resfreshChart();
         });
     }
 
@@ -116,7 +118,16 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     }
 
     startExperiment() {
-        this.beginWrite();
+        let ecs = this.chartService.chartAxesSettings.ExpChatr
+        const dialogRef = this.dialog.open(AttensionDialogComponent, {
+            width: '750px'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('dialog: beginWrite!');
+            this.beginWrite();
+            this.resfreshChart();
+        });
     }
 
     stopExperiment() {

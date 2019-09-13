@@ -29,6 +29,8 @@
     <Content Include="package.json" />
     <Content Include="src\app\components\calibr-curve\calibr-curve.component.css" />
     <Content Include="src\app\components\calibr-curve\calibr-curve.component.html" />
+    <Content Include="src\app\components\controls\attension-dialog\attension-dialog.component.css" />
+    <Content Include="src\app\components\controls\attension-dialog\attension-dialog.component.html" />
     <Content Include="src\app\components\controls\chart-settings-dialog\chart-settings-dialog.component.css" />
     <Content Include="src\app\components\controls\chart-settings-dialog\chart-settings-dialog.component.html" />
     <Content Include="src\app\components\controls\status-row\status-row.component.css" />
@@ -58,6 +60,7 @@
     <Content Include="src\tsconfig.spec.json" />
     <Content Include="src\tslint.json" />
     <TypeScriptCompile Include="src\app\components\calibr-curve\calibr-curve.component.ts" />
+    <TypeScriptCompile Include="src\app\components\controls\attension-dialog\attension-dialog.component.ts" />
     <TypeScriptCompile Include="src\app\components\controls\chart-settings-dialog\chart-settings-dialog.component.ts" />
     <TypeScriptCompile Include="src\app\components\controls\status-row\status-row.component.ts" />
     <TypeScriptCompile Include="src\app\components\experiment\experiment.component.ts" />
@@ -95,6 +98,7 @@
     <Folder Include="src\app\components\" />
     <Folder Include="src\app\components\calibr-curve\" />
     <Folder Include="src\app\components\controls\" />
+    <Folder Include="src\app\components\controls\attension-dialog\" />
     <Folder Include="src\app\components\controls\chart-settings-dialog\" />
     <Folder Include="src\app\components\controls\status-row\" />
     <Folder Include="src\app\components\experiment\" />

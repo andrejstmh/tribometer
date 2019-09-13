@@ -192,7 +192,7 @@ class SettingsHandler(tornado.web.RequestHandler):
             Tibometer.Experiment.SetRPMManual(delta)
             self.write('1')
         elif st_case == "manualstoprot":
-            delta = float(self.get_argument("val"))
+            #delta = float(self.get_argument("val"))
             Tibometer.Experiment.SetStopRotationsManual()
             self.write('1')
         elif st_case == "threshold":

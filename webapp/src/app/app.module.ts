@@ -27,7 +27,7 @@ import { ChartService } from './services/chart.service';
 //import { TabulatorTableComponent } from './components/controls/tabulator-table/tabulator-table.component';
 import { StatusRowComponent } from './components/controls/status-row/status-row.component';
 import { ChartSettingsDialogComponent } from './components/controls/chart-settings-dialog/chart-settings-dialog.component';
-
+import { AttensionDialogComponent } from './components/controls/attension-dialog/attension-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +39,8 @@ import { ChartSettingsDialogComponent } from './components/controls/chart-settin
     ShowErrorsComponent,
     //SettingsFormComponent,
     //TabulatorTableComponent,
-    ChartSettingsDialogComponent,
+        ChartSettingsDialogComponent,
+        AttensionDialogComponent,
     StatusRowComponent,
     TribControlsComponent
   ],
@@ -50,7 +51,7 @@ import { ChartSettingsDialogComponent } from './components/controls/chart-settin
         AppRoutingModule
   ],
     providers: [SignalsService, ChartService],//SocketService,
-    entryComponents: [ChartSettingsDialogComponent],
+    entryComponents: [ChartSettingsDialogComponent, AttensionDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
