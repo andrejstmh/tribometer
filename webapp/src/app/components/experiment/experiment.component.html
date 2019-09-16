@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <div *ngIf="{settings:signalsService.settings$|async,state:signalsService.lastState$|async} as totSTATE" class="row">
         <div class="container rounded border bg-light">
-            <!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
             <app-status-row></app-status-row>
             <div class="row">
                 <div *ngIf="currentData|async as crData" class="container rounded border bg-light m-1">
@@ -15,6 +14,7 @@
                         <div class="col">T, °C</div>
                         <!--<div class="col">μ,-</div>-->
                     </div>
+                    <!-- target time=0 load=1 RPM=2 maxFfr=3 maxT=4-->
                     <div class="row border-top">
                         <div class="col">average/target</div>
                         <div class="col">{{crData.db[0]/60.0 | number:'1.2-2'}} /{{100*crData.db[0]/crData.tb[0]| number:'1.0-0'}}%</div>
@@ -87,5 +87,39 @@
             </div>
         </div>
     </div>
+    <div class="row" *ngIf="latestProgram$|async as stt">
+        <div class="container rounded border bg-light">
+            <div class="row h5">Program</div>
+                <div class="row h6">
+                    <div class="col">Status</div>
+                    <div class="col">Time, min</div>
+                    <div class="col">RPM</div>
+                    <div class="col">Load, N</div>
+                    <div class="col">Friction, N</div>
+                    <div class="col">T, °C</div>
+                </div>
+                <div class="row border-top font-weight-light" *ngFor="let prit of stt">
+                    <div class="col">
+                        <i *ngIf="prit.current" class="fa fa-cog fa-spin"></i>
+                    </div>
+                    <div class="col">
+                        {{prit.time/60.0| number:'1.2-2'}}
+                    </div>
+                    <div class="col">
+                        {{prit.load| number:'1.1-1'}}
+                    </div>
+                    <div class="col">
+                        {{prit.RPM| number:'1.1-1'}}
+                    </div>
+                    <div class="col">
+                        {{prit.Fmax| number:'1.1-1'}}
+                    </div>
+                    <div class="col">
+                        {{prit.Tmax| number:'1.1-1'}}
+                    </div>
+                </div>
+        </div>
+    </div>
+
 </div>
 

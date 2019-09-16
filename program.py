@@ -24,7 +24,7 @@ class ProgrCol:
     maxT=4
     size=5
     colNames = ["time", "load","RPM", "maxFfr","maxT"]
-    SettFields = ["duration","load","RPM","Tmax","Fmax"]
+    SettFields = ["duration","load","RPM","Fmax","Tmax"]
 
 class Program:
     def __init__(self, settings:exp_settings.ExperimentSettings,state:exp_settings.ExpState):

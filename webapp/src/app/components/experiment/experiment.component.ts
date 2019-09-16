@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Observable, Subscription, interval } from 'rxjs';
-
+import { Observable, Subscription, interval, combineLatest, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -10,6 +10,18 @@ import { SignalsService } from './../../services/signals.service';
 import { ChartService, LineChartSettings } from './../../services/chart.service';
 import { ChartSettingsDialogComponent } from './../controls/chart-settings-dialog/chart-settings-dialog.component';
 import { AttensionDialogComponent } from './../controls/attension-dialog/attension-dialog.component';
+
+export class trLocalProgram {
+    constructor(
+        public time: number,
+        public load: number,
+        public RPM: number,
+        public Tmax: number,
+        public Fmax: number,
+        public current: boolean) {
+
+    }
+} 
 
 @Component({
     selector: 'app-experiment',
@@ -22,6 +34,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     subsArr: Subscription[] = [];
     OnGetFileData_Timer = interval(60000);
     OnFileData_TimerSubscription: Subscription = null;
+    latestProgram$: Observable<trLocalProgram[]> = null;
     public ChartFile: LineChartSettings = null; 
     @ViewChild("writing", { read: BaseChartDirective, static: true }) chartW: BaseChartDirective;
 
@@ -55,6 +68,29 @@ export class ExperimentComponent implements OnInit, OnDestroy {
                 this.InitTimer(this.chartService.expFileDataRefreshPeriodMin);
             }
         }
+        this.latestProgram$ = combineLatest(
+            this.chartService.onChartDataChanged$,
+            this.signalsService.lastState$,
+            this.signalsService.settings$).pipe(
+                flatMap(([curdata, st, sett]) => {
+                    let p = sett.program;
+                    let tt = 0;
+                    let pnew: trLocalProgram[] = []
+                    let d = 0;
+                    for (let pit of sett.program) {
+                        d = pit.duration * 60
+                        let pitn = new trLocalProgram(d,
+                            //st.loadRegAuto ? pit.load : NaN, st.rpmRegAuto ? pit.RPM : NaN,
+                            pit.load, pit.RPM,
+                            pit.Tmax, pit.Fmax,
+                            (st.status == ExperimentStatus.started)&&(curdata.db[0] >= tt) && (curdata.db[0] < tt + d));
+                        tt = tt + d;
+                        pitn.time = tt;
+                        pnew.push(pitn);
+                    }
+                    return of(pnew);
+                }),
+        );
     }
     ngOnDestroy() {
         this.subsArr.forEach(it => { if (it) { it.unsubscribe(); } });

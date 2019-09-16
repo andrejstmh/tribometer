@@ -55,12 +55,12 @@ class Tibometer:
         def on_errorW(e):
             print("WRITE:{0}".format(e))
         if (cls.subscriptRead is not None) and (cls.subscriptWrite is None):
-            cls.Experiment.DataFile.MakeHdf5File();
+            cls.Experiment.DataFile.MakeHdf5File()
             cls.Experiment.DataFile.StartRecording(cls.Experiment.currentRecordData)
             cls.Write_obs = cls.Read_obs.filter(lambda i: i%cls.Experiment.Settings.recording_cycle==0)
             cls.subscriptWrite = cls.Write_obs.subscribe(send_write, on_errorW)
             cls.Experiment.status.status = ExpStatus.started
-            autoMode = not cls.Experiment.Settings.manual_mode
+            autoMode = True#not cls.Experiment.Settings.manual_mode
             cls.Experiment.Program.LoadAutoRegulation=cls.Experiment.Program.RPMAutoRegulation=autoMode
             cls.Experiment.status.loadRegAuto = cls.Experiment.status.rpmRegAuto = autoMode
         else:

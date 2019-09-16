@@ -16,6 +16,13 @@ DefaultCalibration_Pressure_2_Force=np.array([
 [6.0,   1060],
 ],dtype=np.float);
 
+class Limits:
+    def __init__(self,min,max):
+        self.min=min
+        self.max=max
+
+Default_RPM_limit=Limits(0,1201)
+Default_Temperature_limit=Limits(0,120)
 
 DefaultCalibration_Load=np.array([
 # voltage,force
@@ -28,7 +35,6 @@ DefaultCalibration_Load=np.array([
 [2.37125,  Pressure_2_Force(6.0)],
 [2.661125,  Pressure_2_Force(7.0)]
 ],dtype=np.float);
-
 
 DefaultCalibration_Friction=np.array([
 # voltage,force

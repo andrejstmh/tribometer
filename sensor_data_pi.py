@@ -38,8 +38,6 @@ step= 6.144/(2**15)
 class SensorData:
     def readRPM(self):
         res=rpm.RPM()
-        if res<0 or res>2000:
-            res = np.nan
         return res
 
     def readFriction(self):
@@ -59,8 +57,6 @@ class SensorData:
     def readTemperature(self):
         try:
             res=hdc1000.readTemperature()
-            if res<10 or res>120:
-                res = np.nan
         except:
               res=np.nan
         return res

@@ -8,6 +8,7 @@ import copy
 from rx import config,Observable
 from rx.subjects import Subject
 
+import default_settings
 import exp_settings
 import exp_datafile
 import program
@@ -44,7 +45,7 @@ class LoadRegilator:
     def __init__(self):
         self.rotationRange=5
         self.RegStepCount=5
-        self.maxLoad=1252 #N
+        self.maxLoad=default_settings.DefaultCalibration_Load[-1,1]
         self.SlipRatioIncCoeff=np.array([0.5,10/self.rotationRange],dtype = np.float)
         self.SlipRatioDecCoeff=np.array([0.5,3/self.rotationRange],dtype = np.float)
 
@@ -68,11 +69,10 @@ class LoadRegilator:
 
     def GetRotations(self,loadN,targetN):
         #df'/df = SlipRatio
-        maxLoad = 1250 # N !!!!!!!
         if targetN<0:
             targetN = 0
-        if targetN>maxLoad:
-            targetN = maxLoad
+        if targetN>self.maxLoad:
+            targetN = self.maxLoad
         def I_SlipRatio_df(rot,coeffs):
             return (coeffs[1]/2.0*rot+coeffs[0])*rot
         f0 = self.rotPosition(loadN)
@@ -126,8 +126,10 @@ class Automation:
         print("GO_rpmReg_TimedOut!")
 
     def GO_rpmToTarget(self):
-        freq_Hz = self.rpmRegulator.GetVFDFrequency(self.CurrentAvgRPM(),self.expr.WFD_freq,self.CurrentTargetRPM())
-        self.setWFD_freq(freq_Hz)
+        avgV = self.CurrentAvgRPM()
+        if not np.isnan(avgV):
+            freq_Hz = self.rpmRegulator.GetVFDFrequency(avgV,self.expr.WFD_freq,self.CurrentTargetRPM())
+            self.setWFD_freq(freq_Hz)
         print("TargetRPM:{0}".format(freq_Hz))
 
     def GO_ManualRPM(self, deltaRPM):
@@ -153,12 +155,13 @@ class Automation:
     def GO_rpmOk(self):
         self.rpm_started = None
         self.rpm_cikl_counter=0
+        self.expr.status.rpmRegTimedOut = False
         print("GO_rpmOk!")
 
     def setWFD_freq(self,freq):
         if freq>0:
-            if freq>60:
-                freq=60
+            if freq>default_settings.Default_RPM_limit.max/60:
+                freq=default_settings.Default_RPM_limit.max/60
             controls.set_speed(freq)
             controls.start()
         else:
@@ -216,21 +219,25 @@ class Automation:
         )
 
     def GO_loadToTarget(self):
-        rotations = self.loadRegulator.GetRotations(self.CurrentAvgLoad(),self.CurrentTargetLoad())
-        print("load2Target {0}".format(rotations))
-        self.MakeSubscriptionToLoadReg(rotations)
+        avgV = self.CurrentAvgLoad()
+        if not np.isnan(avgV):
+            rotations = self.loadRegulator.GetRotations(avgV,self.CurrentTargetLoad())
+            print("load2Target {0}".format(rotations))
+            self.MakeSubscriptionToLoadReg(rotations)
 
     def GO_ManualLoad(self, deltaN):
         rotations = self.loadRegulator.GetRotations(self.CurrentAvgLoad(),self.CurrentAvgLoad()+ deltaN)
         print("GO_ManualLoad {0}".format(rotations))
         self.MakeSubscriptionToLoadReg(rotations)
         self.load_started = None
+        self.expr.status.loadRegTimedOut = False
         self.load_cikl_counter=0
 
 
     def GO_loadOk(self):
         print("GO_loadOk")
         self.load_started = None
+        self.expr.status.loadRegTimedOut = False
         self.load_cikl_counter=0
         self.subscriptLoadReg = None;
     #----------------------------OnNewSensorData-------------------------------------------
@@ -345,10 +352,13 @@ class Experiment:
         self.Automation.OnNewSensorData()
         
     def sensorDataQalityControl(self,load, fr, rpm, temperature):
-        load1 = np.nan if ((load<0.6)or(load>2.7)) else load
-        fr1 = np.nan if ((fr<0.59)or(fr>6.0)) else fr
-        rpm1 = np.nan if ((rpm<0)or(rpm>1500)) else rpm
-        temperature1 = np.nan if ((temperature<0)or(temperature>120)) else temperature
+        d = 0.05*(self.Settings.calibrationData.load.curve1d[-1:0]-self.Settings.calibrationData.load.curve1d[0:0])
+        load1 = np.nan if ((load<self.Settings.calibrationData.load.curve1d[0:0]-d)or(load>self.Settings.calibrationData.load.curve1d[-1:0]+d)) else load
+        d = 0.05*(self.Settings.calibrationData.friction.curve1d[-1:0]-self.Settings.calibrationData.friction.curve1d[0:0])
+        fr1 = np.nan if ((fr<self.Settings.calibrationData.friction.curve1d[0:0]-d)or(fr>self.Settings.calibrationData.friction.curve1d[-1:0]+d)) else fr
+        
+        rpm1 = np.nan if ((rpm<0)or(rpm>default_settings.Default_RPM_limit.max)) else rpm
+        temperature1 = np.nan if ((temperature<default_settings.Default_Temperature_limit.min)or(temperature>default_settings.Default_Temperature_limit.max)) else temperature
         return load1, fr1, rpm1, temperature1
 
 
@@ -374,6 +384,10 @@ class Experiment:
             stop_reason = "Temperature exceed allowed limit"
         if self.status.stopFlim:
             stop_reason = "Friction force exceed allowed limit"
+        if self.status.loadRegTimedOut:
+            stop_reason = "Load regulation timed out"
+        if self.status.rpmRegTimedOut:
+            stop_reason = "RPM regulation timed out"
         if stop_reason is not None:
             self.Automation.GO_ManualStopRotations()
             self.Automation.GO_ManualLoad(0)

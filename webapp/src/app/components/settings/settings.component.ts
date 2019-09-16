@@ -301,13 +301,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 //this.signalsService.totalstate$.next(v);
                 //this.totState = DeepCopyOfState(v);
                 this.signalsService.GetTotalState();
-                if (resOk.output_file) {
-                    if (ss.manual_mode) {
-                        this.router.navigate(['/controls']);
-                    } else {
-                        this.router.navigate(['/experiment']);
-                    }
-                }
+                this.router.navigate(['/experiment']);
+                //if (resOk.output_file) {
+                //    if (ss.manual_mode) {
+                //        this.router.navigate(['/controls']);
+                //    } else {
+                //        this.router.navigate(['/experiment']);
+                //    }
+                //}
             },
             resErr => { console.log("EditSettingsErr"); },
             () => { }
