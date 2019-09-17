@@ -92,7 +92,7 @@ export class TribControlsComponent implements OnInit, OnDestroy {
     //}
 
     showChartSettingsDialog() {
-        console.log("START dialog!");
+        //console.log("START dialog!");
         const dialogRef = this.dialog.open(ChartSettingsDialogComponent, {
             width: '750px',
             data: {
@@ -104,7 +104,7 @@ export class TribControlsComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('chart setting dialog: update settings!');
+            //console.log('chart setting dialog: update settings!');
             this.chartService.updateChartListenSettings([result.t, result.rpm, result.load, result.fr])
             this.ControlChatrSettings = this.chartService.chartAxesSettings.ControlChatr;
             //this.ChartListen = this.chartService.ChartListen;
@@ -114,30 +114,30 @@ export class TribControlsComponent implements OnInit, OnDestroy {
 
     StopRotation() {
         this.signalsService.StopRotationsManual().subscribe(x => {
-            console.log("StopRotation " + x);
+            //console.log("StopRotation " + x);
         });
     }
 
     loadPlus(val: number) {
         this.signalsService.UpdateLoadManual(val).subscribe(x => {
-            console.log("Load +" +val);
+            //console.log("Load +" +val);
         });
     }
 
     loadMinus(val: number) {
         this.signalsService.UpdateLoadManual(-val).subscribe(x => {
-            console.log("Load -" + val);
+            //console.log("Load -" + val);
         });
     }
 
     increaseRPM(val: number) {
-        console.log("increaseRPM" + val);
+        //console.log("increaseRPM" + val);
         this.signalsService.UpdateRPMManual(val).subscribe(
             resOk => { console.log("RPM" + val); }
         );
     }
     decreaseRPM(val: number) {
-        console.log("decreaseRPM" + val);
+        //console.log("decreaseRPM" + val);
         this.signalsService.UpdateRPMManual(-val).subscribe(
             resOk => { console.log("RPM" + val); }
         );
@@ -146,13 +146,13 @@ export class TribControlsComponent implements OnInit, OnDestroy {
         this.signalsService.SetRPM(val).subscribe(
             resOk => { this.signalsService.settings$.next(resOk); }
         );
-        console.log(val);
+        //console.log(val);
     }
     setLoadAuto(val: number) {
         this.signalsService.SetLoad(val).subscribe(
             resOk => { this.signalsService.settings$.next(resOk); }
         );
-        console.log(val);
+        //console.log(val);
     }
     setThresholds(maxFr: number, maxTemp: number) {
         this.signalsService.UpdateThresholds(maxFr, maxTemp).subscribe(

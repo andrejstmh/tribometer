@@ -277,7 +277,7 @@ export class ChartService {
     getDataFromFile() {
         this.signalsService.GetDataFromResultFile().subscribe(x => {
             if (x) {
-                console.log("this.expFileData$.next(x)");
+                //console.log("this.expFileData$.next(x)");
                 let xx = new trResultFileData(x);
                 this.expFileData$.next(xx);
             }

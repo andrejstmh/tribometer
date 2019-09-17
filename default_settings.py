@@ -63,17 +63,13 @@ DefaultSettings={
     "listening_interval":500,
     # listening intervals count
     "recording_cycle":2,
-    # listening intervals count
-    #"visualisation_cycle":4,
-    # minutes (manual mode, default 20 hours)
-    #"total_duration":20*60,
-    #"rpm":600,
-    #"load":200.0,
     "manual_mode":True,
     "program":[
         {"duration":10, "load":200.0,"RPM":600,"Tmax":100,"Fmax":100}],
+    #seconds
     "rpmMaxRegTime":2*60, # 2 minutes
-    "loadMaxRegTime":3*60, # 3 minutes
+    #seconds
+    "loadMaxRegTime":2*60, # 2 minutes
     "avgBufferSize": 10, # 
     "rpmRegCikleSize":20,
     "loadRegCikleSize":15,
@@ -81,9 +77,6 @@ DefaultSettings={
     "loadRegualtionDiffStop":10,
     "RPMRegualtionDiffStart":5,
     "RPMRegualtionDiffStop":2,
-    #=================================================================
-    # optional field
-    "readme":"UNITS: intervals[second]; duration[minutes]; threshold,load[N]"
 }
 import platform
 if platform.system() == 'Windows':

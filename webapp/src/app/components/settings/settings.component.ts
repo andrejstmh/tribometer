@@ -27,7 +27,7 @@ export function outputFileExistsValidator(signalsService: SignalsService): Async
             debounceTime(300), distinctUntilChanged(),
             map(
                 fe => {
-                    console.log("outputFileExistsValidator "+fe)
+                    //console.log("outputFileExistsValidator "+fe)
                     return (fe == "1") ? { "outputFileExists": true } : null;
             }
             )
@@ -294,7 +294,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         ss.manual_mode = !ss.manual_mode;
         this.signalsService.EditSettings(ss).subscribe(
             resOk => {
-                console.log("EditSettingsOk");
+                //console.log("EditSettingsOk");
                 //console.log(resOk);
                 //let v = this.signalsService.totalstate$.value;
                 //v.settings = resOk;

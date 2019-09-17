@@ -125,7 +125,7 @@ export class SignalsService {
     GetTotalState() {
         forkJoin(this.GetState(), this.GetSettings()).subscribe(
             ([st, stt]) => {
-                console.log("Get Settings: Ok");
+                //console.log("Get Settings: Ok");
                 this.settings$.next(stt);
                 this.lastState$.next(new trState(st));
                 //this.totalstate$.next(new trTotalState(stt, new trState(st)))

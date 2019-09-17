@@ -117,7 +117,9 @@ class ExperimentSettings:
             with open(self.SettingsFileName,"r") as f:
                 self.settings = json.load(f);
         else:
-            print("Warning:Setting file not exists");
+            print("Warning:Setting file not exists")
+            self.SaveSettings()
+            print("Setting file saved")
 
         err = self.checkSettings();
         if len(err)==0:
@@ -130,7 +132,8 @@ class ExperimentSettings:
                     ll = l.strip()
                     if ll:
                         self.operators.append(ll);
-        self.user = self.user
+        if len(self.operators)>0:
+            self.user = self.operators[0]
         self.SaveOperatorsToFile();
 
     @property

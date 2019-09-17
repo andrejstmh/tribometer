@@ -18,7 +18,7 @@ from exp_settings import ExpStatus
 if platform.system() != 'Windows':
     try:
         import sensor_data_pi as sensor_data
-        print("sensor_data_pi imported")
+        #print("sensor_data_pi imported")
     except ImportError:
         import sensor_data
 else:
@@ -130,14 +130,14 @@ class Automation:
         if not np.isnan(avgV):
             freq_Hz = self.rpmRegulator.GetVFDFrequency(avgV,self.expr.WFD_freq,self.CurrentTargetRPM())
             self.setWFD_freq(freq_Hz)
-        print("TargetRPM:{0}".format(freq_Hz))
+        #print("TargetRPM:{0}".format(freq_Hz))
 
     def GO_ManualRPM(self, deltaRPM):
         newRPM = self.CurrentAvgRPM()+ deltaRPM
         if newRPM<0:
             newRPM=0
         freq_Hz = self.rpmRegulator.GetVFDFrequency(self.CurrentAvgRPM(),self.expr.WFD_freq,newRPM)
-        print("ManualRPM:{0}".format(freq_Hz))
+        #print("ManualRPM:{0}".format(freq_Hz))
         self.setWFD_freq(freq_Hz)
         self.expr.Program.RPMAutoRegulation=False
         self.expr.status.rpmRegTimedOut = False
@@ -156,7 +156,7 @@ class Automation:
         self.rpm_started = None
         self.rpm_cikl_counter=0
         self.expr.status.rpmRegTimedOut = False
-        print("GO_rpmOk!")
+        #print("GO_rpmOk!")
 
     def setWFD_freq(self,freq):
         if freq>0:
@@ -222,12 +222,12 @@ class Automation:
         avgV = self.CurrentAvgLoad()
         if not np.isnan(avgV):
             rotations = self.loadRegulator.GetRotations(avgV,self.CurrentTargetLoad())
-            print("load2Target {0}".format(rotations))
+            #print("load2Target {0}".format(rotations))
             self.MakeSubscriptionToLoadReg(rotations)
 
     def GO_ManualLoad(self, deltaN):
         rotations = self.loadRegulator.GetRotations(self.CurrentAvgLoad(),self.CurrentAvgLoad()+ deltaN)
-        print("GO_ManualLoad {0}".format(rotations))
+        #print("GO_ManualLoad {0}".format(rotations))
         self.MakeSubscriptionToLoadReg(rotations)
         self.load_started = None
         self.expr.status.loadRegTimedOut = False
@@ -235,7 +235,7 @@ class Automation:
 
 
     def GO_loadOk(self):
-        print("GO_loadOk")
+        #print("GO_loadOk")
         self.load_started = None
         self.expr.status.loadRegTimedOut = False
         self.load_cikl_counter=0

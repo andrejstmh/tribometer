@@ -24,7 +24,7 @@ export class AppComponent {
             ([st, stt]) => {
                 this.signalsService.settings$.next(stt);
                 this.signalsService.lastState$.next(new trState(st));
-                console.log("Get Settings: Ok");
+                //console.log("Get Settings: Ok");
                 this.SocketServiceStart();
             },
             resErr => { console.log("Get Settings: Error"); },
@@ -35,7 +35,7 @@ export class AppComponent {
     SocketServiceStart() {
         this.signalsService.startListen().subscribe(
             x => {
-                console.log("socketService.startListen: Ok");
+                //console.log("socketService.startListen: Ok");
                 this.chartService.initChartData();
                 //this.socketService.initSocket();
                 this.signalsService.socket.subscribe(

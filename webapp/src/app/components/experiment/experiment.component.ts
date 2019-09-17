@@ -97,7 +97,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     }
 
     showChartSettingsDialog() {
-        console.log("START dialog!");
+        //console.log("START dialog!");
         let ecs = this.chartService.chartAxesSettings.ExpChatr
         const dialogRef = this.dialog.open(ChartSettingsDialogComponent, {
             width: '750px',
@@ -110,7 +110,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('chart setting dialog: update settings!');
+            //console.log('chart setting dialog: update settings!');
             ecs[0] = result.t;
             ecs[1] = result.rpm;
             ecs[2] = result.load;
@@ -147,7 +147,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
             this.ChartFile.lineChartData[3].data = x.friction;//this.removeNaN(x.friction);
             this.ChartFile.lineChartLabels = x.time.map(this.secondsToSting);
             if (this.chartW) {
-                console.log("this.chartW.update()");
+                //console.log("this.chartW.update()");
                 this.chartW.update();
             }
         }
@@ -160,7 +160,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('dialog: beginWrite!');
+            //console.log('dialog: beginWrite!');
             this.beginWrite();
             this.resfreshChart();
         });
@@ -179,7 +179,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     }
 
     beginWrite() {
-        console.log("Nachat zapis!")
+        //console.log("Nachat zapis!")
         this.signalsService.beginWrite().subscribe(
             resOk => {
                 this.InitTimer(this.chartService.expFileDataRefreshPeriodMin);
@@ -191,7 +191,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     }
 
     endWrite() {
-        console.log("Zakoncit zapis!")
+        //console.log("Zakoncit zapis!")
         this.UnsubscribeTimer();
         this.signalsService.endWrite().subscribe(
             resOk => {

@@ -36,7 +36,7 @@ class Tibometer:
             cls.subscriptRead = cls.Read_obs.subscribe(send_response, on_error)
             cls.Read_obs.connect()
         else:
-            print("uzhe zapuschen!")
+            print("Already exists!")
 
     @classmethod
     def EndReading(cls):
@@ -53,7 +53,7 @@ class Tibometer:
             sd =Tibometer.Experiment.currentRecordData
             sd = Tibometer.Experiment.DataFile.write(sd)
         def on_errorW(e):
-            print("WRITE:{0}".format(e))
+            print("WRITE ERROR:{0}".format(e))
         if (cls.subscriptRead is not None) and (cls.subscriptWrite is None):
             cls.Experiment.DataFile.MakeHdf5File()
             cls.Experiment.DataFile.StartRecording(cls.Experiment.currentRecordData)

@@ -80,14 +80,14 @@ export class CalibrCurveComponent implements OnInit, OnDestroy {
     onSelect(curve1) {
         if (this.selectedCurve) {
             let curve = this.selectedCurve;
-            console.log("onSelect");
+            //console.log("onSelect");
             //this.selectedCurve = curve;
             //this.CurveTable = null;
             //this.CcurvData = null;
             //this.tableSettings.columns[0].title = curve.title[0];
             //this.tableSettings.columns[1].title = curve.title[1];
             this.sygnalServ.GetCalibrationCurve(curve.path).subscribe(cc => {
-                console.log("GetCalibrationCurve");
+                //console.log("GetCalibrationCurve");
                 //this.CcurvData = cc;
                 //this.CurveTable = [];
                 let res: CurveRow[] = [];

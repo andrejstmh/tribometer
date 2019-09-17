@@ -1,87 +1,5 @@
 <div class="container-fluid">
     <app-status-row></app-status-row>
-    <div *ngIf="signalsService.settings$|async as sett" class="row">
-        <div class="container rounded border bg-light m-1">
-            <div class="row h5">
-                <div class="col-3">RPM control</div>
-                <div class="col-4">Target</div>
-                <div class="col-5">Manual(VFD)</div>
-            </div>
-            <!-- status.rpmRegAuto -->
-            <div class="row border-top" *ngIf="signalsService.lastState$|async as status">
-                <div class="col-3"></div>
-                <div class="col-4">
-                    <div [className]="!status.rpmRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
-                        <input type="number" min="5" max="125" name="rpm_auto" [value]="sett.program[0].RPM" #rpm_auto>
-                        <button type="button" class="btn btn-info m-1" (click)="setRPMAuto(rpm_auto.value)">Apply</button>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <div [className]="status.rpmRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
-                        <button type="button" class="btn btn-info m-1" (click)="decreaseRPM(rpm_manual.value)">Decrease</button>
-                        <input type="number" min="1" max="100" [value]="10" name="rpm_manual" #rpm_manual>
-                        <button type="button" class="btn btn-info m-1" (click)="increaseRPM(rpm_manual.value)">Increase</button>
-                        <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div *ngIf="signalsService.settings$|async as sett" class="row">
-        <div class="container rounded border bg-light m-1">
-            <div class="row h5">
-                <div class="col-3">Load control</div>
-                <div class="col-4">Target</div>
-                <div class="col-5">Manual</div>
-            </div>
-            <div class="row border-top" *ngIf="signalsService.lastState$|async as status">
-                <div class="col-3"></div>
-                <div class="col-4">
-                    <div [className]="!status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
-                        <input type="number" class="m-1" min="1" max="1020" name="load_auto" [value]="sett.program[0].load" #load_auto>
-                        <button type="button" class="btn btn-info m-1" (click)="setLoadAuto(load_auto.value)">Apply</button>
-                    </div>
-                </div>
-                    <div class="col-5">
-                        <div [className]="status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
-                            <button type="button" class="btn btn-info m-1" (click)="loadMinus(load_manual.value)">Decrease</button>
-                            <input type="number" [value]="10" min="1" max="100" name="load_manual" #load_manual>
-                            <button type="button" class="btn btn-info m-1" (click)="loadPlus(load_manual.value)">Increase</button>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <div *ngIf="signalsService.settings$|async as sett" class="row">
-        <div class="container rounded border bg-light m-1">
-            <div class="row h5">
-                <div class="col-3">
-                    Thresholds
-                    <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
-                </div>
-                <div class="col-4">
-                    <input type="number" [value]="sett.program[0].Fmax" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
-                    Friction, N
-                </div>
-                <div class="col-5">
-                    <input type="number" [value]="sett.program[0].Tmax" class="m-1" min="15" max="120" name="t_threshold" #t_threshold>
-                    T, °C
-                </div>
-            </div>
-            <!--<div class="row border-top">
-                <div class="col text-center mx-auto">
-                <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
-                </div>
-                <div class="col text-center mx-auto">
-                    <input type="number" [value]="sett.friction_force_threshold" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
-                </div>
-                <div class="col text-center mx-auto">
-                    <input type="number" [value]="sett.temperature_threshold" class="m-1" min="15" max="100" name="t_threshold" #t_threshold>
-                </div>
-            </div>-->
-        </div>
-    </div>
     <div class="row">
         <div *ngIf="currentData" class="container rounded border bg-light m-1">
             <!--"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]-->
@@ -111,6 +29,114 @@
             </div>
         </div>
     </div>
+
+    <div class="row" *ngIf="signalsService.settings$|async as sett">
+        <div class="container rounded border bg-light m-1" *ngIf="signalsService.lastState$|async as status">
+            <div class="row h5">
+                <div class="col-3">Control</div>
+                <div class="col-4">Target</div>
+                <div class="col-5">Manual</div>
+            </div>
+
+            <div class="row border-top">
+                <div class="col-3">RPM</div>
+                <div class="col-4">
+                    <div [className]="!status.rpmRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <input type="number" min="5" max="1200" name="rpm_auto" [value]="sett.program[0].RPM" #rpm_auto>
+                        <button type="button" class="btn btn-info m-1" (click)="setRPMAuto(rpm_auto.value)">Apply</button>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div [className]="status.rpmRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <button type="button" class="btn btn-info m-1" (click)="decreaseRPM(rpm_manual.value)">Decrease</button>
+                        <input type="number" min="1" max="100" [value]="10" name="rpm_manual" #rpm_manual>
+                        <button type="button" class="btn btn-info m-1" (click)="increaseRPM(rpm_manual.value)">Increase</button>
+                        <button type="button" class="btn btn-info m-1" (click)="StopRotation()">Stop</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row border-top">
+                <div class="col-3">Load</div>
+                <div class="col-4">
+                    <div [className]="!status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <input type="number" class="m-1" min="1" max="1200" name="load_auto" [value]="sett.program[0].load" #load_auto>
+                        <button type="button" class="btn btn-info m-1" (click)="setLoadAuto(load_auto.value)">Apply</button>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div [className]="status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <button type="button" class="btn btn-info m-1" (click)="loadMinus(load_manual.value)">Decrease</button>
+                        <input type="number" [value]="10" min="1" max="100" name="load_manual" #load_manual>
+                        <button type="button" class="btn btn-info m-1" (click)="loadPlus(load_manual.value)">Increase</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row border-top h5">
+                <div class="col-3">
+                    Thresholds
+                    <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
+                </div>
+                <div class="col-4">
+                    <input type="number" [value]="sett.program[0].Fmax" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
+                    Friction, N
+                </div>
+                <div class="col-5">
+                    <input type="number" [value]="sett.program[0].Tmax" class="m-1" min="15" max="120" name="t_threshold" #t_threshold>
+                    T, °C
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div *ngIf="signalsService.settings$|async as sett" class="row">
+        <div class="container rounded border bg-light m-1">
+            <div class="row h5">
+                <div class="col-3">Load control</div>
+                <div class="col-4">Target</div>
+                <div class="col-5">Manual</div>
+            </div>
+            <div class="row border-top" *ngIf="signalsService.lastState$|async as status">
+                <div class="col-3">Load</div>
+                <div class="col-4">
+                    <div [className]="!status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <input type="number" class="m-1" min="1" max="1020" name="load_auto" [value]="sett.program[0].load" #load_auto>
+                        <button type="button" class="btn btn-info m-1" (click)="setLoadAuto(load_auto.value)">Apply</button>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div [className]="status.loadRegAuto ? 'container rounded border bg-info m-1' : 'container rounded border bg-light m-1'">
+                        <button type="button" class="btn btn-info m-1" (click)="loadMinus(load_manual.value)">Decrease</button>
+                        <input type="number" [value]="10" min="1" max="100" name="load_manual" #load_manual>
+                        <button type="button" class="btn btn-info m-1" (click)="loadPlus(load_manual.value)">Increase</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <!--<div class="row" *ngIf="signalsService.settings$|async as sett" >
+        <div class="container rounded border bg-light m-1">
+            <div class="row h5">
+                <div class="col-3">
+                    Thresholds
+                    <button type="button" class="btn btn-info m-1" (click)="setThresholds(fr_threshold.value,t_threshold.value)">Apply</button>
+                </div>
+                <div class="col-4">
+                    <input type="number" [value]="sett.program[0].Fmax" class="m-1" min="5" max="125" name="fr_threshold" #fr_threshold>
+                    Friction, N
+                </div>
+                <div class="col-5">
+                    <input type="number" [value]="sett.program[0].Tmax" class="m-1" min="15" max="120" name="t_threshold" #t_threshold>
+                    T, °C
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+
+
     <div class="row">
         <div class="container rounded border bg-light m-1">
             <div class="row">

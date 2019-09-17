@@ -40,7 +40,7 @@ def checkServer():
         res = False
     except Exception as e:
         # Other errors are possible, such as IOError.
-        print("Error: " + str(e))
+        #print("http client error: " + str(e))
         res = False
     http_client.close()
     return res
@@ -158,7 +158,7 @@ class SettingsHandler(tornado.web.RequestHandler):
             maxCount = 1000
             if rc > maxCount:
                 step = rc // maxCount + 1
-            print("rc:{0},step:{1},sh:{2}".format(rc,step,sh))
+            #print("rc:{0},step:{1},sh:{2}".format(rc,step,sh))
             dt = np.array(dt[:rc:step],copy=True)
             #mask = np.isnan(dt)
             #dt[mask] = -1;
