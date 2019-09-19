@@ -32,6 +32,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
     totState: Observable<trTotalState> = null;
     currentData: Observable<SensorsData> = null;
     subsArr: Subscription[] = [];
+    stopReason: string = "";
     OnGetFileData_Timer = interval(60000);
     OnFileData_TimerSubscription: Subscription = null;
     latestProgram$: Observable<trLocalProgram[]> = null;
@@ -146,6 +147,7 @@ export class ExperimentComponent implements OnInit, OnDestroy {
             this.ChartFile.lineChartData[2].data = x.load;//this.removeNaN(x.load);
             this.ChartFile.lineChartData[3].data = x.friction;//this.removeNaN(x.friction);
             this.ChartFile.lineChartLabels = x.time.map(this.secondsToSting);
+            this.stopReason = x.stReason;
             if (this.chartW) {
                 //console.log("this.chartW.update()");
                 this.chartW.update();

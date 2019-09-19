@@ -197,7 +197,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         //    return new CurveRow(0, 0, Nr);
         //}
         let bp = this.lSettings.program[0]
-        return new trProgram(bp.duration, bp.load, bp.RPM, bp.Tmax, bp.Fmax, 1);
+        return new trProgram(bp.duration, bp.load, bp.RPM, bp.Tmax, bp.Fmax);
     }
 
     onSelectRow(r: any) {

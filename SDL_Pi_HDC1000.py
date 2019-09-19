@@ -75,18 +75,14 @@ class SDL_Pi_HDC1000:
         # public functions
 
         def readTemperature(self):
-               
-
                 s = [HDC1000_TEMPERATURE_REGISTER] # temp
                 s2 = bytearray( s )
                 HDC1000_fw.write( s2 )
                 time.sleep(0.0625)              # From the data sheet
-
                 data = HDC1000_fr.read(2) #read 2 byte temperature data
                 buf = array.array('B', data)
                 #print ( "Temp: %f 0x%X %X" % (  ((((buf[0]<<8) + (buf[1]))/65536.0)*165.0 ) - 40.0   ,buf[0],buf[1] )  )
 
-                
                 # Convert the data
                 temp = (buf[0] * 256) + buf[1]
                 cTemp = (temp / 65536.0) * 165.0 - 40

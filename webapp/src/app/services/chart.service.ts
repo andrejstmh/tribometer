@@ -16,6 +16,7 @@ import { Number } from 'bokehjs/build/js/types/core/properties';
 
 export class LineChartSettings {
     public lineChartDataDraw: ChartDataSets[] = [];
+    public lastNotNanIdx:number[] = [0, 0, 0, 0];
     public lineChartData: ChartDataSets[] = [
         { data: [], label: 'Temperature', yAxisID: "y-axis-T", fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
         { data: [], label: 'RPM', yAxisID: "y-axis-RPM", fill: false, lineTension: 0, pointBorderWidth: 0, pointRadius: 0 },
@@ -296,8 +297,36 @@ export class ChartService {
     NanToNum(v: number) {
         return isNaN(v) ? 0.0 : v;
     }
+    public LinearInterpNanValues(v0: number, serNr: number) {
+        if (!isNaN(v0)) {
+            let v1: number;
+            let idx: number=-1;
+            let jj = this.ChartListen.lineChartData[0].data.length - 1;
+            for (let j = 0; j < jj + 1; j++) {
+                v1 = this.ChartListen.lineChartData[serNr].data[jj - j] as number;
+                if (!isNaN(v1)) {
+                    idx = j;
+                    //console.log("idx:" + idx + "; serNr:" + serNr)
+                    break;
+                }
+            }
+            for (let j = 0; j < idx; j++) {
+                this.ChartListen.lineChartData[serNr].data[jj - j] = v0 + (v1 - v0) * (j + 1) / (idx + 1);
+            }
+        }
+    }
     public updateChartData(x: SensorsData): void {
         if (x) {
+            let temp = x.db[4];
+            let rpm = x.db[3];
+            let load = x.db[1];
+            let fr = x.db[2];
+            
+            this.LinearInterpNanValues(temp, 0);
+            this.LinearInterpNanValues(rpm, 1);
+            this.LinearInterpNanValues(load, 2);
+            this.LinearInterpNanValues(fr, 3);
+            
             //this.ChartListen.lineChartData[0].data.unshift(x.temperature)
             //this.ChartListen.lineChartData[0].data.pop();
             //this.ChartListen.lineChartData[1].data.unshift(x.rotationrate)
@@ -306,6 +335,7 @@ export class ChartService {
             //this.ChartListen.lineChartData[2].data.pop();
             //this.ChartListen.lineChartData[3].data.unshift(x.frictionforce)
             //this.ChartListen.lineChartData[3].data.pop();
+
             let jj = this.ChartListen.lineChartData[0].data.length - 1;
             for (let j = 1; j < jj+1; j++) {
                 this.ChartListen.lineChartData[0].data[j-1] = this.ChartListen.lineChartData[0].data[j];
@@ -314,10 +344,10 @@ export class ChartService {
                 this.ChartListen.lineChartData[3].data[j-1] = this.ChartListen.lineChartData[3].data[j];
             }
             //"load": sd[1], "frictionforce":sd[2], "rotationrate": sd[3], "temperature": sd[4]
-            this.ChartListen.lineChartData[0].data[jj] = x.db[4];//this.NanToNum(x.temperature);
-            this.ChartListen.lineChartData[1].data[jj] = x.db[3];//this.NanToNum(x.rotationrate);
-            this.ChartListen.lineChartData[2].data[jj] = x.db[1];//this.NanToNum(x.load);
-            this.ChartListen.lineChartData[3].data[jj] = x.db[2];//this.NanToNum(x.frictionforce);
+            this.ChartListen.lineChartData[0].data[jj] = temp;//this.NanToNum(x.temperature);
+            this.ChartListen.lineChartData[1].data[jj] = rpm;//this.NanToNum(x.rotationrate);
+            this.ChartListen.lineChartData[2].data[jj] = load;//this.NanToNum(x.load);
+            this.ChartListen.lineChartData[3].data[jj] = fr;//this.NanToNum(x.frictionforce);
             this.onChartDataChanged$.next(x);
         }
     }

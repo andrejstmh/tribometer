@@ -86,7 +86,7 @@ class Program:
             T = getFieldValue(it,ProgrCol.SettFields[ProgrCol.maxT],100)#self.Settings.temperature_threshold)
             self.programData[i,:] = np.array([startTime,load,rpm,F,T])
             startTime+=t
-        self.programData[len(self.Settings.program),:] = np.array([startTime,-1,-1,-1,-1]);
+        self.programData[len(self.Settings.program),:] = np.array([startTime,load,rpm,F,T]);
 
 
     def getTargetValues(self, exp_time):

@@ -57,14 +57,13 @@ export class trProgram {
         public load: number,
         public RPM: number,
         public Tmax: number,
-        public Fmax: number,
-        public Vibrmax: number) {
+        public Fmax: number) {
 
     }
     copy() {
         return new trProgram(
             this.duration, this.load, this.RPM,
-            this.Tmax, this.Fmax, this.Vibrmax);
+            this.Tmax, this.Fmax);
     }
 } 
 export class trSettings {
@@ -136,7 +135,8 @@ export class trResultBase64FileData {
         public load: string,
         public RPM: string,
         public temperature: string,
-        public friction: string) {
+        public friction: string,
+        public stReason: string) {
     }
 }
 
@@ -146,6 +146,7 @@ export class trResultFileData {
     RPM: number[] = [];
     temperature: number[] = [];
     friction: number[] = [];
+    stReason: string="";
     constructor(res:trResultBase64FileData
     ) {
         if (res) {
@@ -154,6 +155,7 @@ export class trResultFileData {
             this.RPM = this.Base64_2_float32(res.RPM);
             this.temperature = this.Base64_2_float32(res.temperature);
             this.friction = this.Base64_2_float32(res.friction);
+            this.stReason = res.stReason;
         }
     }
     Base64_2_float32(b64str: string) {
@@ -274,7 +276,7 @@ export class ObjHelper {
         } else if (stateObj instanceof trProgram) {
             return new trProgram(
                 stateObj.duration, stateObj.load, stateObj.RPM,
-                stateObj.Tmax, stateObj.Fmax, stateObj.Vibrmax);
+                stateObj.Tmax, stateObj.Fmax);
 
         } else {
             return JSON.parse(JSON.stringify(stateObj));

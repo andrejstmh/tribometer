@@ -39,6 +39,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="motor3.py" />
+    <Compile Include="outliers_filter.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="program.py" />
     <Compile Include="read_RPM.py" />
     <Compile Include="relay_control.py" />

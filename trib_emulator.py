@@ -21,19 +21,30 @@ class TibometerEmulator:
         return self.WFD + 1.0 + np.sin(datetime.datetime.now().minute / 60.0 * 2 * np.pi) if self.WFD > 0.1 else 0.0
 
     def get_RPM(self):
-        return 2.0375*np.power(self.get_WFD() * 60,0.8756) + np.random.normal(0, 2) if self.WFD>0.1 else 0.0
+        res = 2.0375*np.power(self.get_WFD() * 60,0.8756) + np.random.normal(0, 2) if self.WFD>0.1 else 0.0
+        if np.random.rand()>0.95:
+            res+= np.random.normal(0, 200)
+        return res
 
     def get_Temp(self):
-        return self.Temperature + np.random.normal(0, 0.5)
+        res=self.Temperature + np.random.normal(0, 0.5)
+        if np.random.rand()>0.95:
+            res+= np.random.normal(0, 20)
+        return res
 
     def get_LoadVolts(self):
-        return 0.615 + self.press_reduct * (2.37125 - 0.615)+ np.random.normal(0, 0.05)
+        res=0.615 + self.press_reduct * (2.37125 - 0.615)+ np.random.normal(0, 0.05)
+        if np.random.rand()>0.95:
+            res+= np.random.normal(0, 0.4)
+        return res
 
     def get_FrVolts(self):
         v=0.59+np.random.normal(0, 0.03)
         if (self.WFD>0):
             force = self.Frict_coeff * 1250*(self.get_LoadVolts() - 0.66)/2.661125 + np.random.normal(0, 2)
             v =(force ) / 20.738
+        if np.random.rand()>0.95:
+            v+= np.random.normal(0, 0.6)
         return v
 
     def setLoad(self,rotation_deg):

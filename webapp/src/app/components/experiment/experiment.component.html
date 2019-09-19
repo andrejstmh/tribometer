@@ -53,6 +53,9 @@
                 <div class="col-3">
                     <button type="button" class="btn btn-info" (click)="resfreshChart()">Refresh chart</button>
                 </div>
+                <div *ngIf="totSTATE.state.status==3" class="col-9">
+                    <h6>Experiment finished:{{stopReason}}</h6>
+                </div>
                 <div *ngIf="totSTATE.state.status==2" class="col-9">
                     <h6>Chart refresh period</h6>
                     <select id="refreshPeriodSelect" (change)="onChangerefreshPeriod($event.target.value)" [value]='1'>

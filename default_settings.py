@@ -67,12 +67,12 @@ DefaultSettings={
     "program":[
         {"duration":10, "load":200.0,"RPM":600,"Tmax":100,"Fmax":100}],
     #seconds
-    "rpmMaxRegTime":2*60, # 2 minutes
+    "rpmMaxRegTime":1E6,#2*60, # 2 minutes
     #seconds
-    "loadMaxRegTime":2*60, # 2 minutes
+    "loadMaxRegTime":1E6,#2*60, # 2 minutes
     "avgBufferSize": 10, # 
     "rpmRegCikleSize":20,
-    "loadRegCikleSize":15,
+    "loadRegCikleSize":20,
     "loadRegualtionDiffStart":50,
     "loadRegualtionDiffStop":10,
     "RPMRegualtionDiffStart":5,

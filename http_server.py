@@ -19,6 +19,7 @@ import numpy as np
 import convert2JSON
 from experiment import Experiment
 from exp_settings import ExpStatus
+import outliers_filter
 
 def checkServer():
     #conn = http.client.HTTPConnection('http://localhost', 8787, timeout=100)
@@ -162,12 +163,13 @@ class SettingsHandler(tornado.web.RequestHandler):
             dt = np.array(dt[:rc:step],copy=True)
             #mask = np.isnan(dt)
             #dt[mask] = -1;
-            time=Experiment.ConvertDataTob64String(np.array(dt[:,0],copy=True))
-            load=Experiment.ConvertDataTob64String(np.array(dt[:,1],copy=True))
-            RPM=Experiment.ConvertDataTob64String(np.array(dt[:,3],copy=True))
-            te=Experiment.ConvertDataTob64String(np.array(dt[:,4],copy=True))
-            fr=Experiment.ConvertDataTob64String(np.array(dt[:,2],copy=True))
-            s = '{"time":'+time+', "load":'+load+', "RPM":'+RPM+', "temperature":'+te+', "friction":'+fr+'}'
+            time=Experiment.ConvertDataTob64String(outliers_filter.PrepareBeautifulData(dt[:,0]))
+            load=Experiment.ConvertDataTob64String(outliers_filter.PrepareBeautifulData(dt[:,1]))
+            RPM=Experiment.ConvertDataTob64String(outliers_filter.PrepareBeautifulData(dt[:,3]))
+            te=Experiment.ConvertDataTob64String(outliers_filter.PrepareBeautifulData(dt[:,4]))
+            fr=Experiment.ConvertDataTob64String(outliers_filter.PrepareBeautifulData(dt[:,2]))
+            stReason=hdf["stop_reason"][0].decode('utf-8')
+            s = '{"time":'+time+', "load":'+load+', "RPM":'+RPM+', "temperature":'+te+', "friction":'+fr+', "stReason":"'+stReason+'"}'
             self.write(s)
             #self.write(json.dumps({"time": dt[:,0].tolist(),"load": list(dt[:,1].tolist()), "RPM": list(dt[:,3].tolist()), 
             #            "temperature": list(dt[:,4].tolist()), "friction":list(dt[:,2].tolist())}))

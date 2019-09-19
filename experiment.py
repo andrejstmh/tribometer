@@ -226,9 +226,10 @@ class Automation:
             self.MakeSubscriptionToLoadReg(rotations)
 
     def GO_ManualLoad(self, deltaN):
-        rotations = self.loadRegulator.GetRotations(self.CurrentAvgLoad(),self.CurrentAvgLoad()+ deltaN)
-        #print("GO_ManualLoad {0}".format(rotations))
-        self.MakeSubscriptionToLoadReg(rotations)
+        if np.abs(deltaN)>1:
+            rotations = self.loadRegulator.GetRotations(self.CurrentAvgLoad(),self.CurrentAvgLoad()+ deltaN)
+            #print("GO_ManualLoad {0}".format(rotations))
+            self.MakeSubscriptionToLoadReg(rotations)
         self.load_started = None
         self.expr.status.loadRegTimedOut = False
         self.load_cikl_counter=0
@@ -247,7 +248,9 @@ class Automation:
         if self.expr.Program.LoadAutoRegulation:
             if self.loadTargetChanged():
                 self.start_load_automation()
-            if self.load_started is None and self.loadValue_outOfRange():
+            valOutOfRange=self.loadValue_outOfRange()
+            if not valOutOfRange:self.load_cikl_counter=0
+            if self.load_started is None and valOutOfRange:
                 self.start_load_automation()
             # regulation mode 
             if self.load_started is not None:
@@ -268,7 +271,9 @@ class Automation:
         if self.expr.Program.RPMAutoRegulation:
             if self.rpmTargetChanged():
                 self.start_rpm_automation()
-            if self.rpm_started is None and self.rpmValue_outOfRange():
+            valOutOfRange=self.rpmValue_outOfRange()
+            if not valOutOfRange:self.rpm_cikl_counter=0
+            if self.rpm_started is None and valOutOfRange:
                 self.start_rpm_automation()
             # regulation mode 
             if self.rpm_started is not None:
@@ -309,6 +314,8 @@ class Experiment:
         self.SensorDataBuffer = np.full(shape=(self.Settings.avgBufferSize,Experiment.sensorDataVecLength),
                                         fill_value=np.nan, dtype=np.float)
         self.SensorDataBuffer[:,0] = 0.0
+        #time,load, friction, rpm, temperatura
+        self.RemovedOutliers=np.array([False,False,False,False,False],dtype=np.bool)
         self.Automation = Automation(self)
 
     def get_currentSensorVoltage(self):
@@ -342,12 +349,15 @@ class Experiment:
         if not np.isnan(fr):
             fr = cd.friction.getCalibratedValue(fr)
         self.SensorDataBuffer[self.DataBufferPointer,:] = np.array([time, load, fr, rpm, t], dtype=np.float);
-        self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
-        self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
+        #self.currentAverageVoltage = np.nanmean(self.SensorVoltageBuffer, axis=0)
+        #self.currentAverageData = np.nanmean(self.SensorDataBuffer, axis=0)
         #self.currentAverageVoltage = np.nanpercentile(self.SensorVoltageBuffer, 50, axis=0)
         #self.currentAverageData = np.nanpercentile(self.SensorDataBuffer,50, axis=0)
+        self.currentAverageVoltage= np.nanmedian(self.SensorVoltageBuffer,axis=0)
+        self.currentAverageData= np.nanmedian(self.SensorDataBuffer,axis=0)
         self.prevTargetData = self.currentTargetData
-        self.currentTargetData = self.Program.getTargetValues(time);
+        self.currentTargetData = self.Program.getTargetValues(time)
+        self.MarkOutliers()
         self.CheckTribometerState()
         self.Automation.OnNewSensorData()
         
@@ -356,11 +366,21 @@ class Experiment:
         load1 = np.nan if ((load<self.Settings.calibrationData.load.curve1d[0:0]-d)or(load>self.Settings.calibrationData.load.curve1d[-1:0]+d)) else load
         d = 0.05*(self.Settings.calibrationData.friction.curve1d[-1:0]-self.Settings.calibrationData.friction.curve1d[0:0])
         fr1 = np.nan if ((fr<self.Settings.calibrationData.friction.curve1d[0:0]-d)or(fr>self.Settings.calibrationData.friction.curve1d[-1:0]+d)) else fr
-        
         rpm1 = np.nan if ((rpm<0)or(rpm>default_settings.Default_RPM_limit.max)) else rpm
         temperature1 = np.nan if ((temperature<default_settings.Default_Temperature_limit.min)or(temperature>default_settings.Default_Temperature_limit.max)) else temperature
         return load1, fr1, rpm1, temperature1
 
+    def MarkOutliers(self):
+        if True:
+            pp = np.nanpercentile( self.SensorDataBuffer, [25,75], axis=0)
+            IRQ = 1.5*(pp[1] - pp[0])
+            pp[0] -= IRQ
+            pp[1] += IRQ
+            cd = self.currentRecordData
+            self.RemovedOutliers[:]=np.logical_or( cd<pp[0],cd>pp[1])
+        else:
+            self.RemovedOutliers.fill(False)
+        return self.RemovedOutliers
 
     def CheckTribometerState(self):
         #Data:time:0, load:1, fr:2, rpm:3, t:4
@@ -368,7 +388,7 @@ class Experiment:
         time,aload, afr,arpm, aT =self.currentRecordData[0],self.currentAverageData[1],self.currentAverageData[2],self.currentAverageData[3],self.currentAverageData[4]
         timeTot, tmaxFfr,tmaxT = self.currentTargetData[0],self.currentTargetData[3],self.currentTargetData[4]
         self.status.VFD_on=arpm>0.1
-        self.status.load_on = (aload>0.1)
+        self.status.load_on = aload>0.1
         self.status.stopTime = time>timeTot
         self.status.stopTlim = aT>tmaxT
         self.status.stopFlim = afr>tmaxFfr
@@ -436,7 +456,10 @@ class Experiment:
         #testar =np.array([1.1,2.2,0,np.nan, 1], dtype=np.float)
         #s = np.fromstring( testar.tobytes(),dtype=np.dtype('B'));
         #db = '"'+base64.b64encode(testar).decode("utf-8")+'"'
-        db = Experiment.ConvertDataTob64String(self.currentRecordData)
+        crd = np.array(self.currentRecordData);
+        if np.any(self.RemovedOutliers):
+            crd[self.RemovedOutliers]=np.nan
+        db = Experiment.ConvertDataTob64String(crd)
         vb = Experiment.ConvertDataTob64String(self.currentRecordVoltage)
         adb = Experiment.ConvertDataTob64String(self.currentAverageData)
         avb = Experiment.ConvertDataTob64String(self.currentAverageVoltage)
