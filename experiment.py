@@ -44,9 +44,9 @@ class LoadRegilator:
     #5 rotations => 7 Bar => 1252 N
     def __init__(self):
         self.rotationRange=5
-        self.RegStepCount=5
+        self.RegStepCount=1
         self.maxLoad=default_settings.DefaultCalibration_Load[-1,1]
-        self.SlipRatioIncCoeff=np.array([0.5,10/self.rotationRange],dtype = np.float)
+        self.SlipRatioIncCoeff=np.array([0.5,12/self.rotationRange],dtype = np.float)
         self.SlipRatioDecCoeff=np.array([0.5,3/self.rotationRange],dtype = np.float)
 
     def relLoad(self,loadN):
@@ -249,7 +249,6 @@ class Automation:
             if self.loadTargetChanged():
                 self.start_load_automation()
             valOutOfRange=self.loadValue_outOfRange()
-            if not valOutOfRange:self.load_cikl_counter=0
             if self.load_started is None and valOutOfRange:
                 self.start_load_automation()
             # regulation mode 
@@ -272,7 +271,6 @@ class Automation:
             if self.rpmTargetChanged():
                 self.start_rpm_automation()
             valOutOfRange=self.rpmValue_outOfRange()
-            if not valOutOfRange:self.rpm_cikl_counter=0
             if self.rpm_started is None and valOutOfRange:
                 self.start_rpm_automation()
             # regulation mode 
